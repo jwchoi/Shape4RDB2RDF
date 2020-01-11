@@ -27,28 +27,18 @@ public class R2RMLShExMapper extends ShExMapper {
     //-> for R2RML parser
     private String propertiesFile;
     Properties properties;
-    private MappingDocument mappingDocument;
     //<- for R2RML parser
 
     public R2RMLShExMapper(String propertiesFile) { this.propertiesFile = propertiesFile; }
 
-    private boolean loadPropertiesFile() {
+    private MappingDocument generateMappingDocument() {
         properties = new Properties();
+
         try {
             properties.load(new FileInputStream(propertiesFile));
         } catch (Exception ex) {
             System.err.println("Error reading properties file (" + propertiesFile + ").");
-            return false;
-        }
-
-        return true;
-    }
-
-    private void generateMappingDocument() {
-        if (mappingDocument != null) return;
-
-        if (properties == null) {
-            if (!loadPropertiesFile()) return;
+            return null;
         }
 
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app-context.xml");
@@ -59,9 +49,11 @@ public class R2RMLShExMapper extends ShExMapper {
         Parser parser = (Parser) context.getBean("parser");
         parser.setProperties(properties);
 
-        mappingDocument = parser.parse();
+        MappingDocument mappingDocument = parser.parse();
 
         context.close();
+
+        return mappingDocument;
     }
 
     private R2RMLModel buildMappingModel(MappingDocument mappingDocument) {
@@ -289,9 +281,7 @@ public class R2RMLShExMapper extends ShExMapper {
 
     @Override
     public File generateShExFile() {
-        generateMappingDocument();
-
-        r2rmlModel = buildMappingModel(mappingDocument);
+        r2rmlModel = buildMappingModel(generateMappingDocument());
         shExSchema = ShExSchemaFactory.getShExSchemaModel(r2rmlModel);
 
         preProcess();
