@@ -1,0 +1,5 @@
+@prefix log:   <http://example.com/base#> .
+
+log:destinationFile  log:destinationFileSize
+                "9365" ;
+        log:timestamp            "Sat Jan 11 15:03:48 GMT+09:00 2020" .

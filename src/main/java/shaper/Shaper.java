@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.util.Properties;
 
 import janus.database.*;
-import shaper.mapping.DirectMappingBasedRDFMapper;
-import shaper.mapping.R2RMLBasedRDFMapper;
-import shaper.mapping.RDFMapper;
+import shaper.mapping.rdf.DirectMappingRDFMapper;
+import shaper.mapping.rdf.R2RMLRDFMapper;
+import shaper.mapping.rdf.RDFMapper;
+import shaper.mapping.shex.DirectMappingShExMapper;
+import shaper.mapping.shex.R2RMLShExMapper;
+import shaper.mapping.shex.ShExMapper;
 
 public class Shaper {
 	private static final String SHAPER_PROPERTIES_FILE = "shaper.properties";
@@ -24,8 +27,10 @@ public class Shaper {
 	public static String prefix;
 	
 	public static DBBridge dbBridge;
-	public static LocalDBSchema localDBSchema;
+	public static DBSchema dbSchema;
+
 	public static RDFMapper rdfMapper;
+	public static ShExMapper shexMapper;
 
 	public static void main (String[] args) {
 		if (!readPropertiesFile(SHAPER_PROPERTIES_FILE))
@@ -37,7 +42,7 @@ public class Shaper {
 		if (!connectDatabase())
 			return;
 
-		if (!buildLocalDBSchema())
+		if (!buildDBSchema())
 			return;
 
 		String generationType = properties.getProperty("generation.type");
@@ -56,25 +61,42 @@ public class Shaper {
 	}
 
 	private static boolean generateShapeFile() {
-		if (rdfMapper == null) {
-			if (!createRDFMapper())
-				return false;
-		}
-
 		String shapeType = properties.getProperty("shape.type");
 
-		if (shapeType.equals("shex")) {
-			File file = rdfMapper.generateShExFile();
-
-			try {
-				System.out.println("The ShEx file \"" + file.getCanonicalPath() + "\" is generated.");
-			} catch (IOException e) {
-				System.out.println("The ShEx file \"" + file.getAbsolutePath() + "\" is generated.");
+		switch (shapeType) {
+			case "shex": {
+				createShExMapper();
+				File file = shexMapper.generateShExFile();
+				try {
+					System.out.println("The ShEx file \"" + file.getCanonicalPath() + "\" is generated.");
+				} catch (IOException e) {
+					System.out.println("The ShEx file \"" + file.getAbsolutePath() + "\" is generated.");
+				}
+				break;
 			}
-
+			case "shacl":
+				break;
 		}
 
 		return true;
+	}
+
+	private static boolean createShExMapper() {
+		ShExMapper shexMapper = null;
+
+		String mappingType = properties.getProperty("mapping.type");
+
+		switch (mappingType) {
+			case "dm": shexMapper = new DirectMappingShExMapper(); break;
+			case "r2rml": shexMapper = new R2RMLShExMapper(R2RML_PARSER_PROPERTIES_FILE); break;
+		}
+
+		if (shexMapper != null) {
+			Shaper.shexMapper = shexMapper;
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean createRDFMapper() {
@@ -82,10 +104,10 @@ public class Shaper {
 
 		String mappingType = properties.getProperty("mapping.type");
 
-		if (mappingType.equals(RDFMapper.MapperTypes.DIRECT_MAPPING.toString()))
-			rdfMapper = new DirectMappingBasedRDFMapper();
-		else if (mappingType.equals(RDFMapper.MapperTypes.R2RML.toString()))
-			rdfMapper = new R2RMLBasedRDFMapper(R2RML_PARSER_PROPERTIES_FILE);
+		switch (mappingType) {
+			case "dm": rdfMapper = new DirectMappingRDFMapper(); break;
+			case "r2rml": rdfMapper = new R2RMLRDFMapper(R2RML_PARSER_PROPERTIES_FILE); break;
+		}
 
 		if (rdfMapper != null) {
 			Shaper.rdfMapper = rdfMapper;
@@ -112,12 +134,12 @@ public class Shaper {
 		return true;
 	}
 
-	private static boolean buildLocalDBSchema() {
-		LocalDBSchema localDBSchema;
-		localDBSchema = LocalDBSchemaFactory.generateLocalDatabaseMetaData(dbBridge);
+	private static boolean buildDBSchema() {
+		DBSchema dbSchema;
+		dbSchema = DBSchemaFactory.generateLocalDatabaseMetaData(dbBridge);
 
-		if (localDBSchema != null) {
-			Shaper.localDBSchema = localDBSchema;
+		if (dbSchema != null) {
+			Shaper.dbSchema = dbSchema;
 			System.out.println("The schema connected is built in local.");
 			return true;
 		}
