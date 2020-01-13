@@ -5,13 +5,13 @@ import java.util.*;
 
 public class R2RMLModel {
     private Map<String, String> prefixMap;
-    private List<TriplesMap> triplesMaps;
+    private Set<TriplesMap> triplesMaps;
     private List<LogicalTable> logicalTables;
 
     public R2RMLModel() {
         prefixMap = new HashMap<>();
         logicalTables = new ArrayList<>();
-        triplesMaps = new ArrayList<>();
+        triplesMaps = new HashSet<>();
     }
 
     public void addPrefixMap(String prefix, String uri) { prefixMap.put(prefix, uri); }
@@ -27,7 +27,7 @@ public class R2RMLModel {
         return template.startsWith("http") ? true : false;
     }
 
-    public List<TriplesMap> getTriplesMaps() { return triplesMaps; }
+    public Set<TriplesMap> getTriplesMaps() { return triplesMaps; }
 
     public LogicalTable getLogicalTableBy(URI iri) {
         for (LogicalTable logicalTable: logicalTables) {

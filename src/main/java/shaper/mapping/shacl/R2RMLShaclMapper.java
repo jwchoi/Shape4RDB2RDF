@@ -4,6 +4,7 @@ import gr.seab.r2rml.beans.Database;
 import gr.seab.r2rml.beans.Parser;
 import gr.seab.r2rml.entities.MappingDocument;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.R2RMLModelFactory;
 import shaper.mapping.model.shacl.ShaclDocModelFactory;
 
@@ -44,7 +45,12 @@ public class R2RMLShaclMapper extends ShaclMapper {
         return mappingDocument;
     }
 
-    private void writeDirectives() {}
+    private void writeDirectives() {
+        // base
+        String defaultNamespace = properties.getProperty("default.namespace");
+        if (defaultNamespace != null)
+            writer.println(Symbols.BASE + Symbols.SPACE + Symbols.LT + defaultNamespace + Symbols.GT); // for a default RDF Graph namespace by r2rml
+    }
 
     private void writeShacl() {}
 

@@ -3,6 +3,7 @@ package shaper.mapping.model.r2rml;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TriplesMap {
 
@@ -27,4 +28,17 @@ public class TriplesMap {
     public URI getUri() { return uri; }
 
     public List<PredicateObjectMap> getPredicateObjectMaps() { return predicateObjectMaps; }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uri);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof TriplesMap)
+            return uri.equals(((TriplesMap) obj).uri);
+
+        return super.equals(obj);
+    }
 }

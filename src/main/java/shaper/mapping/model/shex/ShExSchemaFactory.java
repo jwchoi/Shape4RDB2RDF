@@ -15,7 +15,7 @@ public class ShExSchemaFactory {
     public static ShExSchema getShExSchemaModel(R2RMLModel r2rmlModel) {
         ShExSchema shExSchema = new ShExSchema(URI.create(Shaper.baseURI), Shaper.prefix);
 
-        List<TriplesMap> triplesMaps = r2rmlModel.getTriplesMaps();
+        Set<TriplesMap> triplesMaps = r2rmlModel.getTriplesMaps();
 
         for (TriplesMap triplesMap : triplesMaps) {
 

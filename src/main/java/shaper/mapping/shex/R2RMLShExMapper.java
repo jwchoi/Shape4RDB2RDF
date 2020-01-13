@@ -64,7 +64,7 @@ public class R2RMLShExMapper extends ShExMapper {
     }
 
     private void writeShEx() {
-        List<TriplesMap> triplesMaps = r2rmlModel.getTriplesMaps();
+        Set<TriplesMap> triplesMaps = r2rmlModel.getTriplesMaps();
 
         for (TriplesMap triplesMap : triplesMaps) {
             List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
