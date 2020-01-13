@@ -18,7 +18,7 @@ public class DirectMappingRDFMapper extends RDFMapper {
 			switch (extension) {
 				case Turtle:
 					// base
-					writer.println(Symbols.AT + Symbols.base + Symbols.SPACE + Symbols.LT + Shaper.baseURI + Symbols.GT + Symbols.SPACE + Symbols.DOT);
+					writer.println(Symbols.AT + Symbols.base + Symbols.SPACE + Symbols.LT + Shaper.rdfBaseURI + Symbols.GT + Symbols.SPACE + Symbols.DOT);
 
 					// prefixID
 					writer.println(Symbols.AT + Symbols.prefix + Symbols.SPACE + PrefixMap.getPrefix(URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns")) + Symbols.COLON + Symbols.SPACE + "<http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + Symbols.SPACE + Symbols.DOT);

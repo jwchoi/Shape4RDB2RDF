@@ -87,7 +87,7 @@ public class Shape implements Comparable<Shape> {
     }
 
     private String buildRegex(List<String> pk) {
-        String regex = Shaper.baseURI;
+        String regex = Shaper.rdfBaseURI;
         regex = regex.replace(Symbols.SLASH, Symbols.BACKSLASH + Symbols.SLASH);
         regex = regex.replace(Symbols.DOT, Symbols.BACKSLASH + Symbols.DOT);
 

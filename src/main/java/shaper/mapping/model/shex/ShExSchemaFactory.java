@@ -13,7 +13,7 @@ public class ShExSchemaFactory {
 
     // R2RML
     public static ShExSchema getShExSchemaModel(R2RMLModel r2rmlModel) {
-        ShExSchema shExSchema = new ShExSchema(URI.create(Shaper.baseURI), Shaper.prefix);
+        ShExSchema shExSchema = new ShExSchema(URI.create(Shaper.shapeBaseURI), Shaper.prefixForShapeBaseURI);
 
         Set<TriplesMap> triplesMaps = r2rmlModel.getTriplesMaps();
 
@@ -112,7 +112,7 @@ public class ShExSchemaFactory {
 
     //Direct Mapping
     public static ShExSchema getShExSchemaModel(DBSchema dbSchema) {
-        ShExSchema schemaMD = new ShExSchema(URI.create(Shaper.baseURI), Shaper.prefix);
+        ShExSchema schemaMD = new ShExSchema(URI.create(Shaper.shapeBaseURI), Shaper.prefixForShapeBaseURI);
 
         Set<String> tables = dbSchema.getTableNames();
 

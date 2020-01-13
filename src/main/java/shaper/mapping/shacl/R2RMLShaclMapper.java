@@ -6,22 +6,24 @@ import gr.seab.r2rml.entities.MappingDocument;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.R2RMLModelFactory;
+import shaper.mapping.model.shacl.Directive;
 import shaper.mapping.model.shacl.ShaclDocModelFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 public class R2RMLShaclMapper extends ShaclMapper {
     //-> for R2RML parser
     private String propertiesFile;
-    Properties properties;
     //<- for R2RML parser
 
     public R2RMLShaclMapper(String propertiesFile) { this.propertiesFile = propertiesFile; }
 
     private MappingDocument generateMappingDocument() {
-        properties = new Properties();
+        Properties properties = new Properties();
 
         try {
             properties.load(new FileInputStream(propertiesFile));
@@ -46,10 +48,11 @@ public class R2RMLShaclMapper extends ShaclMapper {
     }
 
     private void writeDirectives() {
-        // base
-        String defaultNamespace = properties.getProperty("default.namespace");
-        if (defaultNamespace != null)
-            writer.println(Symbols.BASE + Symbols.SPACE + Symbols.LT + defaultNamespace + Symbols.GT); // for a default RDF Graph namespace by r2rml
+        Set<Directive> directives = shaclDocModel.getDirectives();
+        for (Directive directive: directives)
+            writer.println(directive);
+
+        writer.println();
     }
 
     private void writeShacl() {}

@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class RDFMappingModelFactory {
 	public static RDFMappingModel generateMappingModel() {
-		RDFMappingModel mappingMD = new RDFMappingModel(URI.create(Shaper.baseURI));
+		RDFMappingModel mappingMD = new RDFMappingModel(URI.create(Shaper.rdfBaseURI));
 		
 		Set<String> tables = Shaper.dbSchema.getTableNames();
 		

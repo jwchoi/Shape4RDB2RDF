@@ -19,6 +19,7 @@ public class Symbols {
     public static final String EQUAL = "=";
     public static final String GT = ">";
     public static final String HASH = "#";
+    public static final String IMPORTS = "IMPORTS";
     public static final String IRI = "IRI";
     public static final String OPEN_BRACE = "{";
     public static final String OPEN_BRACKET = "[";

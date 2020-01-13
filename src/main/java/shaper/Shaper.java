@@ -26,8 +26,11 @@ public class Shaper {
 
 	private static Properties properties;
 	
-	public static String baseURI;
-	public static String prefix;
+	public static String rdfBaseURI;
+	public static String prefixForRDFBaseURI;
+
+	public static String shapeBaseURI;
+	public static String prefixForShapeBaseURI;
 	
 	public static DBBridge dbBridge;
 	public static DBSchema dbSchema;
@@ -40,8 +43,11 @@ public class Shaper {
 		if (!readPropertiesFile(SHAPER_PROPERTIES_FILE))
 			return;
 
-		baseURI = properties.getProperty("base.iri");
-		prefix = properties.getProperty("base.prefix");
+		rdfBaseURI = properties.getProperty("dm.rdf.base.iri");
+		prefixForRDFBaseURI = properties.getProperty("dm.rdf.base.prefix");
+
+		shapeBaseURI = properties.getProperty("shape.base.iri");
+		prefixForShapeBaseURI = properties.getProperty("shape.base.prefix");
 
 		if (!connectDatabase())
 			return;

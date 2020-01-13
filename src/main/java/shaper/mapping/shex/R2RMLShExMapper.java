@@ -17,13 +17,12 @@ import java.util.*;
 public class R2RMLShExMapper extends ShExMapper {
     //-> for R2RML parser
     private String propertiesFile;
-    Properties properties;
     //<- for R2RML parser
 
     public R2RMLShExMapper(String propertiesFile) { this.propertiesFile = propertiesFile; }
 
     private MappingDocument generateMappingDocument() {
-        properties = new Properties();
+        Properties properties = new Properties();
 
         try {
             properties.load(new FileInputStream(propertiesFile));
@@ -49,9 +48,7 @@ public class R2RMLShExMapper extends ShExMapper {
 
     private void writeDirectives() {
         // base
-        String defaultNamespace = properties.getProperty("default.namespace");
-        if (defaultNamespace != null)
-            writer.println(Symbols.BASE + Symbols.SPACE + Symbols.LT + defaultNamespace + Symbols.GT); // for a default RDF Graph namespace by r2rml
+        writer.println(Symbols.BASE + Symbols.SPACE + Symbols.LT + shExSchema.getBaseIRI() + Symbols.GT);
 
         // prefix for newly created shape expressions
         writer.println(Symbols.PREFIX + Symbols.SPACE + shExSchema.getPrefix() + Symbols.COLON + Symbols.SPACE + Symbols.LT + shExSchema.getBaseIRI() + Symbols.HASH + Symbols.GT);
