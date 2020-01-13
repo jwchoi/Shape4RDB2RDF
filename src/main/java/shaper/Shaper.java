@@ -9,6 +9,9 @@ import janus.database.*;
 import shaper.mapping.rdf.DirectMappingRDFMapper;
 import shaper.mapping.rdf.R2RMLRDFMapper;
 import shaper.mapping.rdf.RDFMapper;
+import shaper.mapping.shacl.DirectMappingShaclMapper;
+import shaper.mapping.shacl.R2RMLShaclMapper;
+import shaper.mapping.shacl.ShaclMapper;
 import shaper.mapping.shex.DirectMappingShExMapper;
 import shaper.mapping.shex.R2RMLShExMapper;
 import shaper.mapping.shex.ShExMapper;
@@ -31,6 +34,7 @@ public class Shaper {
 
 	public static RDFMapper rdfMapper;
 	public static ShExMapper shexMapper;
+	public static ShaclMapper shaclMapper;
 
 	public static void main (String[] args) {
 		if (!readPropertiesFile(SHAPER_PROPERTIES_FILE))
@@ -65,7 +69,7 @@ public class Shaper {
 
 		switch (shapeType) {
 			case "shex": {
-				createShExMapper();
+				if (!createShExMapper()) return false;
 				File file = shexMapper.generateShExFile();
 				try {
 					System.out.println("The ShEx file \"" + file.getCanonicalPath() + "\" is generated.");
@@ -74,11 +78,37 @@ public class Shaper {
 				}
 				break;
 			}
-			case "shacl":
+			case "shacl": {
+				if (!createShaclMapper()) return false;
+				File file = shaclMapper.generateShaclFile();
+				try {
+					System.out.println("The Shacl file \"" + file.getCanonicalPath() + "\" is generated.");
+				} catch (IOException e) {
+					System.out.println("The Shacl file \"" + file.getAbsolutePath() + "\" is generated.");
+				}
 				break;
+			}
 		}
 
 		return true;
+	}
+
+	private static boolean createShaclMapper() {
+		ShaclMapper shaclMapper = null;
+
+		String mappingType = properties.getProperty("mapping.type");
+
+		switch (mappingType) {
+			case "dm": shaclMapper = new DirectMappingShaclMapper(); break;
+			case "r2rml": shaclMapper = new R2RMLShaclMapper(R2RML_PARSER_PROPERTIES_FILE); break;
+		}
+
+		if (shaclMapper != null) {
+			Shaper.shaclMapper = shaclMapper;
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean createShExMapper() {

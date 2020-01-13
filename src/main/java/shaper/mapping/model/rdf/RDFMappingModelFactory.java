@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public class RDFMappingModelFactory {
-	public static RDFMappingModel generateMappingMetaData() {
+	public static RDFMappingModel generateMappingModel() {
 		RDFMappingModel mappingMD = new RDFMappingModel(URI.create(Shaper.baseURI));
 		
 		Set<String> tables = Shaper.dbSchema.getTableNames();

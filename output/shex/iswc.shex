@@ -1,174 +1,741 @@
-BASE <http://foo.example/iswc/>
+BASE <http://example.com/base#>
 PREFIX foo: <http://foo.example/iswc/#>
+PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX conf: <http://ufc.br/rdb2rdfmb/conf/>
+PREFIX vcard: <http://www.w3.org/2001/vcard-rdf/3.0#>
+PREFIX map: <http://example.com/base#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
 
-foo:conferencesConfID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:conferencesName xsd:string MAXLENGTH 100
-foo:conferencesURI xsd:string MAXLENGTH 200
-foo:conferencesDate xsd:string MAXLENGTH 50
-foo:conferencesLocation xsd:string MAXLENGTH 50
-foo:conferencesDatum xsd:dateTime /(^(19[7-9][0-9]|20([0-2][0-9]|3[0-7]))-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((.[0-9]{1,6}){0})$)|(^2038-01-(0[1-9]|1[0-8])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((.[0-9]{1,6}){0})$)|(^2038-01-19T0[0-4]:([0-5][0-9]):([0-5][0-9])((.[0-9]{1,6}){0})$)|(^2038-01-19T05:(0[0-9]|1[0-3]):([0-5][0-9])((.[0-9]{1,6}){0}))|(2038-01-19T05:14:0[0-6]((.[0-9]{1,6}){0})$)|(^2038-01-19T05:14:07((.0{1,6}){0})$)/
 
-foo:conferencesShape IRI
- /^http:\/\/foo\.example\/iswc\/conferences\/ConfID=(.*)$/ {
-  a [<conferences>] ;
-  <conferences#ConfID> @foo:conferencesConfID ;
-  <conferences#Name> @foo:conferencesName? ;
-  <conferences#URI> @foo:conferencesURI? ;
-  <conferences#Date> @foo:conferencesDate? ;
-  <conferences#Location> @foo:conferencesLocation? ;
-  <conferences#Datum> @foo:conferencesDatum? ;
- ^<papers#ref-Conference> @foo:papersShape* 
+foo:DocumentShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  a [ foaf:Document ]  ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? 
 }
 
-foo:organizationsOrgID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:organizationsType xsd:string MAXLENGTH 50
-foo:organizationsName xsd:string MAXLENGTH 200
-foo:organizationsAddress xsd:string MAXLENGTH 65535
-foo:organizationsLocation xsd:string MAXLENGTH 50
-foo:organizationsPostcode xsd:string MAXLENGTH 10
-foo:organizationsCountry xsd:string MAXLENGTH 50
-foo:organizationsURI xsd:string MAXLENGTH 100
-foo:organizationsBelongsto xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:organizationsHomepage xsd:string MAXLENGTH 200
 
-foo:organizationsShape IRI
- /^http:\/\/foo\.example\/iswc\/organizations\/OrgID=(.*)$/ {
-  a [<organizations>] ;
-  <organizations#OrgID> @foo:organizationsOrgID ;
-  <organizations#Type> @foo:organizationsType? ;
-  <organizations#Name> @foo:organizationsName? ;
-  <organizations#Address> @foo:organizationsAddress? ;
-  <organizations#Location> @foo:organizationsLocation? ;
-  <organizations#Postcode> @foo:organizationsPostcode? ;
-  <organizations#Country> @foo:organizationsCountry? ;
-  <organizations#URI> @foo:organizationsURI? ;
-  <organizations#Belongsto> @foo:organizationsBelongsto? ;
-  <organizations#Homepage> @foo:organizationsHomepage? ;
-  <organizations#ref-Belongsto> @foo:organizationsShape? ;
- ^<organizations#ref-Belongsto> @foo:organizationsShape* ;
- ^<rel_person_organization#ref-OrganizationID> @foo:rel_person_organizationShape* 
+foo:DocumentShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  a [ foaf:Document ]  ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? 
 }
 
-foo:papersPaperID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:papersTitle xsd:string MAXLENGTH 200
-foo:papersAbstract xsd:string MAXLENGTH 65535
-foo:papersURI xsd:string MAXLENGTH 200
-foo:papersYear xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:papersConference xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:papersPublish xsd:integer MININCLUSIVE -32768 MAXINCLUSIVE 32767
 
-foo:papersShape IRI
- /^http:\/\/foo\.example\/iswc\/papers\/PaperID=(.*)$/ {
-  a [<papers>] ;
-  <papers#PaperID> @foo:papersPaperID ;
-  <papers#Title> @foo:papersTitle? ;
-  <papers#Abstract> @foo:papersAbstract? ;
-  <papers#URI> @foo:papersURI? ;
-  <papers#Year> @foo:papersYear? ;
-  <papers#Conference> @foo:papersConference? ;
-  <papers#Publish> @foo:papersPublish? ;
-  <papers#ref-Conference> @foo:conferencesShape? ;
- ^<rel_paper_topic#ref-PaperID> @foo:rel_paper_topicShape* ;
- ^<rel_person_paper#ref-PaperID> @foo:rel_person_paperShape* 
+foo:DocumentShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  a [ foaf:Document ]  ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? 
 }
 
-foo:personsPerID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:personsType xsd:string MAXLENGTH 50
-foo:personsFirstName xsd:string MAXLENGTH 100
-foo:personsLastName xsd:string MAXLENGTH 100
-foo:personsAddress xsd:string MAXLENGTH 200
-foo:personsEmail xsd:string MAXLENGTH 100
-foo:personsHomepage xsd:string MAXLENGTH 50
-foo:personsPhone xsd:string MAXLENGTH 200
-foo:personsURI xsd:string MAXLENGTH 200
-foo:personsPhoto xsd:string MAXLENGTH 200
+foo:PersonShape_Obj1 LITERAL /^(.*) (.*)$/
 
-foo:personsShape IRI
- /^http:\/\/foo\.example\/iswc\/persons\/PerID=(.*)$/ {
-  a [<persons>] ;
-  <persons#PerID> @foo:personsPerID ;
-  <persons#Type> @foo:personsType? ;
-  <persons#FirstName> @foo:personsFirstName? ;
-  <persons#LastName> @foo:personsLastName? ;
-  <persons#Address> @foo:personsAddress? ;
-  <persons#Email> @foo:personsEmail? ;
-  <persons#Homepage> @foo:personsHomepage? ;
-  <persons#Phone> @foo:personsPhone? ;
-  <persons#URI> @foo:personsURI? ;
-  <persons#Photo> @foo:personsPhoto? ;
- ^<rel_person_organization#ref-PersonID> @foo:rel_person_organizationShape* ;
- ^<rel_person_paper#ref-PersonID> @foo:rel_person_paperShape* ;
- ^<rel_person_topic#ref-PersonID> @foo:rel_person_topicShape* 
+foo:PersonShape IRI
+ /^http:\/\/data\.example\.com\/person\/(.+)$/ {
+  a [ dc:Person ]  ;
+  foaf:name @foo:PersonShape_Obj1  
 }
 
-foo:rel_paper_topicPaperID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:rel_paper_topicTopicID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:rel_paper_topicRelationType xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
 
-foo:rel_paper_topicShape IRI
- /^http:\/\/foo\.example\/iswc\/rel_paper_topic\/PaperID=(.*);TopicID=(.*)$/ {
-  a [<rel_paper_topic>] ;
-  <rel_paper_topic#PaperID> @foo:rel_paper_topicPaperID ;
-  <rel_paper_topic#TopicID> @foo:rel_paper_topicTopicID ;
-  <rel_paper_topic#RelationType> @foo:rel_paper_topicRelationType? ;
-  <rel_paper_topic#ref-PaperID> @foo:papersShape? ;
-  <rel_paper_topic#ref-TopicID> @foo:topicsShape? 
+foo:OrganizationShape IRI
+ /^http:\/\/data\.example\.com\/organization\/(.+)$/ {
+  a [ conf:Organization ]  ;
+  rdfs:label xsd:string ? 
 }
 
-foo:rel_person_organizationPersonID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:rel_person_organizationOrganizationID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
 
-foo:rel_person_organizationShape IRI
- /^http:\/\/foo\.example\/iswc\/rel_person_organization\/PersonID=(.*);OrganizationID=(.*)$/ {
-  a [<rel_person_organization>] ;
-  <rel_person_organization#PersonID> @foo:rel_person_organizationPersonID ;
-  <rel_person_organization#OrganizationID> @foo:rel_person_organizationOrganizationID ;
-  <rel_person_organization#ref-PersonID> @foo:personsShape? ;
-  <rel_person_organization#ref-OrganizationID> @foo:organizationsShape? 
+foo:ConceptShape IRI
+ /^http:\/\/data\.example\.com\/concept\/(.+)$/ {
+  a [ skos:Concept ]  ;
+  skos:prefLabel xsd:string ? ;
+  (
+     skos:broader @foo:ConceptShape *
+    |
+     skos:broader @foo:ConceptConceptShape *
+  ) ;
+  (
+     skos:broader @foo:ConceptShape *
+    |
+     skos:broader @foo:ConceptConceptShape *
+  ) 
 }
 
-foo:rel_person_paperPersonID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:rel_person_paperPaperID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
 
-foo:rel_person_paperShape IRI
- /^http:\/\/foo\.example\/iswc\/rel_person_paper\/PersonID=(.*);PaperID=(.*)$/ {
-  a [<rel_person_paper>] ;
-  <rel_person_paper#PersonID> @foo:rel_person_paperPersonID ;
-  <rel_person_paper#PaperID> @foo:rel_person_paperPaperID ;
-  <rel_person_paper#ref-PersonID> @foo:personsShape? ;
-  <rel_person_paper#ref-PaperID> @foo:papersShape? 
+foo:PostalAddressShape IRI
+ /^http:\/\/data\.example\.com\/postalAddress\/(.+)$/ {
+  a [ conf:PostalAddress ]  ;
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? 
 }
 
-foo:rel_person_topicPersonID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:rel_person_topicTopicID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
 
-foo:rel_person_topicShape IRI
- /^http:\/\/foo\.example\/iswc\/rel_person_topic\/PersonID=(.*);TopicID=(.*)$/ {
-  a [<rel_person_topic>] ;
-  <rel_person_topic#PersonID> @foo:rel_person_topicPersonID ;
-  <rel_person_topic#TopicID> @foo:rel_person_topicTopicID ;
-  <rel_person_topic#ref-PersonID> @foo:personsShape? ;
-  <rel_person_topic#ref-TopicID> @foo:topicsShape? 
+foo:PostalAddressShape IRI
+ /^http:\/\/data\.example\.com\/postalAddress\/(.+)$/ {
+  a [ conf:PostalAddress ]  ;
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? 
 }
 
-foo:topicsTopicID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
-foo:topicsTopicName xsd:string MAXLENGTH 50
-foo:topicsURI xsd:string MAXLENGTH 200
-foo:topicsParentID xsd:integer MININCLUSIVE -2147483648 MAXINCLUSIVE 2147483647
 
-foo:topicsShape IRI
- /^http:\/\/foo\.example\/iswc\/topics\/TopicID=(.*)$/ {
-  a [<topics>] ;
-  <topics#TopicID> @foo:topicsTopicID ;
-  <topics#TopicName> @foo:topicsTopicName? ;
-  <topics#URI> @foo:topicsURI? ;
-  <topics#ParentID> @foo:topicsParentID? ;
-  <topics#ref-ParentID> @foo:topicsShape? ;
- ^<rel_paper_topic#ref-TopicID> @foo:rel_paper_topicShape* ;
- ^<rel_person_topic#ref-TopicID> @foo:rel_person_topicShape* ;
- ^<topics#ref-ParentID> @foo:topicsShape* 
+foo:PostalAddressShape IRI
+ /^http:\/\/data\.example\.com\/postalAddress\/(.+)$/ {
+  a [ conf:PostalAddress ]  ;
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? 
+}
+
+
+foo:Person_has_affiliationShape IRI
+ /^http:\/\/data\.example\.com\/person\/(.+)$/ {
+  a [ foaf:Person ]  ;
+  conf:has_affiliation @foo:OrganizationShape * 
+}
+
+
+foo:Person_research_interestsShape IRI
+ /^http:\/\/data\.example\.com\/person\/(.+)$/ {
+  a [ foaf:Person ]  ;
+  (
+     conf:research_interests @foo:ConceptShape *
+    |
+     conf:research_interests @foo:ConceptConceptShape *
+  ) 
+}
+
+
+foo:Document_CreatorShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  a [ foaf:Document ]  ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) 
+}
+
+
+foo:Document_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  a [ foaf:Document ]  ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) 
+}
+
+
+foo:ConceptShape IRI
+ /^http:\/\/data\.example\.com\/concept\/(.+)$/ {
+  a [ skos:Concept ]  ;
+  skos:prefLabel xsd:string ? ;
+  (
+     skos:broader @foo:ConceptShape *
+    |
+     skos:broader @foo:ConceptConceptShape *
+  ) ;
+  (
+     skos:broader @foo:ConceptShape *
+    |
+     skos:broader @foo:ConceptConceptShape *
+  ) 
+}
+
+foo:DocumentDocumentShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocumentShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_CreatorShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_CreatorShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_CreatorShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_CreatorShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_CreatorShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_CreatorShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocumentDocument_CreatorShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocumentDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:Document_CreatorDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_CreatorDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_CreatorDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_CreatorDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocument_CreatorDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_CreatorDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocument_CreatorDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:DocumentDocumentDocumentDocument_CreatorDocument_subjectShape IRI
+ /^http:\/\/data\.example\.com\/document\/(.+)$/ {
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  (
+     dc:creator @foo:PersonShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationShape *
+    |
+     dc:creator @foo:PersonPerson_research_interestsShape *
+    |
+     dc:creator @foo:PersonPerson_has_affiliationPerson_research_interestsShape *
+  ) ;
+  (
+     skos:subject @foo:ConceptShape *
+    |
+     skos:subject @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Document ]  
+}
+
+foo:PersonPerson_has_affiliationShape IRI
+ /^http:\/\/data\.example\.com\/person\/(.+)$/ {
+  foaf:name @foo:PersonShape_Obj1  ;
+  conf:has_affiliation @foo:OrganizationShape * ;
+  a [ dc:Person foaf:Person ] {2} 
+}
+
+foo:PersonPerson_research_interestsShape IRI
+ /^http:\/\/data\.example\.com\/person\/(.+)$/ {
+  foaf:name @foo:PersonShape_Obj1  ;
+  (
+     conf:research_interests @foo:ConceptShape *
+    |
+     conf:research_interests @foo:ConceptConceptShape *
+  ) ;
+  a [ dc:Person foaf:Person ] {2} 
+}
+
+foo:Person_has_affiliationPerson_research_interestsShape IRI
+ /^http:\/\/data\.example\.com\/person\/(.+)$/ {
+  conf:has_affiliation @foo:OrganizationShape * ;
+  (
+     conf:research_interests @foo:ConceptShape *
+    |
+     conf:research_interests @foo:ConceptConceptShape *
+  ) ;
+  a [ foaf:Person ]  
+}
+
+foo:PersonPerson_has_affiliationPerson_research_interestsShape IRI
+ /^http:\/\/data\.example\.com\/person\/(.+)$/ {
+  foaf:name @foo:PersonShape_Obj1  ;
+  conf:has_affiliation @foo:OrganizationShape * ;
+  (
+     conf:research_interests @foo:ConceptShape *
+    |
+     conf:research_interests @foo:ConceptConceptShape *
+  ) ;
+  a [ dc:Person foaf:Person ] {2} 
+}
+
+foo:ConceptConceptShape IRI
+ /^http:\/\/data\.example\.com\/concept\/(.+)$/ {
+  skos:prefLabel xsd:string ? ;
+  (
+     skos:broader @foo:ConceptShape *
+    |
+     skos:broader @foo:ConceptConceptShape *
+  ) ;
+  (
+     skos:broader @foo:ConceptShape *
+    |
+     skos:broader @foo:ConceptConceptShape *
+  ) ;
+  skos:prefLabel xsd:string ? ;
+  a [ skos:Concept ]  
+}
+
+foo:PostalAddressPostalAddressShape IRI
+ /^http:\/\/data\.example\.com\/postalAddress\/(.+)$/ {
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  a [ conf:PostalAddress ]  
+}
+
+foo:PostalAddressPostalAddressShape IRI
+ /^http:\/\/data\.example\.com\/postalAddress\/(.+)$/ {
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  a [ conf:PostalAddress ]  
+}
+
+foo:PostalAddressPostalAddressShape IRI
+ /^http:\/\/data\.example\.com\/postalAddress\/(.+)$/ {
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  a [ conf:PostalAddress ]  
+}
+
+foo:PostalAddressPostalAddressPostalAddressShape IRI
+ /^http:\/\/data\.example\.com\/postalAddress\/(.+)$/ {
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  vcard:country xsd:string ? ;
+  vcard:street xsd:string ? ;
+  vcard:pcode xsd:string ? ;
+  a [ conf:PostalAddress ]  
 }
 
