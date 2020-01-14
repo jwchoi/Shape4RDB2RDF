@@ -11,13 +11,13 @@ public class PredicateObjectMap {
 
     private PredicateObjectMap(PredicateMap predicateMap) { this.predicateMap = predicateMap; }
 
-    public PredicateObjectMap(PredicateMap predicateMap, ObjectMap objectMap) {
+    PredicateObjectMap(PredicateMap predicateMap, ObjectMap objectMap) {
         this(predicateMap);
         this.objectMap = Optional.of(objectMap);
         refObjectMap = Optional.empty();
     }
 
-    public PredicateObjectMap(PredicateMap predicateMap, RefObjectMap refObjectMap) {
+    PredicateObjectMap(PredicateMap predicateMap, RefObjectMap refObjectMap) {
         this(predicateMap);
         this.refObjectMap = Optional.of(refObjectMap);
         objectMap = Optional.empty();

@@ -18,6 +18,7 @@ public final class PrefixMap {
 		map.put(URI.create("http://www.w3.org/XML/1998/namespace"), "xml");
 		map.put(URI.create("http://www.w3.org/2000/01/rdf-schema"), "rdfs");
 		map.put(URI.create("http://www.w3.org/2002/07/owl"), "owl");
+		map.put(URI.create("http://www.w3.org/ns/shacl#"), "sh");
 		map.put(URI.create(Shaper.rdfBaseURI), Shaper.prefixForRDFBaseURI);
 		map.put(URI.create(Shaper.shapeBaseURI), Shaper.prefixForShapeBaseURI);
 	}

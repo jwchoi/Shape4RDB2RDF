@@ -8,7 +8,7 @@ public class R2RMLModel {
     private Set<TriplesMap> triplesMaps;
     private List<LogicalTable> logicalTables;
 
-    public R2RMLModel() {
+    R2RMLModel() {
         prefixMap = new HashMap<>();
         logicalTables = new ArrayList<>();
         triplesMaps = new HashSet<>();

@@ -12,7 +12,7 @@ public class TriplesMap {
     private SubjectMap subjectMap;
     private List<PredicateObjectMap> predicateObjectMaps;
 
-    public TriplesMap(URI uri, LogicalTable logicalTable, SubjectMap subjectMap) {
+    TriplesMap(URI uri, LogicalTable logicalTable, SubjectMap subjectMap) {
         this.uri = uri;
         this.logicalTable = logicalTable;
         this.subjectMap = subjectMap;

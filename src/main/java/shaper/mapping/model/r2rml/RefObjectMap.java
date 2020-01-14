@@ -9,7 +9,7 @@ public class RefObjectMap {
     private URI parentTriplesMap;
     private List<JoinCondition> joinConditions;
 
-    public RefObjectMap(URI parentTriplesMap) {
+    RefObjectMap(URI parentTriplesMap) {
         this.parentTriplesMap = parentTriplesMap;
         joinConditions = new ArrayList<>();
     }

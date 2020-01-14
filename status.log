@@ -1,524 +1,524 @@
-2020-01-13 20:06:07,542 INFO  [ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@346d61be: startup date [Mon Jan 13 20:06:07 GMT+09:00 2020]; root of context hierarchy
-2020-01-13 20:06:07,631 INFO  [XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [app-context.xml]
-2020-01-13 20:06:08,038 INFO  [Parser] Initializing.
-2020-01-13 20:06:08,038 INFO  [Database] Establishing source (relational) connection.
-2020-01-13 20:06:08,040 INFO  [Database] Established source (relational) connection.
-2020-01-13 20:06:09,541 INFO  [Parser] Initialising Parser
-2020-01-13 20:06:09,554 INFO  [Parser] Initialized.
-2020-01-13 20:06:09,584 INFO  [Parser] Testing query: <null> with value:  		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	
-2020-01-13 20:06:09,610 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
-2020-01-13 20:06:09,613 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	'
-2020-01-13 20:06:09,616 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:09,616 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
-2020-01-13 20:06:09,616 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:09,627 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
-2020-01-13 20:06:09,628 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS skos_subject', table 'rel_paper_topic', alias 'skos_subject'
-2020-01-13 20:06:09,628 INFO  [Parser] Testing query: <null> with value:  		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	
-2020-01-13 20:06:09,629 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
-2020-01-13 20:06:09,629 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	'
-2020-01-13 20:06:09,630 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:09,630 INFO  [SelectQuery] Adding table with: name 'rel_person_organization', alias 'rel_person_organization'
-2020-01-13 20:06:09,630 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:09,631 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
-2020-01-13 20:06:09,631 INFO  [SelectQuery] Adding field with: name 'rel_person_organization.OrganizationID AS conf_has_affiliation', table 'rel_person_organization', alias 'conf_has_affiliation'
-2020-01-13 20:06:09,632 INFO  [Parser] Testing query: <null> with value:  		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	
-2020-01-13 20:06:09,632 INFO  [Database] Query is ok. Retrieves a dataset with 3 column(s).
-2020-01-13 20:06:09,633 INFO  [SelectQuery] Processing query: ' 		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	'
-2020-01-13 20:06:09,633 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:09,633 INFO  [SelectQuery] Adding field with: name 'TopicID AS ID', table 'topics', alias 'ID'
-2020-01-13 20:06:09,634 INFO  [SelectQuery] Adding field with: name 'TopicName AS skos_prefLabel', table 'topics', alias 'skos_prefLabel'
-2020-01-13 20:06:09,634 INFO  [SelectQuery] Adding field with: name 'ParentID AS skos_broader', table 'topics', alias 'skos_broader'
-2020-01-13 20:06:09,634 INFO  [Parser] Testing query: <null> with value:  		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	
-2020-01-13 20:06:09,635 INFO  [Database] Query is ok. Retrieves a dataset with 5 column(s).
-2020-01-13 20:06:09,635 INFO  [SelectQuery] Processing query: ' 		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	'
-2020-01-13 20:06:09,636 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:09,636 INFO  [SelectQuery] Adding field with: name 'PerID AS ID', table 'persons', alias 'ID'
-2020-01-13 20:06:09,637 INFO  [SelectQuery] Adding field with: name 'Email AS foaf_mbox', table 'persons', alias 'foaf_mbox'
-2020-01-13 20:06:09,637 INFO  [SelectQuery] Adding field with: name 'FirstName AS foaf_name', table 'persons', alias 'foaf_name'
-2020-01-13 20:06:09,637 INFO  [SelectQuery] Adding field with: name 'LastName AS foaf_name2', table 'persons', alias 'tName AS foaf_name2'
-2020-01-13 20:06:09,637 INFO  [SelectQuery] Adding field with: name 'Address', table 'persons', alias 'Address'
-2020-01-13 20:06:09,637 INFO  [Parser] Testing query: <null> with value:  		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	
-2020-01-13 20:06:09,638 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
-2020-01-13 20:06:09,638 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	'
-2020-01-13 20:06:09,639 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:09,639 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
-2020-01-13 20:06:09,639 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:09,640 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
-2020-01-13 20:06:09,640 INFO  [SelectQuery] Adding field with: name 'rel_person_paper.PersonID AS dc_creator', table 'rel_person_paper', alias 'dc_creator'
-2020-01-13 20:06:09,640 INFO  [Parser] Testing query: <null> with value:  		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	
-2020-01-13 20:06:09,641 INFO  [Database] Query is ok. Retrieves a dataset with 7 column(s).
-2020-01-13 20:06:09,641 INFO  [SelectQuery] Processing query: ' 		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	'
-2020-01-13 20:06:09,641 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:09,642 INFO  [SelectQuery] Adding field with: name 'OrgID AS ID', table 'organizations', alias 'ID'
-2020-01-13 20:06:09,643 INFO  [SelectQuery] Adding field with: name 'Homepage AS foaf_homepage', table 'organizations', alias 'foaf_homepage'
-2020-01-13 20:06:09,643 INFO  [SelectQuery] Adding field with: name 'Name AS rdfs_label', table 'organizations', alias 'rdfs_label'
-2020-01-13 20:06:09,643 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_ADR', table 'organizations', alias 'vcard_ADR'
-2020-01-13 20:06:09,643 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_ADR2', table 'organizations', alias 'vcard_ADR2'
-2020-01-13 20:06:09,643 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_ADR3', table 'organizations', alias 'vcard_ADR3'
-2020-01-13 20:06:09,643 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_ADR4', table 'organizations', alias 'vcard_ADR4'
-2020-01-13 20:06:09,644 INFO  [Parser] Testing query: <null> with value:  		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	
-2020-01-13 20:06:09,645 INFO  [Database] Query is ok. Retrieves a dataset with 4 column(s).
-2020-01-13 20:06:09,645 INFO  [SelectQuery] Processing query: ' 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	'
-2020-01-13 20:06:09,654 INFO  [SelectQuery] Adding table with: name 'conferences.ConfID=papers.conference) AS conf_conference', alias 'conf_conference'
-2020-01-13 20:06:09,654 INFO  [SelectQuery] Adding field with: name 'PaperID AS ID', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'ID'
-2020-01-13 20:06:09,655 INFO  [SelectQuery] Adding field with: name 'Title AS dc_title', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_title'
-2020-01-13 20:06:09,655 INFO  [SelectQuery] Adding field with: name 'Year AS dc_date', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_date'
-2020-01-13 20:06:09,655 INFO  [SelectQuery] Adding field with: name '(SELECT Name || ', ' || location', table 'conferences.ConfID=papers.conference) AS conf_conference', alias '(SELECT Name || ', ' || location'
-2020-01-13 20:06:09,656 INFO  [Parser] Testing query: <null> with value:  		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	
-2020-01-13 20:06:09,657 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
-2020-01-13 20:06:09,657 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	'
-2020-01-13 20:06:09,657 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:09,657 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
-2020-01-13 20:06:09,658 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:09,658 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
-2020-01-13 20:06:09,658 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:09,658 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
-2020-01-13 20:06:09,658 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS conf_research_interests', table 'rel_paper_topic', alias 'conf_research_interests'
-2020-01-13 20:06:09,659 INFO  [Parser] Testing query: <null> with value:  		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	
-2020-01-13 20:06:09,660 INFO  [Database] Query is ok. Retrieves a dataset with 5 column(s).
-2020-01-13 20:06:09,660 INFO  [SelectQuery] Processing query: ' 		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	'
-2020-01-13 20:06:09,660 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:09,661 INFO  [SelectQuery] Adding field with: name 'Address || ' ' || Postcode || ' ' || Country AS ID', table 'organizations', alias 'ID'
-2020-01-13 20:06:09,661 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_country', table 'organizations', alias 'vcard_country'
-2020-01-13 20:06:09,661 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_street', table 'organizations', alias 'vcard_street'
-2020-01-13 20:06:09,661 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_locality', table 'organizations', alias 'vcard_locality'
-2020-01-13 20:06:09,661 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_pcode', table 'organizations', alias 'vcard_pcode'
-2020-01-13 20:06:09,662 INFO  [Parser] Mapping document has 9 logical table views.
-2020-01-13 20:06:09,664 INFO  [Parser] Found logical table: <http://data.example.com/#Document>
-2020-01-13 20:06:09,665 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,004 INFO  [SelectQuery] Processing query: ' 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	'
-2020-01-13 20:06:10,004 INFO  [SelectQuery] Adding table with: name 'conferences.ConfID=papers.conference) AS conf_conference', alias 'conf_conference'
-2020-01-13 20:06:10,004 INFO  [SelectQuery] Adding field with: name 'PaperID AS ID', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'ID'
-2020-01-13 20:06:10,004 INFO  [SelectQuery] Adding field with: name 'Title AS dc_title', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_title'
-2020-01-13 20:06:10,005 INFO  [SelectQuery] Adding field with: name 'Year AS dc_date', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_date'
-2020-01-13 20:06:10,005 INFO  [SelectQuery] Adding field with: name '(SELECT Name || ', ' || location', table 'conferences.ConfID=papers.conference) AS conf_conference', alias '(SELECT Name || ', ' || location'
-2020-01-13 20:06:10,006 INFO  [MappingDocument] Searching for query  		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	
-2020-01-13 20:06:10,007 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,007 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document>
-2020-01-13 20:06:10,007 INFO  [Parser] Found logical table: <http://data.example.com/#Concept>
-2020-01-13 20:06:10,008 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,015 INFO  [SelectQuery] Processing query: ' 		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	'
-2020-01-13 20:06:10,015 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,015 INFO  [SelectQuery] Adding field with: name 'TopicID AS ID', table 'topics', alias 'ID'
-2020-01-13 20:06:10,016 INFO  [SelectQuery] Adding field with: name 'TopicName AS skos_prefLabel', table 'topics', alias 'skos_prefLabel'
-2020-01-13 20:06:10,016 INFO  [SelectQuery] Adding field with: name 'ParentID AS skos_broader', table 'topics', alias 'skos_broader'
-2020-01-13 20:06:10,016 INFO  [MappingDocument] Searching for query  		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	
-2020-01-13 20:06:10,016 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,016 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Concept>
-2020-01-13 20:06:10,016 INFO  [Parser] Found logical table: <http://data.example.com/#Document_subject>
-2020-01-13 20:06:10,017 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,027 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	'
-2020-01-13 20:06:10,028 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,028 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
-2020-01-13 20:06:10,028 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,028 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
-2020-01-13 20:06:10,028 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS skos_subject', table 'rel_paper_topic', alias 'skos_subject'
-2020-01-13 20:06:10,028 INFO  [MappingDocument] Searching for query  		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	
-2020-01-13 20:06:10,029 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,029 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document_subject>
-2020-01-13 20:06:10,029 INFO  [Parser] Found logical table: <http://data.example.com/#Person_has_affiliation>
-2020-01-13 20:06:10,029 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,037 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	'
-2020-01-13 20:06:10,037 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,037 INFO  [SelectQuery] Adding table with: name 'rel_person_organization', alias 'rel_person_organization'
-2020-01-13 20:06:10,037 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,038 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
-2020-01-13 20:06:10,038 INFO  [SelectQuery] Adding field with: name 'rel_person_organization.OrganizationID AS conf_has_affiliation', table 'rel_person_organization', alias 'conf_has_affiliation'
-2020-01-13 20:06:10,038 INFO  [MappingDocument] Searching for query  		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	
-2020-01-13 20:06:10,038 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,039 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person_has_affiliation>
-2020-01-13 20:06:10,039 INFO  [Parser] Found logical table: <http://data.example.com/#PostalAddress>
-2020-01-13 20:06:10,039 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,045 INFO  [SelectQuery] Processing query: ' 		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	'
-2020-01-13 20:06:10,046 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,046 INFO  [SelectQuery] Adding field with: name 'Address || ' ' || Postcode || ' ' || Country AS ID', table 'organizations', alias 'ID'
-2020-01-13 20:06:10,046 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_country', table 'organizations', alias 'vcard_country'
-2020-01-13 20:06:10,047 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_street', table 'organizations', alias 'vcard_street'
-2020-01-13 20:06:10,047 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_locality', table 'organizations', alias 'vcard_locality'
-2020-01-13 20:06:10,047 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_pcode', table 'organizations', alias 'vcard_pcode'
-2020-01-13 20:06:10,047 INFO  [MappingDocument] Searching for query  		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	
-2020-01-13 20:06:10,047 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,047 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#PostalAddress>
-2020-01-13 20:06:10,047 INFO  [Parser] Found logical table: <http://data.example.com/#Person_research_interests>
-2020-01-13 20:06:10,047 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,053 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	'
-2020-01-13 20:06:10,054 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,054 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
-2020-01-13 20:06:10,054 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,054 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
-2020-01-13 20:06:10,054 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,054 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
-2020-01-13 20:06:10,055 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS conf_research_interests', table 'rel_paper_topic', alias 'conf_research_interests'
-2020-01-13 20:06:10,055 INFO  [MappingDocument] Searching for query  		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	
-2020-01-13 20:06:10,055 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,055 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person_research_interests>
-2020-01-13 20:06:10,055 INFO  [Parser] Found logical table: <http://data.example.com/#Organization>
-2020-01-13 20:06:10,055 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,062 INFO  [SelectQuery] Processing query: ' 		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	'
-2020-01-13 20:06:10,062 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,063 INFO  [SelectQuery] Adding field with: name 'OrgID AS ID', table 'organizations', alias 'ID'
-2020-01-13 20:06:10,063 INFO  [SelectQuery] Adding field with: name 'Homepage AS foaf_homepage', table 'organizations', alias 'foaf_homepage'
-2020-01-13 20:06:10,063 INFO  [SelectQuery] Adding field with: name 'Name AS rdfs_label', table 'organizations', alias 'rdfs_label'
-2020-01-13 20:06:10,063 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_ADR', table 'organizations', alias 'vcard_ADR'
-2020-01-13 20:06:10,063 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_ADR2', table 'organizations', alias 'vcard_ADR2'
-2020-01-13 20:06:10,063 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_ADR3', table 'organizations', alias 'vcard_ADR3'
-2020-01-13 20:06:10,063 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_ADR4', table 'organizations', alias 'vcard_ADR4'
-2020-01-13 20:06:10,063 INFO  [MappingDocument] Searching for query  		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	
-2020-01-13 20:06:10,064 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,064 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Organization>
-2020-01-13 20:06:10,064 INFO  [Parser] Found logical table: <http://data.example.com/#Document_Creator>
-2020-01-13 20:06:10,064 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,069 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	'
-2020-01-13 20:06:10,070 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,070 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
-2020-01-13 20:06:10,070 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,070 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
-2020-01-13 20:06:10,070 INFO  [SelectQuery] Adding field with: name 'rel_person_paper.PersonID AS dc_creator', table 'rel_person_paper', alias 'dc_creator'
-2020-01-13 20:06:10,070 INFO  [MappingDocument] Searching for query  		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	
-2020-01-13 20:06:10,070 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,071 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document_Creator>
-2020-01-13 20:06:10,071 INFO  [Parser] Found logical table: <http://data.example.com/#Person>
-2020-01-13 20:06:10,071 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,076 INFO  [SelectQuery] Processing query: ' 		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	'
-2020-01-13 20:06:10,076 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,077 INFO  [SelectQuery] Adding field with: name 'PerID AS ID', table 'persons', alias 'ID'
-2020-01-13 20:06:10,077 INFO  [SelectQuery] Adding field with: name 'Email AS foaf_mbox', table 'persons', alias 'foaf_mbox'
-2020-01-13 20:06:10,077 INFO  [SelectQuery] Adding field with: name 'FirstName AS foaf_name', table 'persons', alias 'foaf_name'
-2020-01-13 20:06:10,077 INFO  [SelectQuery] Adding field with: name 'LastName AS foaf_name2', table 'persons', alias 'tName AS foaf_name2'
-2020-01-13 20:06:10,077 INFO  [SelectQuery] Adding field with: name 'Address', table 'persons', alias 'Address'
-2020-01-13 20:06:10,077 INFO  [MappingDocument] Searching for query  		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	
-2020-01-13 20:06:10,077 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,077 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person>
-2020-01-13 20:06:10,078 INFO  [Parser] Mapping document has 9 logical table mappings.
-2020-01-13 20:06:10,079 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document>
-2020-01-13 20:06:10,079 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID"}
-2020-01-13 20:06:10,083 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document
-2020-01-13 20:06:10,083 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document>
-2020-01-13 20:06:10,085 INFO  [Parser] Added object column and template from column: dc_title
-2020-01-13 20:06:10,085 INFO  [Parser] Added object column and template from column: dc_date
-2020-01-13 20:06:10,086 INFO  [Parser] Added object column and template from column: conf_conference
-2020-01-13 20:06:10,086 INFO  [Parser] Processing subject map for: <http://data.example.com/#Concept>
-2020-01-13 20:06:10,086 INFO  [Parser] Processing literal subject template: http://data.example.com/concept/{"ID"}
-2020-01-13 20:06:10,088 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Concept
-2020-01-13 20:06:10,088 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Concept>
-2020-01-13 20:06:10,089 INFO  [Parser] Added object column and template from column: skos_prefLabel
-2020-01-13 20:06:10,090 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
-2020-01-13 20:06:10,091 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,092 INFO  [Parser] Found rr:child skos_broader
-2020-01-13 20:06:10,092 INFO  [Parser] Found rr:parent TopicID
-2020-01-13 20:06:10,093 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document_subject>
-2020-01-13 20:06:10,093 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID_foaf_Document"}
-2020-01-13 20:06:10,093 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document_subject
-2020-01-13 20:06:10,094 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document_subject>
-2020-01-13 20:06:10,094 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
-2020-01-13 20:06:10,094 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,095 INFO  [Parser] Found rr:child skos_subject
-2020-01-13 20:06:10,095 INFO  [Parser] Found rr:parent TopicID
-2020-01-13 20:06:10,095 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person_has_affiliation>
-2020-01-13 20:06:10,095 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID_foaf_Person"}
-2020-01-13 20:06:10,096 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person_has_affiliation
-2020-01-13 20:06:10,096 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person_has_affiliation>
-2020-01-13 20:06:10,111 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Organization
-2020-01-13 20:06:10,112 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,112 INFO  [Parser] Found rr:child conf_has_affiliation
-2020-01-13 20:06:10,112 INFO  [Parser] Found rr:parent OrgID
-2020-01-13 20:06:10,112 INFO  [Parser] Processing subject map for: <http://data.example.com/#PostalAddress>
-2020-01-13 20:06:10,113 INFO  [Parser] Processing literal subject template: http://data.example.com/postalAddress/{"ID"}
-2020-01-13 20:06:10,113 INFO  [Parser] Logical table mapping uri is http://data.example.com/#PostalAddress
-2020-01-13 20:06:10,113 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#PostalAddress>
-2020-01-13 20:06:10,114 INFO  [Parser] Added object column and template from column: vcard_pcode
-2020-01-13 20:06:10,114 INFO  [Parser] Added object column and template from column: vcard_street
-2020-01-13 20:06:10,115 INFO  [Parser] Added object column and template from column: vcard_country
-2020-01-13 20:06:10,115 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person_research_interests>
-2020-01-13 20:06:10,116 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID_foaf_Person"}
-2020-01-13 20:06:10,116 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person_research_interests
-2020-01-13 20:06:10,116 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person_research_interests>
-2020-01-13 20:06:10,117 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
-2020-01-13 20:06:10,117 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,117 INFO  [Parser] Found rr:child conf_research_interests
-2020-01-13 20:06:10,117 INFO  [Parser] Found rr:parent TopicID
-2020-01-13 20:06:10,117 INFO  [Parser] Processing subject map for: <http://data.example.com/#Organization>
-2020-01-13 20:06:10,117 INFO  [Parser] Processing literal subject template: http://data.example.com/organization/{"ID"}
-2020-01-13 20:06:10,118 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Organization
-2020-01-13 20:06:10,118 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Organization>
-2020-01-13 20:06:10,118 INFO  [Parser] Added object column and template from column: rdfs_label
-2020-01-13 20:06:10,118 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document_Creator>
-2020-01-13 20:06:10,119 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID_foaf_Document"}
-2020-01-13 20:06:10,119 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document_Creator
-2020-01-13 20:06:10,119 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document_Creator>
-2020-01-13 20:06:10,120 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Person
-2020-01-13 20:06:10,120 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,120 INFO  [Parser] Found rr:child dc_creator
-2020-01-13 20:06:10,120 INFO  [Parser] Found rr:parent PerID
-2020-01-13 20:06:10,120 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person>
-2020-01-13 20:06:10,120 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID"}
-2020-01-13 20:06:10,120 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person
-2020-01-13 20:06:10,121 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person>
-2020-01-13 20:06:10,122 INFO  [Parser] Processing object map template: {"foaf_name"} {"foaf_name2"}
-2020-01-13 20:06:10,122 INFO  [Parser] Found rr:termType Literal
-2020-01-13 20:06:10,726 INFO  [Generator] Finished generating jena model in memory.
-2020-01-13 20:06:10,735 INFO  [Generator] Full run: Writing model to output/rdf/dump.rdf. Model has 154 statements.
-2020-01-13 20:06:10,780 INFO  [Generator] Writing model to disk took 39 milliseconds.
-2020-01-13 20:06:10,780 INFO  [Generator] Not Writing reified model.
-2020-01-13 20:06:10,781 INFO  [Generator] Logging results to C:\Users\jwchoi\IdeaProjects\shaper\status.rdf
-2020-01-13 20:06:10,785 INFO  [Generator] Logging took 3 milliseconds.
-2020-01-13 20:06:10,785 INFO  [ClassPathXmlApplicationContext] Closing org.springframework.context.support.ClassPathXmlApplicationContext@346d61be: startup date [Mon Jan 13 20:06:07 GMT+09:00 2020]; root of context hierarchy
-2020-01-13 20:06:10,790 INFO  [ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@29f0802c: startup date [Mon Jan 13 20:06:10 GMT+09:00 2020]; root of context hierarchy
-2020-01-13 20:06:10,791 INFO  [XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [app-context.xml]
-2020-01-13 20:06:10,841 INFO  [Parser] Initializing.
-2020-01-13 20:06:10,841 INFO  [Database] Establishing source (relational) connection.
-2020-01-13 20:06:10,845 INFO  [Database] Established source (relational) connection.
-2020-01-13 20:06:10,862 INFO  [Parser] Initialising Parser
-2020-01-13 20:06:10,862 INFO  [Parser] Initialized.
-2020-01-13 20:06:10,863 INFO  [Parser] Testing query: <null> with value:  		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	
-2020-01-13 20:06:10,863 INFO  [Database] Query is ok. Retrieves a dataset with 7 column(s).
-2020-01-13 20:06:10,864 INFO  [SelectQuery] Processing query: ' 		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	'
-2020-01-13 20:06:10,864 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,864 INFO  [SelectQuery] Adding field with: name 'OrgID AS ID', table 'organizations', alias 'ID'
-2020-01-13 20:06:10,864 INFO  [SelectQuery] Adding field with: name 'Homepage AS foaf_homepage', table 'organizations', alias 'foaf_homepage'
-2020-01-13 20:06:10,864 INFO  [SelectQuery] Adding field with: name 'Name AS rdfs_label', table 'organizations', alias 'rdfs_label'
-2020-01-13 20:06:10,864 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_ADR', table 'organizations', alias 'vcard_ADR'
-2020-01-13 20:06:10,864 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_ADR2', table 'organizations', alias 'vcard_ADR2'
-2020-01-13 20:06:10,864 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_ADR3', table 'organizations', alias 'vcard_ADR3'
-2020-01-13 20:06:10,865 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_ADR4', table 'organizations', alias 'vcard_ADR4'
-2020-01-13 20:06:10,865 INFO  [Parser] Testing query: <null> with value:  		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	
-2020-01-13 20:06:10,866 INFO  [Database] Query is ok. Retrieves a dataset with 4 column(s).
-2020-01-13 20:06:10,866 INFO  [SelectQuery] Processing query: ' 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	'
-2020-01-13 20:06:10,866 INFO  [SelectQuery] Adding table with: name 'conferences.ConfID=papers.conference) AS conf_conference', alias 'conf_conference'
-2020-01-13 20:06:10,866 INFO  [SelectQuery] Adding field with: name 'PaperID AS ID', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'ID'
-2020-01-13 20:06:10,867 INFO  [SelectQuery] Adding field with: name 'Title AS dc_title', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_title'
-2020-01-13 20:06:10,867 INFO  [SelectQuery] Adding field with: name 'Year AS dc_date', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_date'
-2020-01-13 20:06:10,867 INFO  [SelectQuery] Adding field with: name '(SELECT Name || ', ' || location', table 'conferences.ConfID=papers.conference) AS conf_conference', alias '(SELECT Name || ', ' || location'
-2020-01-13 20:06:10,867 INFO  [Parser] Testing query: <null> with value:  		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	
-2020-01-13 20:06:10,868 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
-2020-01-13 20:06:10,868 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	'
-2020-01-13 20:06:10,868 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,869 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
-2020-01-13 20:06:10,869 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,869 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
-2020-01-13 20:06:10,869 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS skos_subject', table 'rel_paper_topic', alias 'skos_subject'
-2020-01-13 20:06:10,869 INFO  [Parser] Testing query: <null> with value:  		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	
-2020-01-13 20:06:10,870 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
-2020-01-13 20:06:10,870 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	'
-2020-01-13 20:06:10,871 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,871 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
-2020-01-13 20:06:10,871 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,871 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
-2020-01-13 20:06:10,871 INFO  [SelectQuery] Adding field with: name 'rel_person_paper.PersonID AS dc_creator', table 'rel_person_paper', alias 'dc_creator'
-2020-01-13 20:06:10,871 INFO  [Parser] Testing query: <null> with value:  		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	
-2020-01-13 20:06:10,872 INFO  [Database] Query is ok. Retrieves a dataset with 5 column(s).
-2020-01-13 20:06:10,872 INFO  [SelectQuery] Processing query: ' 		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	'
-2020-01-13 20:06:10,872 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,873 INFO  [SelectQuery] Adding field with: name 'Address || ' ' || Postcode || ' ' || Country AS ID', table 'organizations', alias 'ID'
-2020-01-13 20:06:10,873 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_country', table 'organizations', alias 'vcard_country'
-2020-01-13 20:06:10,873 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_street', table 'organizations', alias 'vcard_street'
-2020-01-13 20:06:10,873 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_locality', table 'organizations', alias 'vcard_locality'
-2020-01-13 20:06:10,873 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_pcode', table 'organizations', alias 'vcard_pcode'
-2020-01-13 20:06:10,873 INFO  [Parser] Testing query: <null> with value:  		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	
-2020-01-13 20:06:10,874 INFO  [Database] Query is ok. Retrieves a dataset with 3 column(s).
-2020-01-13 20:06:10,874 INFO  [SelectQuery] Processing query: ' 		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	'
-2020-01-13 20:06:10,874 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,874 INFO  [SelectQuery] Adding field with: name 'TopicID AS ID', table 'topics', alias 'ID'
-2020-01-13 20:06:10,874 INFO  [SelectQuery] Adding field with: name 'TopicName AS skos_prefLabel', table 'topics', alias 'skos_prefLabel'
-2020-01-13 20:06:10,875 INFO  [SelectQuery] Adding field with: name 'ParentID AS skos_broader', table 'topics', alias 'skos_broader'
-2020-01-13 20:06:10,875 INFO  [Parser] Testing query: <null> with value:  		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	
-2020-01-13 20:06:10,875 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
-2020-01-13 20:06:10,876 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	'
-2020-01-13 20:06:10,876 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,876 INFO  [SelectQuery] Adding table with: name 'rel_person_organization', alias 'rel_person_organization'
-2020-01-13 20:06:10,876 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,876 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
-2020-01-13 20:06:10,876 INFO  [SelectQuery] Adding field with: name 'rel_person_organization.OrganizationID AS conf_has_affiliation', table 'rel_person_organization', alias 'conf_has_affiliation'
-2020-01-13 20:06:10,876 INFO  [Parser] Testing query: <null> with value:  		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	
-2020-01-13 20:06:10,877 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
-2020-01-13 20:06:10,877 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	'
-2020-01-13 20:06:10,877 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,877 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
-2020-01-13 20:06:10,878 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,878 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
-2020-01-13 20:06:10,878 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,878 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
-2020-01-13 20:06:10,878 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS conf_research_interests', table 'rel_paper_topic', alias 'conf_research_interests'
-2020-01-13 20:06:10,878 INFO  [Parser] Testing query: <null> with value:  		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	
-2020-01-13 20:06:10,879 INFO  [Database] Query is ok. Retrieves a dataset with 5 column(s).
-2020-01-13 20:06:10,879 INFO  [SelectQuery] Processing query: ' 		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	'
-2020-01-13 20:06:10,879 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,879 INFO  [SelectQuery] Adding field with: name 'PerID AS ID', table 'persons', alias 'ID'
-2020-01-13 20:06:10,879 INFO  [SelectQuery] Adding field with: name 'Email AS foaf_mbox', table 'persons', alias 'foaf_mbox'
-2020-01-13 20:06:10,879 INFO  [SelectQuery] Adding field with: name 'FirstName AS foaf_name', table 'persons', alias 'foaf_name'
-2020-01-13 20:06:10,880 INFO  [SelectQuery] Adding field with: name 'LastName AS foaf_name2', table 'persons', alias 'tName AS foaf_name2'
-2020-01-13 20:06:10,880 INFO  [SelectQuery] Adding field with: name 'Address', table 'persons', alias 'Address'
-2020-01-13 20:06:10,880 INFO  [Parser] Mapping document has 9 logical table views.
-2020-01-13 20:06:10,880 INFO  [Parser] Found logical table: <http://data.example.com/#Document>
-2020-01-13 20:06:10,880 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,884 INFO  [SelectQuery] Processing query: ' 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	'
-2020-01-13 20:06:10,885 INFO  [SelectQuery] Adding table with: name 'conferences.ConfID=papers.conference) AS conf_conference', alias 'conf_conference'
-2020-01-13 20:06:10,885 INFO  [SelectQuery] Adding field with: name 'PaperID AS ID', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'ID'
-2020-01-13 20:06:10,885 INFO  [SelectQuery] Adding field with: name 'Title AS dc_title', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_title'
-2020-01-13 20:06:10,885 INFO  [SelectQuery] Adding field with: name 'Year AS dc_date', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_date'
-2020-01-13 20:06:10,885 INFO  [SelectQuery] Adding field with: name '(SELECT Name || ', ' || location', table 'conferences.ConfID=papers.conference) AS conf_conference', alias '(SELECT Name || ', ' || location'
-2020-01-13 20:06:10,885 INFO  [MappingDocument] Searching for query  		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	
-2020-01-13 20:06:10,885 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,885 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document>
-2020-01-13 20:06:10,885 INFO  [Parser] Found logical table: <http://data.example.com/#Concept>
-2020-01-13 20:06:10,885 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,889 INFO  [SelectQuery] Processing query: ' 		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	'
-2020-01-13 20:06:10,890 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,890 INFO  [SelectQuery] Adding field with: name 'TopicID AS ID', table 'topics', alias 'ID'
-2020-01-13 20:06:10,890 INFO  [SelectQuery] Adding field with: name 'TopicName AS skos_prefLabel', table 'topics', alias 'skos_prefLabel'
-2020-01-13 20:06:10,890 INFO  [SelectQuery] Adding field with: name 'ParentID AS skos_broader', table 'topics', alias 'skos_broader'
-2020-01-13 20:06:10,890 INFO  [MappingDocument] Searching for query  		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	
-2020-01-13 20:06:10,890 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,890 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Concept>
-2020-01-13 20:06:10,890 INFO  [Parser] Found logical table: <http://data.example.com/#Document_subject>
-2020-01-13 20:06:10,890 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,894 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	'
-2020-01-13 20:06:10,895 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,895 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
-2020-01-13 20:06:10,895 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,895 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
-2020-01-13 20:06:10,895 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS skos_subject', table 'rel_paper_topic', alias 'skos_subject'
-2020-01-13 20:06:10,895 INFO  [MappingDocument] Searching for query  		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	
-2020-01-13 20:06:10,895 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,895 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document_subject>
-2020-01-13 20:06:10,896 INFO  [Parser] Found logical table: <http://data.example.com/#Person_has_affiliation>
-2020-01-13 20:06:10,896 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,901 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	'
-2020-01-13 20:06:10,901 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,901 INFO  [SelectQuery] Adding table with: name 'rel_person_organization', alias 'rel_person_organization'
-2020-01-13 20:06:10,902 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,902 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
-2020-01-13 20:06:10,902 INFO  [SelectQuery] Adding field with: name 'rel_person_organization.OrganizationID AS conf_has_affiliation', table 'rel_person_organization', alias 'conf_has_affiliation'
-2020-01-13 20:06:10,902 INFO  [MappingDocument] Searching for query  		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	
-2020-01-13 20:06:10,902 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,902 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person_has_affiliation>
-2020-01-13 20:06:10,902 INFO  [Parser] Found logical table: <http://data.example.com/#PostalAddress>
-2020-01-13 20:06:10,902 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,906 INFO  [SelectQuery] Processing query: ' 		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	'
-2020-01-13 20:06:10,906 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,906 INFO  [SelectQuery] Adding field with: name 'Address || ' ' || Postcode || ' ' || Country AS ID', table 'organizations', alias 'ID'
-2020-01-13 20:06:10,906 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_country', table 'organizations', alias 'vcard_country'
-2020-01-13 20:06:10,906 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_street', table 'organizations', alias 'vcard_street'
-2020-01-13 20:06:10,906 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_locality', table 'organizations', alias 'vcard_locality'
-2020-01-13 20:06:10,906 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_pcode', table 'organizations', alias 'vcard_pcode'
-2020-01-13 20:06:10,906 INFO  [MappingDocument] Searching for query  		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	
-2020-01-13 20:06:10,907 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,907 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#PostalAddress>
-2020-01-13 20:06:10,907 INFO  [Parser] Found logical table: <http://data.example.com/#Person_research_interests>
-2020-01-13 20:06:10,907 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,911 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	'
-2020-01-13 20:06:10,911 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,911 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
-2020-01-13 20:06:10,911 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,911 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
-2020-01-13 20:06:10,911 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
-2020-01-13 20:06:10,912 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
-2020-01-13 20:06:10,912 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS conf_research_interests', table 'rel_paper_topic', alias 'conf_research_interests'
-2020-01-13 20:06:10,912 INFO  [MappingDocument] Searching for query  		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	
-2020-01-13 20:06:10,912 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,912 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person_research_interests>
-2020-01-13 20:06:10,912 INFO  [Parser] Found logical table: <http://data.example.com/#Organization>
-2020-01-13 20:06:10,912 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,916 INFO  [SelectQuery] Processing query: ' 		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	'
-2020-01-13 20:06:10,917 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
-2020-01-13 20:06:10,917 INFO  [SelectQuery] Adding field with: name 'OrgID AS ID', table 'organizations', alias 'ID'
-2020-01-13 20:06:10,917 INFO  [SelectQuery] Adding field with: name 'Homepage AS foaf_homepage', table 'organizations', alias 'foaf_homepage'
-2020-01-13 20:06:10,917 INFO  [SelectQuery] Adding field with: name 'Name AS rdfs_label', table 'organizations', alias 'rdfs_label'
-2020-01-13 20:06:10,917 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_ADR', table 'organizations', alias 'vcard_ADR'
-2020-01-13 20:06:10,917 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_ADR2', table 'organizations', alias 'vcard_ADR2'
-2020-01-13 20:06:10,917 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_ADR3', table 'organizations', alias 'vcard_ADR3'
-2020-01-13 20:06:10,918 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_ADR4', table 'organizations', alias 'vcard_ADR4'
-2020-01-13 20:06:10,918 INFO  [MappingDocument] Searching for query  		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	
-2020-01-13 20:06:10,918 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,918 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Organization>
-2020-01-13 20:06:10,918 INFO  [Parser] Found logical table: <http://data.example.com/#Document_Creator>
-2020-01-13 20:06:10,918 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,921 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	'
-2020-01-13 20:06:10,921 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
-2020-01-13 20:06:10,922 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
-2020-01-13 20:06:10,922 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,922 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
-2020-01-13 20:06:10,922 INFO  [SelectQuery] Adding field with: name 'rel_person_paper.PersonID AS dc_creator', table 'rel_person_paper', alias 'dc_creator'
-2020-01-13 20:06:10,922 INFO  [MappingDocument] Searching for query  		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	
-2020-01-13 20:06:10,922 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,922 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document_Creator>
-2020-01-13 20:06:10,922 INFO  [Parser] Found logical table: <http://data.example.com/#Person>
-2020-01-13 20:06:10,923 INFO  [Parser] Looking up logical table view null
-2020-01-13 20:06:10,926 INFO  [SelectQuery] Processing query: ' 		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	'
-2020-01-13 20:06:10,926 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
-2020-01-13 20:06:10,926 INFO  [SelectQuery] Adding field with: name 'PerID AS ID', table 'persons', alias 'ID'
-2020-01-13 20:06:10,926 INFO  [SelectQuery] Adding field with: name 'Email AS foaf_mbox', table 'persons', alias 'foaf_mbox'
-2020-01-13 20:06:10,926 INFO  [SelectQuery] Adding field with: name 'FirstName AS foaf_name', table 'persons', alias 'foaf_name'
-2020-01-13 20:06:10,926 INFO  [SelectQuery] Adding field with: name 'LastName AS foaf_name2', table 'persons', alias 'tName AS foaf_name2'
-2020-01-13 20:06:10,926 INFO  [SelectQuery] Adding field with: name 'Address', table 'persons', alias 'Address'
-2020-01-13 20:06:10,926 INFO  [MappingDocument] Searching for query  		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	
-2020-01-13 20:06:10,927 INFO  [MappingDocument] Found match
-2020-01-13 20:06:10,927 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person>
-2020-01-13 20:06:10,927 INFO  [Parser] Mapping document has 9 logical table mappings.
-2020-01-13 20:06:10,927 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document>
-2020-01-13 20:06:10,927 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID"}
-2020-01-13 20:06:10,927 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document
-2020-01-13 20:06:10,927 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document>
-2020-01-13 20:06:10,928 INFO  [Parser] Added object column and template from column: dc_title
-2020-01-13 20:06:10,928 INFO  [Parser] Added object column and template from column: conf_conference
-2020-01-13 20:06:10,928 INFO  [Parser] Added object column and template from column: dc_date
-2020-01-13 20:06:10,928 INFO  [Parser] Processing subject map for: <http://data.example.com/#Concept>
-2020-01-13 20:06:10,928 INFO  [Parser] Processing literal subject template: http://data.example.com/concept/{"ID"}
-2020-01-13 20:06:10,928 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Concept
-2020-01-13 20:06:10,928 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Concept>
-2020-01-13 20:06:10,929 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
-2020-01-13 20:06:10,929 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,929 INFO  [Parser] Found rr:child skos_broader
-2020-01-13 20:06:10,929 INFO  [Parser] Found rr:parent TopicID
-2020-01-13 20:06:10,929 INFO  [Parser] Added object column and template from column: skos_prefLabel
-2020-01-13 20:06:10,930 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document_subject>
-2020-01-13 20:06:10,930 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID_foaf_Document"}
-2020-01-13 20:06:10,930 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document_subject
-2020-01-13 20:06:10,930 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document_subject>
-2020-01-13 20:06:10,930 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
-2020-01-13 20:06:10,931 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,931 INFO  [Parser] Found rr:child skos_subject
-2020-01-13 20:06:10,931 INFO  [Parser] Found rr:parent TopicID
-2020-01-13 20:06:10,931 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person_has_affiliation>
-2020-01-13 20:06:10,931 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID_foaf_Person"}
-2020-01-13 20:06:10,931 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person_has_affiliation
-2020-01-13 20:06:10,932 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person_has_affiliation>
-2020-01-13 20:06:10,932 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Organization
-2020-01-13 20:06:10,932 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,932 INFO  [Parser] Found rr:child conf_has_affiliation
-2020-01-13 20:06:10,932 INFO  [Parser] Found rr:parent OrgID
-2020-01-13 20:06:10,932 INFO  [Parser] Processing subject map for: <http://data.example.com/#PostalAddress>
-2020-01-13 20:06:10,932 INFO  [Parser] Processing literal subject template: http://data.example.com/postalAddress/{"ID"}
-2020-01-13 20:06:10,932 INFO  [Parser] Logical table mapping uri is http://data.example.com/#PostalAddress
-2020-01-13 20:06:10,933 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#PostalAddress>
-2020-01-13 20:06:10,933 INFO  [Parser] Added object column and template from column: vcard_pcode
-2020-01-13 20:06:10,933 INFO  [Parser] Added object column and template from column: vcard_country
-2020-01-13 20:06:10,933 INFO  [Parser] Added object column and template from column: vcard_street
-2020-01-13 20:06:10,933 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person_research_interests>
-2020-01-13 20:06:10,934 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID_foaf_Person"}
-2020-01-13 20:06:10,934 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person_research_interests
-2020-01-13 20:06:10,934 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person_research_interests>
-2020-01-13 20:06:10,935 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
-2020-01-13 20:06:10,935 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,935 INFO  [Parser] Found rr:child conf_research_interests
-2020-01-13 20:06:10,935 INFO  [Parser] Found rr:parent TopicID
-2020-01-13 20:06:10,935 INFO  [Parser] Processing subject map for: <http://data.example.com/#Organization>
-2020-01-13 20:06:10,935 INFO  [Parser] Processing literal subject template: http://data.example.com/organization/{"ID"}
-2020-01-13 20:06:10,935 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Organization
-2020-01-13 20:06:10,936 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Organization>
-2020-01-13 20:06:10,936 INFO  [Parser] Added object column and template from column: rdfs_label
-2020-01-13 20:06:10,936 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document_Creator>
-2020-01-13 20:06:10,936 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID_foaf_Document"}
-2020-01-13 20:06:10,936 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document_Creator
-2020-01-13 20:06:10,936 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document_Creator>
-2020-01-13 20:06:10,937 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Person
-2020-01-13 20:06:10,937 INFO  [Parser] Found rr:joinCondition null
-2020-01-13 20:06:10,937 INFO  [Parser] Found rr:child dc_creator
-2020-01-13 20:06:10,937 INFO  [Parser] Found rr:parent PerID
-2020-01-13 20:06:10,937 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person>
-2020-01-13 20:06:10,937 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID"}
-2020-01-13 20:06:10,937 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person
-2020-01-13 20:06:10,937 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person>
-2020-01-13 20:06:10,937 INFO  [Parser] Processing object map template: {"foaf_name"} {"foaf_name2"}
-2020-01-13 20:06:10,937 INFO  [Parser] Found rr:termType Literal
-2020-01-13 20:06:10,938 INFO  [ClassPathXmlApplicationContext] Closing org.springframework.context.support.ClassPathXmlApplicationContext@29f0802c: startup date [Mon Jan 13 20:06:10 GMT+09:00 2020]; root of context hierarchy
+2020-01-14 22:13:04,218 INFO  [ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@10163d6: startup date [Tue Jan 14 22:13:04 GMT+09:00 2020]; root of context hierarchy
+2020-01-14 22:13:04,296 INFO  [XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [app-context.xml]
+2020-01-14 22:13:04,768 INFO  [Parser] Initializing.
+2020-01-14 22:13:04,768 INFO  [Database] Establishing source (relational) connection.
+2020-01-14 22:13:04,770 INFO  [Database] Established source (relational) connection.
+2020-01-14 22:13:05,940 INFO  [Parser] Initialising Parser
+2020-01-14 22:13:05,953 INFO  [Parser] Initialized.
+2020-01-14 22:13:05,980 INFO  [Parser] Testing query: <null> with value:  		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	
+2020-01-14 22:13:06,004 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
+2020-01-14 22:13:06,007 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	'
+2020-01-14 22:13:06,010 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:06,010 INFO  [SelectQuery] Adding table with: name 'rel_person_organization', alias 'rel_person_organization'
+2020-01-14 22:13:06,010 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:06,020 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
+2020-01-14 22:13:06,020 INFO  [SelectQuery] Adding field with: name 'rel_person_organization.OrganizationID AS conf_has_affiliation', table 'rel_person_organization', alias 'conf_has_affiliation'
+2020-01-14 22:13:06,021 INFO  [Parser] Testing query: <null> with value:  		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	
+2020-01-14 22:13:06,022 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
+2020-01-14 22:13:06,022 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	'
+2020-01-14 22:13:06,023 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:06,023 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
+2020-01-14 22:13:06,023 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:06,023 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
+2020-01-14 22:13:06,023 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:06,024 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
+2020-01-14 22:13:06,024 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS conf_research_interests', table 'rel_paper_topic', alias 'conf_research_interests'
+2020-01-14 22:13:06,024 INFO  [Parser] Testing query: <null> with value:  		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	
+2020-01-14 22:13:06,025 INFO  [Database] Query is ok. Retrieves a dataset with 5 column(s).
+2020-01-14 22:13:06,025 INFO  [SelectQuery] Processing query: ' 		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	'
+2020-01-14 22:13:06,026 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:06,027 INFO  [SelectQuery] Adding field with: name 'Address || ' ' || Postcode || ' ' || Country AS ID', table 'organizations', alias 'ID'
+2020-01-14 22:13:06,027 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_country', table 'organizations', alias 'vcard_country'
+2020-01-14 22:13:06,027 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_street', table 'organizations', alias 'vcard_street'
+2020-01-14 22:13:06,027 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_locality', table 'organizations', alias 'vcard_locality'
+2020-01-14 22:13:06,027 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_pcode', table 'organizations', alias 'vcard_pcode'
+2020-01-14 22:13:06,028 INFO  [Parser] Testing query: <null> with value:  		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	
+2020-01-14 22:13:06,028 INFO  [Database] Query is ok. Retrieves a dataset with 4 column(s).
+2020-01-14 22:13:06,029 INFO  [SelectQuery] Processing query: ' 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	'
+2020-01-14 22:13:06,036 INFO  [SelectQuery] Adding table with: name 'conferences.ConfID=papers.conference) AS conf_conference', alias 'conf_conference'
+2020-01-14 22:13:06,037 INFO  [SelectQuery] Adding field with: name 'PaperID AS ID', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'ID'
+2020-01-14 22:13:06,037 INFO  [SelectQuery] Adding field with: name 'Title AS dc_title', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_title'
+2020-01-14 22:13:06,037 INFO  [SelectQuery] Adding field with: name 'Year AS dc_date', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_date'
+2020-01-14 22:13:06,037 INFO  [SelectQuery] Adding field with: name '(SELECT Name || ', ' || location', table 'conferences.ConfID=papers.conference) AS conf_conference', alias '(SELECT Name || ', ' || location'
+2020-01-14 22:13:06,038 INFO  [Parser] Testing query: <null> with value:  		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	
+2020-01-14 22:13:06,038 INFO  [Database] Query is ok. Retrieves a dataset with 7 column(s).
+2020-01-14 22:13:06,039 INFO  [SelectQuery] Processing query: ' 		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	'
+2020-01-14 22:13:06,039 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:06,039 INFO  [SelectQuery] Adding field with: name 'OrgID AS ID', table 'organizations', alias 'ID'
+2020-01-14 22:13:06,040 INFO  [SelectQuery] Adding field with: name 'Homepage AS foaf_homepage', table 'organizations', alias 'foaf_homepage'
+2020-01-14 22:13:06,040 INFO  [SelectQuery] Adding field with: name 'Name AS rdfs_label', table 'organizations', alias 'rdfs_label'
+2020-01-14 22:13:06,040 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_ADR', table 'organizations', alias 'vcard_ADR'
+2020-01-14 22:13:06,040 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_ADR2', table 'organizations', alias 'vcard_ADR2'
+2020-01-14 22:13:06,040 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_ADR3', table 'organizations', alias 'vcard_ADR3'
+2020-01-14 22:13:06,041 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_ADR4', table 'organizations', alias 'vcard_ADR4'
+2020-01-14 22:13:06,041 INFO  [Parser] Testing query: <null> with value:  		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	
+2020-01-14 22:13:06,042 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
+2020-01-14 22:13:06,042 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	'
+2020-01-14 22:13:06,042 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:06,042 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
+2020-01-14 22:13:06,043 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:06,043 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
+2020-01-14 22:13:06,043 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS skos_subject', table 'rel_paper_topic', alias 'skos_subject'
+2020-01-14 22:13:06,043 INFO  [Parser] Testing query: <null> with value:  		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	
+2020-01-14 22:13:06,044 INFO  [Database] Query is ok. Retrieves a dataset with 5 column(s).
+2020-01-14 22:13:06,044 INFO  [SelectQuery] Processing query: ' 		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	'
+2020-01-14 22:13:06,045 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:06,045 INFO  [SelectQuery] Adding field with: name 'PerID AS ID', table 'persons', alias 'ID'
+2020-01-14 22:13:06,045 INFO  [SelectQuery] Adding field with: name 'Email AS foaf_mbox', table 'persons', alias 'foaf_mbox'
+2020-01-14 22:13:06,045 INFO  [SelectQuery] Adding field with: name 'FirstName AS foaf_name', table 'persons', alias 'foaf_name'
+2020-01-14 22:13:06,045 INFO  [SelectQuery] Adding field with: name 'LastName AS foaf_name2', table 'persons', alias 'tName AS foaf_name2'
+2020-01-14 22:13:06,045 INFO  [SelectQuery] Adding field with: name 'Address', table 'persons', alias 'Address'
+2020-01-14 22:13:06,046 INFO  [Parser] Testing query: <null> with value:  		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	
+2020-01-14 22:13:06,047 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
+2020-01-14 22:13:06,047 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	'
+2020-01-14 22:13:06,047 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:06,047 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
+2020-01-14 22:13:06,048 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:06,048 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
+2020-01-14 22:13:06,048 INFO  [SelectQuery] Adding field with: name 'rel_person_paper.PersonID AS dc_creator', table 'rel_person_paper', alias 'dc_creator'
+2020-01-14 22:13:06,048 INFO  [Parser] Testing query: <null> with value:  		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	
+2020-01-14 22:13:06,049 INFO  [Database] Query is ok. Retrieves a dataset with 3 column(s).
+2020-01-14 22:13:06,049 INFO  [SelectQuery] Processing query: ' 		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	'
+2020-01-14 22:13:06,049 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:06,050 INFO  [SelectQuery] Adding field with: name 'TopicID AS ID', table 'topics', alias 'ID'
+2020-01-14 22:13:06,050 INFO  [SelectQuery] Adding field with: name 'TopicName AS skos_prefLabel', table 'topics', alias 'skos_prefLabel'
+2020-01-14 22:13:06,050 INFO  [SelectQuery] Adding field with: name 'ParentID AS skos_broader', table 'topics', alias 'skos_broader'
+2020-01-14 22:13:06,051 INFO  [Parser] Mapping document has 9 logical table views.
+2020-01-14 22:13:06,051 INFO  [Parser] Found logical table: <http://data.example.com/#Document>
+2020-01-14 22:13:06,052 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,358 INFO  [SelectQuery] Processing query: ' 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	'
+2020-01-14 22:13:06,358 INFO  [SelectQuery] Adding table with: name 'conferences.ConfID=papers.conference) AS conf_conference', alias 'conf_conference'
+2020-01-14 22:13:06,358 INFO  [SelectQuery] Adding field with: name 'PaperID AS ID', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'ID'
+2020-01-14 22:13:06,359 INFO  [SelectQuery] Adding field with: name 'Title AS dc_title', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_title'
+2020-01-14 22:13:06,359 INFO  [SelectQuery] Adding field with: name 'Year AS dc_date', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_date'
+2020-01-14 22:13:06,359 INFO  [SelectQuery] Adding field with: name '(SELECT Name || ', ' || location', table 'conferences.ConfID=papers.conference) AS conf_conference', alias '(SELECT Name || ', ' || location'
+2020-01-14 22:13:06,360 INFO  [MappingDocument] Searching for query  		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	
+2020-01-14 22:13:06,360 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,360 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document>
+2020-01-14 22:13:06,360 INFO  [Parser] Found logical table: <http://data.example.com/#Concept>
+2020-01-14 22:13:06,361 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,366 INFO  [SelectQuery] Processing query: ' 		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	'
+2020-01-14 22:13:06,367 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:06,367 INFO  [SelectQuery] Adding field with: name 'TopicID AS ID', table 'topics', alias 'ID'
+2020-01-14 22:13:06,367 INFO  [SelectQuery] Adding field with: name 'TopicName AS skos_prefLabel', table 'topics', alias 'skos_prefLabel'
+2020-01-14 22:13:06,367 INFO  [SelectQuery] Adding field with: name 'ParentID AS skos_broader', table 'topics', alias 'skos_broader'
+2020-01-14 22:13:06,367 INFO  [MappingDocument] Searching for query  		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	
+2020-01-14 22:13:06,367 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,367 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Concept>
+2020-01-14 22:13:06,368 INFO  [Parser] Found logical table: <http://data.example.com/#Document_subject>
+2020-01-14 22:13:06,368 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,377 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	'
+2020-01-14 22:13:06,378 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:06,378 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
+2020-01-14 22:13:06,378 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:06,378 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
+2020-01-14 22:13:06,378 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS skos_subject', table 'rel_paper_topic', alias 'skos_subject'
+2020-01-14 22:13:06,379 INFO  [MappingDocument] Searching for query  		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	
+2020-01-14 22:13:06,379 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,379 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document_subject>
+2020-01-14 22:13:06,379 INFO  [Parser] Found logical table: <http://data.example.com/#Person_has_affiliation>
+2020-01-14 22:13:06,379 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,385 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	'
+2020-01-14 22:13:06,385 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:06,385 INFO  [SelectQuery] Adding table with: name 'rel_person_organization', alias 'rel_person_organization'
+2020-01-14 22:13:06,386 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:06,386 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
+2020-01-14 22:13:06,386 INFO  [SelectQuery] Adding field with: name 'rel_person_organization.OrganizationID AS conf_has_affiliation', table 'rel_person_organization', alias 'conf_has_affiliation'
+2020-01-14 22:13:06,386 INFO  [MappingDocument] Searching for query  		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	
+2020-01-14 22:13:06,386 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,386 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person_has_affiliation>
+2020-01-14 22:13:06,387 INFO  [Parser] Found logical table: <http://data.example.com/#PostalAddress>
+2020-01-14 22:13:06,387 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,392 INFO  [SelectQuery] Processing query: ' 		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	'
+2020-01-14 22:13:06,392 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:06,393 INFO  [SelectQuery] Adding field with: name 'Address || ' ' || Postcode || ' ' || Country AS ID', table 'organizations', alias 'ID'
+2020-01-14 22:13:06,393 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_country', table 'organizations', alias 'vcard_country'
+2020-01-14 22:13:06,393 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_street', table 'organizations', alias 'vcard_street'
+2020-01-14 22:13:06,393 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_locality', table 'organizations', alias 'vcard_locality'
+2020-01-14 22:13:06,393 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_pcode', table 'organizations', alias 'vcard_pcode'
+2020-01-14 22:13:06,393 INFO  [MappingDocument] Searching for query  		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	
+2020-01-14 22:13:06,393 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,393 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#PostalAddress>
+2020-01-14 22:13:06,393 INFO  [Parser] Found logical table: <http://data.example.com/#Person_research_interests>
+2020-01-14 22:13:06,394 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,399 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	'
+2020-01-14 22:13:06,399 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:06,399 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
+2020-01-14 22:13:06,399 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:06,400 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
+2020-01-14 22:13:06,400 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:06,400 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
+2020-01-14 22:13:06,400 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS conf_research_interests', table 'rel_paper_topic', alias 'conf_research_interests'
+2020-01-14 22:13:06,400 INFO  [MappingDocument] Searching for query  		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	
+2020-01-14 22:13:06,400 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,400 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person_research_interests>
+2020-01-14 22:13:06,401 INFO  [Parser] Found logical table: <http://data.example.com/#Organization>
+2020-01-14 22:13:06,401 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,406 INFO  [SelectQuery] Processing query: ' 		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	'
+2020-01-14 22:13:06,406 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:06,406 INFO  [SelectQuery] Adding field with: name 'OrgID AS ID', table 'organizations', alias 'ID'
+2020-01-14 22:13:06,406 INFO  [SelectQuery] Adding field with: name 'Homepage AS foaf_homepage', table 'organizations', alias 'foaf_homepage'
+2020-01-14 22:13:06,407 INFO  [SelectQuery] Adding field with: name 'Name AS rdfs_label', table 'organizations', alias 'rdfs_label'
+2020-01-14 22:13:06,407 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_ADR', table 'organizations', alias 'vcard_ADR'
+2020-01-14 22:13:06,407 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_ADR2', table 'organizations', alias 'vcard_ADR2'
+2020-01-14 22:13:06,407 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_ADR3', table 'organizations', alias 'vcard_ADR3'
+2020-01-14 22:13:06,407 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_ADR4', table 'organizations', alias 'vcard_ADR4'
+2020-01-14 22:13:06,407 INFO  [MappingDocument] Searching for query  		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	
+2020-01-14 22:13:06,407 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,407 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Organization>
+2020-01-14 22:13:06,407 INFO  [Parser] Found logical table: <http://data.example.com/#Document_Creator>
+2020-01-14 22:13:06,408 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,413 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	'
+2020-01-14 22:13:06,413 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:06,413 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
+2020-01-14 22:13:06,414 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:06,414 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
+2020-01-14 22:13:06,414 INFO  [SelectQuery] Adding field with: name 'rel_person_paper.PersonID AS dc_creator', table 'rel_person_paper', alias 'dc_creator'
+2020-01-14 22:13:06,414 INFO  [MappingDocument] Searching for query  		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	
+2020-01-14 22:13:06,414 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,415 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document_Creator>
+2020-01-14 22:13:06,415 INFO  [Parser] Found logical table: <http://data.example.com/#Person>
+2020-01-14 22:13:06,415 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:06,420 INFO  [SelectQuery] Processing query: ' 		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	'
+2020-01-14 22:13:06,421 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:06,421 INFO  [SelectQuery] Adding field with: name 'PerID AS ID', table 'persons', alias 'ID'
+2020-01-14 22:13:06,421 INFO  [SelectQuery] Adding field with: name 'Email AS foaf_mbox', table 'persons', alias 'foaf_mbox'
+2020-01-14 22:13:06,421 INFO  [SelectQuery] Adding field with: name 'FirstName AS foaf_name', table 'persons', alias 'foaf_name'
+2020-01-14 22:13:06,421 INFO  [SelectQuery] Adding field with: name 'LastName AS foaf_name2', table 'persons', alias 'tName AS foaf_name2'
+2020-01-14 22:13:06,421 INFO  [SelectQuery] Adding field with: name 'Address', table 'persons', alias 'Address'
+2020-01-14 22:13:06,421 INFO  [MappingDocument] Searching for query  		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	
+2020-01-14 22:13:06,422 INFO  [MappingDocument] Found match
+2020-01-14 22:13:06,422 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person>
+2020-01-14 22:13:06,422 INFO  [Parser] Mapping document has 9 logical table mappings.
+2020-01-14 22:13:06,423 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document>
+2020-01-14 22:13:06,424 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID"}
+2020-01-14 22:13:06,427 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document
+2020-01-14 22:13:06,428 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document>
+2020-01-14 22:13:06,430 INFO  [Parser] Added object column and template from column: dc_date
+2020-01-14 22:13:06,430 INFO  [Parser] Added object column and template from column: dc_title
+2020-01-14 22:13:06,431 INFO  [Parser] Added object column and template from column: conf_conference
+2020-01-14 22:13:06,431 INFO  [Parser] Processing subject map for: <http://data.example.com/#Concept>
+2020-01-14 22:13:06,432 INFO  [Parser] Processing literal subject template: http://data.example.com/concept/{"ID"}
+2020-01-14 22:13:06,432 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Concept
+2020-01-14 22:13:06,432 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Concept>
+2020-01-14 22:13:06,433 INFO  [Parser] Added object column and template from column: skos_prefLabel
+2020-01-14 22:13:06,433 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
+2020-01-14 22:13:06,435 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:06,436 INFO  [Parser] Found rr:child skos_broader
+2020-01-14 22:13:06,436 INFO  [Parser] Found rr:parent TopicID
+2020-01-14 22:13:06,436 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document_subject>
+2020-01-14 22:13:06,437 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID_foaf_Document"}
+2020-01-14 22:13:06,437 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document_subject
+2020-01-14 22:13:06,437 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document_subject>
+2020-01-14 22:13:06,437 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
+2020-01-14 22:13:06,438 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:06,438 INFO  [Parser] Found rr:child skos_subject
+2020-01-14 22:13:06,438 INFO  [Parser] Found rr:parent TopicID
+2020-01-14 22:13:06,438 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person_has_affiliation>
+2020-01-14 22:13:06,438 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID_foaf_Person"}
+2020-01-14 22:13:06,438 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person_has_affiliation
+2020-01-14 22:13:06,439 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person_has_affiliation>
+2020-01-14 22:13:06,454 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Organization
+2020-01-14 22:13:06,454 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:06,454 INFO  [Parser] Found rr:child conf_has_affiliation
+2020-01-14 22:13:06,454 INFO  [Parser] Found rr:parent OrgID
+2020-01-14 22:13:06,455 INFO  [Parser] Processing subject map for: <http://data.example.com/#PostalAddress>
+2020-01-14 22:13:06,455 INFO  [Parser] Processing literal subject template: http://data.example.com/postalAddress/{"ID"}
+2020-01-14 22:13:06,455 INFO  [Parser] Logical table mapping uri is http://data.example.com/#PostalAddress
+2020-01-14 22:13:06,455 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#PostalAddress>
+2020-01-14 22:13:06,456 INFO  [Parser] Added object column and template from column: vcard_pcode
+2020-01-14 22:13:06,456 INFO  [Parser] Added object column and template from column: vcard_country
+2020-01-14 22:13:06,457 INFO  [Parser] Added object column and template from column: vcard_street
+2020-01-14 22:13:06,457 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person_research_interests>
+2020-01-14 22:13:06,457 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID_foaf_Person"}
+2020-01-14 22:13:06,457 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person_research_interests
+2020-01-14 22:13:06,457 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person_research_interests>
+2020-01-14 22:13:06,458 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
+2020-01-14 22:13:06,458 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:06,459 INFO  [Parser] Found rr:child conf_research_interests
+2020-01-14 22:13:06,459 INFO  [Parser] Found rr:parent TopicID
+2020-01-14 22:13:06,459 INFO  [Parser] Processing subject map for: <http://data.example.com/#Organization>
+2020-01-14 22:13:06,459 INFO  [Parser] Processing literal subject template: http://data.example.com/organization/{"ID"}
+2020-01-14 22:13:06,459 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Organization
+2020-01-14 22:13:06,460 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Organization>
+2020-01-14 22:13:06,460 INFO  [Parser] Added object column and template from column: rdfs_label
+2020-01-14 22:13:06,460 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document_Creator>
+2020-01-14 22:13:06,460 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID_foaf_Document"}
+2020-01-14 22:13:06,460 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document_Creator
+2020-01-14 22:13:06,461 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document_Creator>
+2020-01-14 22:13:06,461 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Person
+2020-01-14 22:13:06,461 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:06,461 INFO  [Parser] Found rr:child dc_creator
+2020-01-14 22:13:06,461 INFO  [Parser] Found rr:parent PerID
+2020-01-14 22:13:06,462 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person>
+2020-01-14 22:13:06,462 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID"}
+2020-01-14 22:13:06,462 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person
+2020-01-14 22:13:06,462 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person>
+2020-01-14 22:13:06,463 INFO  [Parser] Processing object map template: {"foaf_name"} {"foaf_name2"}
+2020-01-14 22:13:06,464 INFO  [Parser] Found rr:termType Literal
+2020-01-14 22:13:07,124 INFO  [Generator] Finished generating jena model in memory.
+2020-01-14 22:13:07,134 INFO  [Generator] Full run: Writing model to output/rdf/dump.rdf. Model has 154 statements.
+2020-01-14 22:13:07,179 INFO  [Generator] Writing model to disk took 40 milliseconds.
+2020-01-14 22:13:07,180 INFO  [Generator] Not Writing reified model.
+2020-01-14 22:13:07,180 INFO  [Generator] Logging results to C:\Users\jwchoi\IdeaProjects\shaper\status.rdf
+2020-01-14 22:13:07,185 INFO  [Generator] Logging took 4 milliseconds.
+2020-01-14 22:13:07,185 INFO  [ClassPathXmlApplicationContext] Closing org.springframework.context.support.ClassPathXmlApplicationContext@10163d6: startup date [Tue Jan 14 22:13:04 GMT+09:00 2020]; root of context hierarchy
+2020-01-14 22:13:07,190 INFO  [ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@45394b31: startup date [Tue Jan 14 22:13:07 GMT+09:00 2020]; root of context hierarchy
+2020-01-14 22:13:07,191 INFO  [XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [app-context.xml]
+2020-01-14 22:13:07,248 INFO  [Parser] Initializing.
+2020-01-14 22:13:07,248 INFO  [Database] Establishing source (relational) connection.
+2020-01-14 22:13:07,252 INFO  [Database] Established source (relational) connection.
+2020-01-14 22:13:07,273 INFO  [Parser] Initialising Parser
+2020-01-14 22:13:07,273 INFO  [Parser] Initialized.
+2020-01-14 22:13:07,274 INFO  [Parser] Testing query: <null> with value:  		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	
+2020-01-14 22:13:07,275 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
+2020-01-14 22:13:07,275 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	'
+2020-01-14 22:13:07,275 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:07,275 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
+2020-01-14 22:13:07,276 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:07,276 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
+2020-01-14 22:13:07,276 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:07,276 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
+2020-01-14 22:13:07,276 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS conf_research_interests', table 'rel_paper_topic', alias 'conf_research_interests'
+2020-01-14 22:13:07,276 INFO  [Parser] Testing query: <null> with value:  		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	
+2020-01-14 22:13:07,277 INFO  [Database] Query is ok. Retrieves a dataset with 4 column(s).
+2020-01-14 22:13:07,277 INFO  [SelectQuery] Processing query: ' 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	'
+2020-01-14 22:13:07,278 INFO  [SelectQuery] Adding table with: name 'conferences.ConfID=papers.conference) AS conf_conference', alias 'conf_conference'
+2020-01-14 22:13:07,278 INFO  [SelectQuery] Adding field with: name 'PaperID AS ID', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'ID'
+2020-01-14 22:13:07,278 INFO  [SelectQuery] Adding field with: name 'Title AS dc_title', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_title'
+2020-01-14 22:13:07,278 INFO  [SelectQuery] Adding field with: name 'Year AS dc_date', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_date'
+2020-01-14 22:13:07,278 INFO  [SelectQuery] Adding field with: name '(SELECT Name || ', ' || location', table 'conferences.ConfID=papers.conference) AS conf_conference', alias '(SELECT Name || ', ' || location'
+2020-01-14 22:13:07,279 INFO  [Parser] Testing query: <null> with value:  		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	
+2020-01-14 22:13:07,279 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
+2020-01-14 22:13:07,279 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	'
+2020-01-14 22:13:07,280 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:07,280 INFO  [SelectQuery] Adding table with: name 'rel_person_organization', alias 'rel_person_organization'
+2020-01-14 22:13:07,280 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:07,281 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
+2020-01-14 22:13:07,281 INFO  [SelectQuery] Adding field with: name 'rel_person_organization.OrganizationID AS conf_has_affiliation', table 'rel_person_organization', alias 'conf_has_affiliation'
+2020-01-14 22:13:07,281 INFO  [Parser] Testing query: <null> with value:  		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	
+2020-01-14 22:13:07,282 INFO  [Database] Query is ok. Retrieves a dataset with 5 column(s).
+2020-01-14 22:13:07,282 INFO  [SelectQuery] Processing query: ' 		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	'
+2020-01-14 22:13:07,282 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:07,282 INFO  [SelectQuery] Adding field with: name 'PerID AS ID', table 'persons', alias 'ID'
+2020-01-14 22:13:07,282 INFO  [SelectQuery] Adding field with: name 'Email AS foaf_mbox', table 'persons', alias 'foaf_mbox'
+2020-01-14 22:13:07,283 INFO  [SelectQuery] Adding field with: name 'FirstName AS foaf_name', table 'persons', alias 'foaf_name'
+2020-01-14 22:13:07,283 INFO  [SelectQuery] Adding field with: name 'LastName AS foaf_name2', table 'persons', alias 'tName AS foaf_name2'
+2020-01-14 22:13:07,283 INFO  [SelectQuery] Adding field with: name 'Address', table 'persons', alias 'Address'
+2020-01-14 22:13:07,283 INFO  [Parser] Testing query: <null> with value:  		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	
+2020-01-14 22:13:07,284 INFO  [Database] Query is ok. Retrieves a dataset with 7 column(s).
+2020-01-14 22:13:07,284 INFO  [SelectQuery] Processing query: ' 		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	'
+2020-01-14 22:13:07,284 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:07,284 INFO  [SelectQuery] Adding field with: name 'OrgID AS ID', table 'organizations', alias 'ID'
+2020-01-14 22:13:07,285 INFO  [SelectQuery] Adding field with: name 'Homepage AS foaf_homepage', table 'organizations', alias 'foaf_homepage'
+2020-01-14 22:13:07,285 INFO  [SelectQuery] Adding field with: name 'Name AS rdfs_label', table 'organizations', alias 'rdfs_label'
+2020-01-14 22:13:07,285 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_ADR', table 'organizations', alias 'vcard_ADR'
+2020-01-14 22:13:07,285 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_ADR2', table 'organizations', alias 'vcard_ADR2'
+2020-01-14 22:13:07,285 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_ADR3', table 'organizations', alias 'vcard_ADR3'
+2020-01-14 22:13:07,285 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_ADR4', table 'organizations', alias 'vcard_ADR4'
+2020-01-14 22:13:07,285 INFO  [Parser] Testing query: <null> with value:  		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	
+2020-01-14 22:13:07,286 INFO  [Database] Query is ok. Retrieves a dataset with 3 column(s).
+2020-01-14 22:13:07,286 INFO  [SelectQuery] Processing query: ' 		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	'
+2020-01-14 22:13:07,286 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:07,287 INFO  [SelectQuery] Adding field with: name 'TopicID AS ID', table 'topics', alias 'ID'
+2020-01-14 22:13:07,287 INFO  [SelectQuery] Adding field with: name 'TopicName AS skos_prefLabel', table 'topics', alias 'skos_prefLabel'
+2020-01-14 22:13:07,287 INFO  [SelectQuery] Adding field with: name 'ParentID AS skos_broader', table 'topics', alias 'skos_broader'
+2020-01-14 22:13:07,287 INFO  [Parser] Testing query: <null> with value:  		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	
+2020-01-14 22:13:07,288 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
+2020-01-14 22:13:07,288 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	'
+2020-01-14 22:13:07,288 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:07,289 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
+2020-01-14 22:13:07,289 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:07,289 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
+2020-01-14 22:13:07,289 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS skos_subject', table 'rel_paper_topic', alias 'skos_subject'
+2020-01-14 22:13:07,289 INFO  [Parser] Testing query: <null> with value:  		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	
+2020-01-14 22:13:07,290 INFO  [Database] Query is ok. Retrieves a dataset with 2 column(s).
+2020-01-14 22:13:07,290 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	'
+2020-01-14 22:13:07,290 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:07,291 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
+2020-01-14 22:13:07,291 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:07,291 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
+2020-01-14 22:13:07,291 INFO  [SelectQuery] Adding field with: name 'rel_person_paper.PersonID AS dc_creator', table 'rel_person_paper', alias 'dc_creator'
+2020-01-14 22:13:07,291 INFO  [Parser] Testing query: <null> with value:  		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	
+2020-01-14 22:13:07,292 INFO  [Database] Query is ok. Retrieves a dataset with 5 column(s).
+2020-01-14 22:13:07,292 INFO  [SelectQuery] Processing query: ' 		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	'
+2020-01-14 22:13:07,292 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:07,293 INFO  [SelectQuery] Adding field with: name 'Address || ' ' || Postcode || ' ' || Country AS ID', table 'organizations', alias 'ID'
+2020-01-14 22:13:07,293 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_country', table 'organizations', alias 'vcard_country'
+2020-01-14 22:13:07,293 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_street', table 'organizations', alias 'vcard_street'
+2020-01-14 22:13:07,293 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_locality', table 'organizations', alias 'vcard_locality'
+2020-01-14 22:13:07,293 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_pcode', table 'organizations', alias 'vcard_pcode'
+2020-01-14 22:13:07,293 INFO  [Parser] Mapping document has 9 logical table views.
+2020-01-14 22:13:07,293 INFO  [Parser] Found logical table: <http://data.example.com/#Document>
+2020-01-14 22:13:07,293 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,299 INFO  [SelectQuery] Processing query: ' 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	'
+2020-01-14 22:13:07,299 INFO  [SelectQuery] Adding table with: name 'conferences.ConfID=papers.conference) AS conf_conference', alias 'conf_conference'
+2020-01-14 22:13:07,299 INFO  [SelectQuery] Adding field with: name 'PaperID AS ID', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'ID'
+2020-01-14 22:13:07,299 INFO  [SelectQuery] Adding field with: name 'Title AS dc_title', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_title'
+2020-01-14 22:13:07,299 INFO  [SelectQuery] Adding field with: name 'Year AS dc_date', table 'conferences.ConfID=papers.conference) AS conf_conference', alias 'dc_date'
+2020-01-14 22:13:07,299 INFO  [SelectQuery] Adding field with: name '(SELECT Name || ', ' || location', table 'conferences.ConfID=papers.conference) AS conf_conference', alias '(SELECT Name || ', ' || location'
+2020-01-14 22:13:07,299 INFO  [MappingDocument] Searching for query  		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date,  		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference 		FROM papers 		WHERE papers.Year > 2002 	
+2020-01-14 22:13:07,300 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,300 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document>
+2020-01-14 22:13:07,300 INFO  [Parser] Found logical table: <http://data.example.com/#Concept>
+2020-01-14 22:13:07,300 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,305 INFO  [SelectQuery] Processing query: ' 		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	'
+2020-01-14 22:13:07,305 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:07,306 INFO  [SelectQuery] Adding field with: name 'TopicID AS ID', table 'topics', alias 'ID'
+2020-01-14 22:13:07,306 INFO  [SelectQuery] Adding field with: name 'TopicName AS skos_prefLabel', table 'topics', alias 'skos_prefLabel'
+2020-01-14 22:13:07,306 INFO  [SelectQuery] Adding field with: name 'ParentID AS skos_broader', table 'topics', alias 'skos_broader'
+2020-01-14 22:13:07,306 INFO  [MappingDocument] Searching for query  		SELECT TopicID AS ID, TopicName AS skos_prefLabel, ParentID AS skos_broader  		FROM topics 	
+2020-01-14 22:13:07,306 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,306 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Concept>
+2020-01-14 22:13:07,306 INFO  [Parser] Found logical table: <http://data.example.com/#Document_subject>
+2020-01-14 22:13:07,306 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,311 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	'
+2020-01-14 22:13:07,311 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:07,311 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
+2020-01-14 22:13:07,312 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:07,312 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
+2020-01-14 22:13:07,312 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS skos_subject', table 'rel_paper_topic', alias 'skos_subject'
+2020-01-14 22:13:07,312 INFO  [MappingDocument] Searching for query  		SELECT papers.PaperID AS ID_foaf_Document, rel_paper_topic.TopicID AS skos_subject 	FROM papers, rel_paper_topic, topics 	WHERE papers.PaperID = rel_paper_topic.PaperID 	AND rel_paper_topic.TopicID = topics.TopicID 	AND papers.Year > 2002 	
+2020-01-14 22:13:07,312 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,312 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document_subject>
+2020-01-14 22:13:07,312 INFO  [Parser] Found logical table: <http://data.example.com/#Person_has_affiliation>
+2020-01-14 22:13:07,312 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,317 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	'
+2020-01-14 22:13:07,317 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:07,318 INFO  [SelectQuery] Adding table with: name 'rel_person_organization', alias 'rel_person_organization'
+2020-01-14 22:13:07,318 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:07,318 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
+2020-01-14 22:13:07,318 INFO  [SelectQuery] Adding field with: name 'rel_person_organization.OrganizationID AS conf_has_affiliation', table 'rel_person_organization', alias 'conf_has_affiliation'
+2020-01-14 22:13:07,318 INFO  [MappingDocument] Searching for query  		SELECT persons.PerID AS ID_foaf_Person, rel_person_organization.OrganizationID AS conf_has_affiliation 	FROM persons, rel_person_organization, organizations 	WHERE persons.PerID = rel_person_organization.PersonID 	AND rel_person_organization.OrganizationID = organizations.OrgID 	
+2020-01-14 22:13:07,318 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,318 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person_has_affiliation>
+2020-01-14 22:13:07,319 INFO  [Parser] Found logical table: <http://data.example.com/#PostalAddress>
+2020-01-14 22:13:07,319 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,324 INFO  [SelectQuery] Processing query: ' 		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	'
+2020-01-14 22:13:07,324 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:07,325 INFO  [SelectQuery] Adding field with: name 'Address || ' ' || Postcode || ' ' || Country AS ID', table 'organizations', alias 'ID'
+2020-01-14 22:13:07,325 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_country', table 'organizations', alias 'vcard_country'
+2020-01-14 22:13:07,325 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_street', table 'organizations', alias 'vcard_street'
+2020-01-14 22:13:07,325 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_locality', table 'organizations', alias 'vcard_locality'
+2020-01-14 22:13:07,325 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_pcode', table 'organizations', alias 'vcard_pcode'
+2020-01-14 22:13:07,325 INFO  [MappingDocument] Searching for query  		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode 		FROM organizations 	
+2020-01-14 22:13:07,325 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,325 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#PostalAddress>
+2020-01-14 22:13:07,325 INFO  [Parser] Found logical table: <http://data.example.com/#Person_research_interests>
+2020-01-14 22:13:07,325 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,330 INFO  [SelectQuery] Processing query: ' 		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	'
+2020-01-14 22:13:07,331 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:07,331 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
+2020-01-14 22:13:07,331 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:07,331 INFO  [SelectQuery] Adding table with: name 'rel_paper_topic', alias 'rel_paper_topic'
+2020-01-14 22:13:07,331 INFO  [SelectQuery] Adding table with: name 'topics', alias 'topics'
+2020-01-14 22:13:07,331 INFO  [SelectQuery] Adding field with: name 'persons.PerID AS ID_foaf_Person', table 'persons', alias 'ID_foaf_Person'
+2020-01-14 22:13:07,331 INFO  [SelectQuery] Adding field with: name 'rel_paper_topic.TopicID AS conf_research_interests', table 'rel_paper_topic', alias 'conf_research_interests'
+2020-01-14 22:13:07,331 INFO  [MappingDocument] Searching for query  		SELECT persons.PerID AS ID_foaf_Person, rel_paper_topic.TopicID AS conf_research_interests 		FROM persons, rel_person_paper, papers, rel_paper_topic, topics  		WHERE persons.PerID = rel_person_paper.PersonID 		AND rel_person_paper.PaperID = papers.PaperID  		AND papers.PaperID = rel_paper_topic.PaperID  		AND rel_paper_topic.TopicID = topics.TopicID 	
+2020-01-14 22:13:07,331 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,332 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person_research_interests>
+2020-01-14 22:13:07,332 INFO  [Parser] Found logical table: <http://data.example.com/#Organization>
+2020-01-14 22:13:07,332 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,338 INFO  [SelectQuery] Processing query: ' 		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	'
+2020-01-14 22:13:07,338 INFO  [SelectQuery] Adding table with: name 'organizations', alias 'organizations'
+2020-01-14 22:13:07,339 INFO  [SelectQuery] Adding field with: name 'OrgID AS ID', table 'organizations', alias 'ID'
+2020-01-14 22:13:07,339 INFO  [SelectQuery] Adding field with: name 'Homepage AS foaf_homepage', table 'organizations', alias 'foaf_homepage'
+2020-01-14 22:13:07,339 INFO  [SelectQuery] Adding field with: name 'Name AS rdfs_label', table 'organizations', alias 'rdfs_label'
+2020-01-14 22:13:07,339 INFO  [SelectQuery] Adding field with: name 'Address AS vcard_ADR', table 'organizations', alias 'vcard_ADR'
+2020-01-14 22:13:07,339 INFO  [SelectQuery] Adding field with: name 'Location AS vcard_ADR2', table 'organizations', alias 'vcard_ADR2'
+2020-01-14 22:13:07,339 INFO  [SelectQuery] Adding field with: name 'Postcode AS vcard_ADR3', table 'organizations', alias 'vcard_ADR3'
+2020-01-14 22:13:07,339 INFO  [SelectQuery] Adding field with: name 'Country AS vcard_ADR4', table 'organizations', alias 'vcard_ADR4'
+2020-01-14 22:13:07,339 INFO  [MappingDocument] Searching for query  		SELECT OrgID AS ID, Homepage AS foaf_homepage, Name AS rdfs_label, Address AS vcard_ADR, Location AS vcard_ADR2, Postcode AS vcard_ADR3, Country AS vcard_ADR4  		FROM organizations 	
+2020-01-14 22:13:07,339 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,339 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Organization>
+2020-01-14 22:13:07,340 INFO  [Parser] Found logical table: <http://data.example.com/#Document_Creator>
+2020-01-14 22:13:07,340 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,344 INFO  [SelectQuery] Processing query: ' 		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	'
+2020-01-14 22:13:07,345 INFO  [SelectQuery] Adding table with: name 'papers', alias 'papers'
+2020-01-14 22:13:07,345 INFO  [SelectQuery] Adding table with: name 'rel_person_paper', alias 'rel_person_paper'
+2020-01-14 22:13:07,345 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:07,345 INFO  [SelectQuery] Adding field with: name 'papers.PaperID AS ID_foaf_Document', table 'papers', alias 'ID_foaf_Document'
+2020-01-14 22:13:07,345 INFO  [SelectQuery] Adding field with: name 'rel_person_paper.PersonID AS dc_creator', table 'rel_person_paper', alias 'dc_creator'
+2020-01-14 22:13:07,345 INFO  [MappingDocument] Searching for query  		SELECT papers.PaperID AS ID_foaf_Document, rel_person_paper.PersonID AS dc_creator 		FROM papers, rel_person_paper, persons 		WHERE papers.PaperID = rel_person_paper.PaperID 		AND rel_person_paper.PersonID = persons.PerID 		AND papers.Year > 2002 	
+2020-01-14 22:13:07,345 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,345 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Document_Creator>
+2020-01-14 22:13:07,346 INFO  [Parser] Found logical table: <http://data.example.com/#Person>
+2020-01-14 22:13:07,346 INFO  [Parser] Looking up logical table view null
+2020-01-14 22:13:07,350 INFO  [SelectQuery] Processing query: ' 		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	'
+2020-01-14 22:13:07,350 INFO  [SelectQuery] Adding table with: name 'persons', alias 'persons'
+2020-01-14 22:13:07,350 INFO  [SelectQuery] Adding field with: name 'PerID AS ID', table 'persons', alias 'ID'
+2020-01-14 22:13:07,350 INFO  [SelectQuery] Adding field with: name 'Email AS foaf_mbox', table 'persons', alias 'foaf_mbox'
+2020-01-14 22:13:07,351 INFO  [SelectQuery] Adding field with: name 'FirstName AS foaf_name', table 'persons', alias 'foaf_name'
+2020-01-14 22:13:07,351 INFO  [SelectQuery] Adding field with: name 'LastName AS foaf_name2', table 'persons', alias 'tName AS foaf_name2'
+2020-01-14 22:13:07,351 INFO  [SelectQuery] Adding field with: name 'Address', table 'persons', alias 'Address'
+2020-01-14 22:13:07,351 INFO  [MappingDocument] Searching for query  		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address 		FROM persons 	
+2020-01-14 22:13:07,351 INFO  [MappingDocument] Found match
+2020-01-14 22:13:07,351 INFO  [Parser] Added logical table mapping from uri <http://data.example.com/#Person>
+2020-01-14 22:13:07,351 INFO  [Parser] Mapping document has 9 logical table mappings.
+2020-01-14 22:13:07,351 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document>
+2020-01-14 22:13:07,351 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID"}
+2020-01-14 22:13:07,352 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document
+2020-01-14 22:13:07,352 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document>
+2020-01-14 22:13:07,352 INFO  [Parser] Added object column and template from column: conf_conference
+2020-01-14 22:13:07,352 INFO  [Parser] Added object column and template from column: dc_title
+2020-01-14 22:13:07,353 INFO  [Parser] Added object column and template from column: dc_date
+2020-01-14 22:13:07,353 INFO  [Parser] Processing subject map for: <http://data.example.com/#Concept>
+2020-01-14 22:13:07,353 INFO  [Parser] Processing literal subject template: http://data.example.com/concept/{"ID"}
+2020-01-14 22:13:07,353 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Concept
+2020-01-14 22:13:07,353 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Concept>
+2020-01-14 22:13:07,353 INFO  [Parser] Added object column and template from column: skos_prefLabel
+2020-01-14 22:13:07,354 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
+2020-01-14 22:13:07,354 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:07,354 INFO  [Parser] Found rr:child skos_broader
+2020-01-14 22:13:07,355 INFO  [Parser] Found rr:parent TopicID
+2020-01-14 22:13:07,355 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document_subject>
+2020-01-14 22:13:07,355 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID_foaf_Document"}
+2020-01-14 22:13:07,355 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document_subject
+2020-01-14 22:13:07,355 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document_subject>
+2020-01-14 22:13:07,355 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
+2020-01-14 22:13:07,356 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:07,356 INFO  [Parser] Found rr:child skos_subject
+2020-01-14 22:13:07,356 INFO  [Parser] Found rr:parent TopicID
+2020-01-14 22:13:07,356 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person_has_affiliation>
+2020-01-14 22:13:07,356 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID_foaf_Person"}
+2020-01-14 22:13:07,356 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person_has_affiliation
+2020-01-14 22:13:07,356 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person_has_affiliation>
+2020-01-14 22:13:07,357 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Organization
+2020-01-14 22:13:07,357 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:07,357 INFO  [Parser] Found rr:child conf_has_affiliation
+2020-01-14 22:13:07,357 INFO  [Parser] Found rr:parent OrgID
+2020-01-14 22:13:07,357 INFO  [Parser] Processing subject map for: <http://data.example.com/#PostalAddress>
+2020-01-14 22:13:07,357 INFO  [Parser] Processing literal subject template: http://data.example.com/postalAddress/{"ID"}
+2020-01-14 22:13:07,357 INFO  [Parser] Logical table mapping uri is http://data.example.com/#PostalAddress
+2020-01-14 22:13:07,358 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#PostalAddress>
+2020-01-14 22:13:07,358 INFO  [Parser] Added object column and template from column: vcard_street
+2020-01-14 22:13:07,358 INFO  [Parser] Added object column and template from column: vcard_country
+2020-01-14 22:13:07,358 INFO  [Parser] Added object column and template from column: vcard_pcode
+2020-01-14 22:13:07,359 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person_research_interests>
+2020-01-14 22:13:07,359 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID_foaf_Person"}
+2020-01-14 22:13:07,359 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person_research_interests
+2020-01-14 22:13:07,359 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person_research_interests>
+2020-01-14 22:13:07,360 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Concept
+2020-01-14 22:13:07,360 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:07,360 INFO  [Parser] Found rr:child conf_research_interests
+2020-01-14 22:13:07,360 INFO  [Parser] Found rr:parent TopicID
+2020-01-14 22:13:07,360 INFO  [Parser] Processing subject map for: <http://data.example.com/#Organization>
+2020-01-14 22:13:07,360 INFO  [Parser] Processing literal subject template: http://data.example.com/organization/{"ID"}
+2020-01-14 22:13:07,360 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Organization
+2020-01-14 22:13:07,360 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Organization>
+2020-01-14 22:13:07,361 INFO  [Parser] Added object column and template from column: rdfs_label
+2020-01-14 22:13:07,361 INFO  [Parser] Processing subject map for: <http://data.example.com/#Document_Creator>
+2020-01-14 22:13:07,361 INFO  [Parser] Processing literal subject template: http://data.example.com/document/{"ID_foaf_Document"}
+2020-01-14 22:13:07,361 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Document_Creator
+2020-01-14 22:13:07,362 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Document_Creator>
+2020-01-14 22:13:07,362 INFO  [Parser] Found rr:parentTriplesMap http://data.example.com/#Person
+2020-01-14 22:13:07,362 INFO  [Parser] Found rr:joinCondition null
+2020-01-14 22:13:07,362 INFO  [Parser] Found rr:child dc_creator
+2020-01-14 22:13:07,362 INFO  [Parser] Found rr:parent PerID
+2020-01-14 22:13:07,362 INFO  [Parser] Processing subject map for: <http://data.example.com/#Person>
+2020-01-14 22:13:07,362 INFO  [Parser] Processing literal subject template: http://data.example.com/person/{"ID"}
+2020-01-14 22:13:07,363 INFO  [Parser] Logical table mapping uri is http://data.example.com/#Person
+2020-01-14 22:13:07,363 INFO  [Parser] Processing predicate object maps for: <http://data.example.com/#Person>
+2020-01-14 22:13:07,363 INFO  [Parser] Processing object map template: {"foaf_name"} {"foaf_name2"}
+2020-01-14 22:13:07,363 INFO  [Parser] Found rr:termType Literal
+2020-01-14 22:13:07,363 INFO  [ClassPathXmlApplicationContext] Closing org.springframework.context.support.ClassPathXmlApplicationContext@45394b31: startup date [Tue Jan 14 22:13:07 GMT+09:00 2020]; root of context hierarchy

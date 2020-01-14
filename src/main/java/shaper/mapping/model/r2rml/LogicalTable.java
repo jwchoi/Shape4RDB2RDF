@@ -11,7 +11,7 @@ public class LogicalTable {
     private Optional<String> sqlQuery; // rr:sqlQuery
     private Optional<String> sqlVersion; // rr:sqlVersion, which is an IRI
 
-    public LogicalTable() {
+    LogicalTable() {
         uri = Optional.empty();
 
         tableName = Optional.empty();

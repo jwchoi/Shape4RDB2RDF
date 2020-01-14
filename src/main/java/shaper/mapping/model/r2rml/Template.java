@@ -9,7 +9,7 @@ public class Template {
     private List<SQLSelectField> columnNames;
     private boolean isIRIPattern;
 
-    public Template(String format, List<SQLSelectField> columnNames, boolean isIRIPattern) {
+    Template(String format, List<SQLSelectField> columnNames, boolean isIRIPattern) {
         this.format = format;
         this.isIRIPattern = isIRIPattern;
         this.columnNames = columnNames;

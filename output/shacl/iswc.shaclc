@@ -1,14 +1,15 @@
-BASE <http://example.com/ns/>
-PREFIX conf: <http://ufc.br/rdb2rdfmb/conf/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX map: <http://data.example.com/#>
-PREFIX ns: <http://example.com/ns/#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rr: <http://www.w3.org/ns/r2rml#>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX vcard: <http://www.w3.org/2001/vcard-rdf/3.0#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+shaper.mapping.model.shacl.PrefixDecl@2d7e1102
+shaper.mapping.model.shacl.BaseDecl@65327f5
+shaper.mapping.model.shacl.PrefixDecl@2adddc06
+shaper.mapping.model.shacl.PrefixDecl@301d8120
+shaper.mapping.model.shacl.PrefixDecl@6d367020
+shaper.mapping.model.shacl.PrefixDecl@72458efc
+shaper.mapping.model.shacl.PrefixDecl@36bc415e
+shaper.mapping.model.shacl.PrefixDecl@6a74d228
+shaper.mapping.model.shacl.PrefixDecl@349d0836
+shaper.mapping.model.shacl.PrefixDecl@6a714237
+shaper.mapping.model.shacl.PrefixDecl@3e134896
+shaper.mapping.model.shacl.PrefixDecl@72ba28ee
+shaper.mapping.model.shacl.PrefixDecl@2e3a5237
+shaper.mapping.model.shacl.PrefixDecl@4ebadd3d
 

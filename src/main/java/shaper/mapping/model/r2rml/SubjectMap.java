@@ -6,7 +6,7 @@ import java.util.List;
 public class SubjectMap extends TermMap {
     private List<URI> classIRIs;
 
-    public SubjectMap(List<URI> classIRIs) {
+    SubjectMap(List<URI> classIRIs) {
         this.classIRIs = classIRIs;
     }
 
