@@ -17,4 +17,9 @@ public class IRI extends Node {
     public URI getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

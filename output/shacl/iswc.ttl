@@ -1,0 +1,112 @@
+@base <http://example.com/ns/> .
+@prefix map: <http://data.example.com/#> .
+@prefix ex: <http://example.com/ns/#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix conf: <http://ufc.br/rdb2rdfmb/conf/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard: <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+ex:Document_CreatorShape-dc-creator
+    a sh:PropertyShape ;
+    sh:path dc:creator  .
+    
+ex:Document_CreatorShape
+    a sh:NodeShape ;
+    sh:property ex:Document_CreatorShape-dc-creator  .
+    
+ex:DocumentShape-dc-title
+    a sh:PropertyShape ;
+    sh:path dc:title  .
+    
+ex:DocumentShape-conf-conference
+    a sh:PropertyShape ;
+    sh:path conf:conference  .
+    
+ex:DocumentShape-dc-date
+    a sh:PropertyShape ;
+    sh:path dc:date  .
+    
+ex:DocumentShape
+    a sh:NodeShape ;
+    sh:property ex:DocumentShape-dc-title ;
+    sh:property ex:DocumentShape-conf-conference ;
+    sh:property ex:DocumentShape-dc-date  .
+    
+ex:PersonShape-foaf-name
+    a sh:PropertyShape ;
+    sh:path foaf:name  .
+    
+ex:PersonShape
+    a sh:NodeShape ;
+    sh:property ex:PersonShape-foaf-name  .
+    
+ex:Person_research_interestsShape-conf-research_interests
+    a sh:PropertyShape ;
+    sh:path conf:research_interests  .
+    
+ex:Person_research_interestsShape
+    a sh:NodeShape ;
+    sh:property ex:Person_research_interestsShape-conf-research_interests  .
+    
+ex:ConceptShape-skos-prefLabel
+    a sh:PropertyShape ;
+    sh:path skos:prefLabel  .
+    
+ex:ConceptShape-skos-broader
+    a sh:PropertyShape ;
+    sh:path skos:broader  .
+    
+ex:ConceptShape
+    a sh:NodeShape ;
+    sh:property ex:ConceptShape-skos-prefLabel ;
+    sh:property ex:ConceptShape-skos-broader  .
+    
+ex:PostalAddressShape-vcard-pcode
+    a sh:PropertyShape ;
+    sh:path vcard:pcode  .
+    
+ex:PostalAddressShape-vcard-country
+    a sh:PropertyShape ;
+    sh:path vcard:country  .
+    
+ex:PostalAddressShape-vcard-street
+    a sh:PropertyShape ;
+    sh:path vcard:street  .
+    
+ex:PostalAddressShape
+    a sh:NodeShape ;
+    sh:property ex:PostalAddressShape-vcard-pcode ;
+    sh:property ex:PostalAddressShape-vcard-country ;
+    sh:property ex:PostalAddressShape-vcard-street  .
+    
+ex:Person_has_affiliationShape-conf-has_affiliation
+    a sh:PropertyShape ;
+    sh:path conf:has_affiliation  .
+    
+ex:Person_has_affiliationShape
+    a sh:NodeShape ;
+    sh:property ex:Person_has_affiliationShape-conf-has_affiliation  .
+    
+ex:Document_subjectShape-skos-subject
+    a sh:PropertyShape ;
+    sh:path skos:subject  .
+    
+ex:Document_subjectShape
+    a sh:NodeShape ;
+    sh:property ex:Document_subjectShape-skos-subject  .
+    
+ex:OrganizationShape-rdfs-label
+    a sh:PropertyShape ;
+    sh:path rdfs:label  .
+    
+ex:OrganizationShape
+    a sh:NodeShape ;
+    sh:property ex:OrganizationShape-rdfs-label  .
+    

@@ -34,7 +34,7 @@ public class Symbols {
     public static final String SEMICOLON = ";";
     public static final String SLASH = "/";
     public static final String SPACE = " ";
-    public static final String TAB = "\t";
+    public static final String TAB = "    ";
     public static final String UNDERSCORE = "_";
     public static final String ZERO = "0";
     public static final String base = "base";

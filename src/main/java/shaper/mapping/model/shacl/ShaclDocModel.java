@@ -4,15 +4,13 @@ import shaper.mapping.PrefixMap;
 import shaper.mapping.Symbols;
 
 import java.net.URI;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class ShaclDocModel {
     private URI baseIRI;
     private String prefix;
 
-    private Set<Directive> directives;
+    private Map<URI, String> prefixMap;
 
     private Set<Shape> shapes;
 
@@ -20,12 +18,37 @@ public class ShaclDocModel {
         this.baseIRI = baseIRI;
         this.prefix = prefix;
 
-        directives = new TreeSet<>();
-        directives.add(new BaseDecl(baseIRI));
-        directives.add(new PrefixDecl(URI.create(baseIRI + Symbols.HASH), prefix));
-        directives.add(new PrefixDecl(PrefixMap.getURI("sh"), "sh"));
+        prefixMap = new TreeMap<>();
+        prefixMap.put(URI.create(baseIRI + Symbols.HASH), prefix); // prefix newly created by base
+        prefixMap.put(PrefixMap.getURI("sh"), "sh"); // prefix for sh:
 
         shapes = new TreeSet<>();
+    }
+
+    public String getRelativeIRI(final String absoluteIRIString) {
+        Set<Map.Entry<URI, String>> entrySet = prefixMap.entrySet();
+
+        for (Map.Entry<URI, String> entry: entrySet) {
+            String uri = entry.getKey().toString();
+            if (absoluteIRIString.startsWith(uri))
+                return absoluteIRIString.replace(uri, entry.getValue() + Symbols.COLON);
+        }
+
+        if (absoluteIRIString.startsWith(baseIRI.toString()))
+            return Symbols.LT + absoluteIRIString.substring(absoluteIRIString.length()) + Symbols.GT;
+
+        return Symbols.LT + absoluteIRIString + Symbols.GT;
+    }
+
+    public String getSerializedPropertyShape(IRI propertyShapeID) {
+        for (Shape shape : shapes)
+            if (shape instanceof PropertyShape) {
+                PropertyShape propertyShape = (PropertyShape) shape;
+                if (propertyShape.getID().equals(propertyShapeID))
+                    return propertyShape.toString();
+            }
+
+        return null;
     }
 
     public NodeShape getMappedNodeShape(URI triplesMap) {
@@ -44,11 +67,12 @@ public class ShaclDocModel {
     }
 
     String getPrefixOf(URI uri) {
-        for (Directive directive: directives) {
-            if (directive instanceof PrefixDecl) {
-                if (uri.toString().startsWith(directive.getIRI().toString()))
-                    return ((PrefixDecl) directive).getPrefix();
-            }
+        Set<Map.Entry<URI, String>> entrySet = prefixMap.entrySet();
+
+        for (Map.Entry<URI, String> entry: entrySet) {
+            String key = entry.getKey().toString();
+            if (uri.toString().startsWith(key))
+                return entry.getValue();
         }
 
         return null;
@@ -57,25 +81,13 @@ public class ShaclDocModel {
     void addShape(Shape shape) { shapes.add(shape); }
 
     void addPrefixDecl(String prefix, String IRIString) {
-        directives.add(new PrefixDecl(URI.create(IRIString), prefix));
+        prefixMap.put(URI.create(IRIString), prefix);
     }
 
-    public Set<Directive> getDirectives() { return directives; }
+    public Map<URI, String> getPrefixMap() { return prefixMap; }
 
     public URI getBaseIRI() {
         return baseIRI;
     }
     public String getPrefix() { return prefix; }
-
-    public static class Keywords {
-        public static final String KW_BASE = Symbols.BASE;
-        public static final String KW_IMPORTS = Symbols.IMPORTS;
-        public static final String KW_PREFIX = Symbols.PREFIX;
-
-        public static final String KW_SHAPE_CLASS = "shapeClass";
-        public static final String KW_SHAPE = "shape";
-
-        public static final String KW_TRUE = "true";
-        public static final String KW_FALSE = "false";
-    }
 }

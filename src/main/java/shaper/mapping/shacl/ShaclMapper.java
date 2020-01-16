@@ -9,20 +9,20 @@ import java.io.File;
 import java.io.PrintWriter;
 
 public abstract class ShaclMapper {
-    public R2RMLModel r2rmlModel; // used only when mapping with R2RML
-    public RDFMappingModel rdfMappingModel; // used only when Direct Mapping
+    protected R2RMLModel r2rmlModel; // used only when mapping with R2RML
+    protected RDFMappingModel rdfMappingModel; // used only when Direct Mapping
 
-    public ShaclDocModel shaclDocModel; // dependent on r2rmlModel or rdfMappingModel
+    protected ShaclDocModel shaclDocModel; // dependent on r2rmlModel or rdfMappingModel
 
-    File output;
-    PrintWriter writer;
+    protected File output;
+    protected PrintWriter writer;
 
     public abstract File generateShaclFile();
 
-    void preProcess() {
+    protected void preProcess() {
         String catalog = Shaper.dbSchema.getCatalog();
 
-        output = new File(Shaper.DEFAULT_DIR_FOR_SHACL_FILE + catalog + "." + "shaclc");
+        output = new File(Shaper.DEFAULT_DIR_FOR_SHACL_FILE + catalog + "." + "ttl");
 
         try {
             writer = new PrintWriter(output);
