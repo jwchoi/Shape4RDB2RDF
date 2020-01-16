@@ -15,11 +15,16 @@
 
 ex:Document_CreatorShape-dc-creator
     a sh:PropertyShape ;
-    sh:path dc:creator  .
+    sh:path dc:creator ;
+    sh:node map:Person  .
     
 ex:Document_CreatorShape
     a sh:NodeShape ;
     sh:property ex:Document_CreatorShape-dc-creator  .
+    
+ex:DocumentShape-dc-date
+    a sh:PropertyShape ;
+    sh:path dc:date  .
     
 ex:DocumentShape-dc-title
     a sh:PropertyShape ;
@@ -29,15 +34,11 @@ ex:DocumentShape-conf-conference
     a sh:PropertyShape ;
     sh:path conf:conference  .
     
-ex:DocumentShape-dc-date
-    a sh:PropertyShape ;
-    sh:path dc:date  .
-    
 ex:DocumentShape
     a sh:NodeShape ;
+    sh:property ex:DocumentShape-dc-date ;
     sh:property ex:DocumentShape-dc-title ;
-    sh:property ex:DocumentShape-conf-conference ;
-    sh:property ex:DocumentShape-dc-date  .
+    sh:property ex:DocumentShape-conf-conference  .
     
 ex:PersonShape-foaf-name
     a sh:PropertyShape ;
@@ -49,7 +50,8 @@ ex:PersonShape
     
 ex:Person_research_interestsShape-conf-research_interests
     a sh:PropertyShape ;
-    sh:path conf:research_interests  .
+    sh:path conf:research_interests ;
+    sh:node map:Concept  .
     
 ex:Person_research_interestsShape
     a sh:NodeShape ;
@@ -61,20 +63,21 @@ ex:ConceptShape-skos-prefLabel
     
 ex:ConceptShape-skos-broader
     a sh:PropertyShape ;
-    sh:path skos:broader  .
+    sh:path skos:broader ;
+    sh:node map:Concept  .
     
 ex:ConceptShape
     a sh:NodeShape ;
     sh:property ex:ConceptShape-skos-prefLabel ;
     sh:property ex:ConceptShape-skos-broader  .
     
-ex:PostalAddressShape-vcard-pcode
-    a sh:PropertyShape ;
-    sh:path vcard:pcode  .
-    
 ex:PostalAddressShape-vcard-country
     a sh:PropertyShape ;
     sh:path vcard:country  .
+    
+ex:PostalAddressShape-vcard-pcode
+    a sh:PropertyShape ;
+    sh:path vcard:pcode  .
     
 ex:PostalAddressShape-vcard-street
     a sh:PropertyShape ;
@@ -82,13 +85,14 @@ ex:PostalAddressShape-vcard-street
     
 ex:PostalAddressShape
     a sh:NodeShape ;
-    sh:property ex:PostalAddressShape-vcard-pcode ;
     sh:property ex:PostalAddressShape-vcard-country ;
+    sh:property ex:PostalAddressShape-vcard-pcode ;
     sh:property ex:PostalAddressShape-vcard-street  .
     
 ex:Person_has_affiliationShape-conf-has_affiliation
     a sh:PropertyShape ;
-    sh:path conf:has_affiliation  .
+    sh:path conf:has_affiliation ;
+    sh:node map:Organization  .
     
 ex:Person_has_affiliationShape
     a sh:NodeShape ;
@@ -96,7 +100,8 @@ ex:Person_has_affiliationShape
     
 ex:Document_subjectShape-skos-subject
     a sh:PropertyShape ;
-    sh:path skos:subject  .
+    sh:path skos:subject ;
+    sh:node map:Concept  .
     
 ex:Document_subjectShape
     a sh:NodeShape ;
