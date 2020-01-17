@@ -22,30 +22,35 @@ ex:Document_CreatorShape
     a sh:NodeShape ;
     sh:property ex:Document_CreatorShape-dc-creator  .
     
+ex:DocumentShape-dc-date
+    a sh:PropertyShape ;
+    sh:path dc:date ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1  .
+    
 ex:DocumentShape-conf-conference
     a sh:PropertyShape ;
     sh:path conf:conference ;
+    sh:datatype xsd:integer ;
     sh:maxCount 1  .
     
 ex:DocumentShape-dc-title
     a sh:PropertyShape ;
     sh:path dc:title ;
-    sh:maxCount 1  .
-    
-ex:DocumentShape-dc-date
-    a sh:PropertyShape ;
-    sh:path dc:date ;
+    sh:datatype xsd:string ;
     sh:maxCount 1  .
     
 ex:DocumentShape
     a sh:NodeShape ;
+    sh:property ex:DocumentShape-dc-date ;
     sh:property ex:DocumentShape-conf-conference ;
-    sh:property ex:DocumentShape-dc-title ;
-    sh:property ex:DocumentShape-dc-date  .
+    sh:property ex:DocumentShape-dc-title  .
     
 ex:PersonShape-foaf-name
     a sh:PropertyShape ;
     sh:path foaf:name ;
+    sh:nodeKind sh:Literal ;
+    sh:pattern "^(.*) (.*)$" ;
     sh:minCount 1 ;
     sh:maxCount 1  .
     
@@ -65,6 +70,7 @@ ex:Person_research_interestsShape
 ex:ConceptShape-skos-prefLabel
     a sh:PropertyShape ;
     sh:path skos:prefLabel ;
+    sh:datatype xsd:string ;
     sh:maxCount 1  .
     
 ex:ConceptShape-skos-broader
@@ -80,23 +86,26 @@ ex:ConceptShape
 ex:PostalAddressShape-vcard-pcode
     a sh:PropertyShape ;
     sh:path vcard:pcode ;
-    sh:maxCount 1  .
-    
-ex:PostalAddressShape-vcard-street
-    a sh:PropertyShape ;
-    sh:path vcard:street ;
+    sh:datatype xsd:string ;
     sh:maxCount 1  .
     
 ex:PostalAddressShape-vcard-country
     a sh:PropertyShape ;
     sh:path vcard:country ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1  .
+    
+ex:PostalAddressShape-vcard-street
+    a sh:PropertyShape ;
+    sh:path vcard:street ;
+    sh:datatype xsd:string ;
     sh:maxCount 1  .
     
 ex:PostalAddressShape
     a sh:NodeShape ;
     sh:property ex:PostalAddressShape-vcard-pcode ;
-    sh:property ex:PostalAddressShape-vcard-street ;
-    sh:property ex:PostalAddressShape-vcard-country  .
+    sh:property ex:PostalAddressShape-vcard-country ;
+    sh:property ex:PostalAddressShape-vcard-street  .
     
 ex:Person_has_affiliationShape-conf-has_affiliation
     a sh:PropertyShape ;
@@ -119,6 +128,7 @@ ex:Document_subjectShape
 ex:OrganizationShape-rdfs-label
     a sh:PropertyShape ;
     sh:path rdfs:label ;
+    sh:datatype xsd:string ;
     sh:maxCount 1  .
     
 ex:OrganizationShape

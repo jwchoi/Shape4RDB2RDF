@@ -92,7 +92,7 @@ map:PostalAddress
 	];
 	rr:predicateObjectMap [
 		rr:predicate vcard:country;
-		rr:objectMap [ rr:column 'vcard_country' ;] 
+		rr:objectMap [ rr:column 'vcard_country' ;]
 	];
 	rr:predicateObjectMap [
 		rr:predicate vcard:pcode;

@@ -13,9 +13,10 @@ public class Symbols {
     public static final String CLOSE_BRACKET = "]";
     public static final String CLOSE_PARENTHESIS = ")";
     public static final String COLON = ":";
-    public static final String DOLLAR = "$";
     public static final String DASH = "-";
+    public static final String DOLLAR = "$";
     public static final String DOT = ".";
+    public static final String DOUBLE_QUOTATION_MARK = "\"";
     public static final String EQUAL = "=";
     public static final String GT = ">";
     public static final String HASH = "#";

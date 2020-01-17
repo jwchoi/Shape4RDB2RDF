@@ -1,12 +1,13 @@
 package shaper.mapping.model.shacl;
 
 import janus.database.SQLSelectField;
+import shaper.Shaper;
+import shaper.mapping.DatatypeMap;
 import shaper.mapping.Symbols;
-import shaper.mapping.model.r2rml.ObjectMap;
-import shaper.mapping.model.r2rml.PredicateMap;
-import shaper.mapping.model.r2rml.RefObjectMap;
-import shaper.mapping.model.r2rml.Template;
+import shaper.mapping.model.r2rml.*;
+import shaper.mapping.model.shex.NodeKinds;
 
+import java.net.URI;
 import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class PropertyShape extends Shape {
         String o; // to be used as objects of different RDF triples
 
         // sh:node
-        o = getShaclDocModel().getRelativeIRI(mappedRefObjectMap.getParentTriplesMap().toString());
+        o = getShaclDocModel().getRelativeIRIOr(mappedRefObjectMap.getParentTriplesMap().toString());
         buffer.append(getPO("sh:node", o));
         buffer.append(getSNT());
 
@@ -64,6 +65,57 @@ public class PropertyShape extends Shape {
         StringBuffer buffer = new StringBuffer();
 
         String o; // to be used as objects of different RDF triples
+
+        // sh:nodeKind
+        Optional<TermMap.TermTypes> termType = mappedObjectMap.getTermType();
+        if (termType.isPresent()) {
+
+            switch (termType.get()) {
+                case BLANKNODE: o = "sh:BlankNode"; break;
+                case IRI: o = "sh:IRI"; break;
+                case LITERAL: o = "sh:Literal"; break;
+                default: o = null;
+            }
+
+            if (o != null) {
+                buffer.append(getPO("sh:nodeKind", o));
+                buffer.append(getSNT());
+            }
+        }
+
+        // sh:languageIn
+        Optional<String> language = mappedObjectMap.getLanguage();
+        if (language.isPresent()) {
+            o = Symbols.OPEN_PARENTHESIS + Symbols.SPACE + Symbols.DOUBLE_QUOTATION_MARK + language.get() + Symbols.DOUBLE_QUOTATION_MARK + Symbols.SPACE + Symbols.CLOSE_PARENTHESIS;
+            buffer.append(getPO("sh:languageIn", o));
+            buffer.append(getSNT());
+        }
+
+        // sh:datatype
+        o = null;
+
+        Optional<String> datatype = mappedObjectMap.getDatatype();
+        if (datatype.isPresent()) {
+            // from rr:column
+            o = getShaclDocModel().getRelativeIRIOr(datatype.get());
+        } else {
+            // Natural Mapping of SQL Values
+            Optional<SQLSelectField> sqlSelectField = mappedObjectMap.getColumn();
+            if (sqlSelectField.isPresent())
+                o = DatatypeMap.getMappedXSD(sqlSelectField.get().getSqlType());
+        }
+
+        if (o != null) {
+            buffer.append(getPO("sh:datatype", o));
+            buffer.append(getSNT());
+        }
+
+        // sh:pattern
+        if (isPossibleToHavePattern(mappedObjectMap)) {
+            o = buildRegex(mappedObjectMap.getTemplate().get());
+            buffer.append(getPO("sh:pattern", o));
+            buffer.append(getSNT());
+        }
 
         // cardinality
         o = "1";
@@ -113,7 +165,7 @@ public class PropertyShape extends Shape {
         String o; // to be used as objects of different RDF triples
 
         // rdf:type sh:PropertyShape
-        String id = getShaclDocModel().getRelativeIRI(getID().toString());
+        String id = getShaclDocModel().getRelativeIRIOr(getID().toString());
         buffer.append(id);
         buffer.append(getNT());
 
@@ -121,7 +173,7 @@ public class PropertyShape extends Shape {
         buffer.append(getSNT());
 
         // sh:path
-        o = getShaclDocModel().getRelativeIRI(mappedPredicateMap.getConstant().get());
+        o = getShaclDocModel().getRelativeIRIOr(mappedPredicateMap.getConstant().get());
         buffer.append(getPO("sh:path", o));
         buffer.append(getSNT());
 
@@ -137,5 +189,43 @@ public class PropertyShape extends Shape {
         buffer.append(getDNT());
 
         return buffer.toString();
+    }
+
+    private String buildRegex(Template template) {
+        String regex = template.getFormat();
+
+        // replace meta-characters in XPath
+        regex = regex.replace(Symbols.SLASH, Symbols.BACKSLASH + Symbols.SLASH);
+        regex = regex.replace(Symbols.DOT, Symbols.BACKSLASH + Symbols.DOT);
+        if (!template.isIRIPattern()) { // for LITERAL
+//            regex = regex.replace(RDFMapper.BACKSLASH, RDFMapper.BACKSLASH + RDFMapper.BACKSLASH);
+//            regex = regex.replace(RDFMapper.SLASH, RDFMapper.BACKSLASH + RDFMapper.SLASH);
+//            regex = regex.replace(RDFMapper.DOT, RDFMapper.BACKSLASH + RDFMapper.DOT);
+//            regex = regex.replace(RDFMapper.QUESTION_MARK, RDFMapper.BACKSLASH + RDFMapper.QUESTION_MARK);
+//            regex = regex.replace(RDFMapper.PLUS, RDFMapper.BACKSLASH + RDFMapper.PLUS);
+//            regex = regex.replace(RDFMapper.ASTERISK, RDFMapper.BACKSLASH + RDFMapper.ASTERISK);
+//            regex = regex.replace(RDFMapper.OR, RDFMapper.BACKSLASH + RDFMapper.OR);
+//            regex = regex.replace(RDFMapper.CARET, RDFMapper.BACKSLASH + RDFMapper.CARET);
+//            regex = regex.replace(RDFMapper.DOLLAR, RDFMapper.BACKSLASH + RDFMapper.DOLLAR);
+//            regex = regex.replace(RDFMapper.OPEN_PARENTHESIS, RDFMapper.BACKSLASH + RDFMapper.OPEN_PARENTHESIS);
+//            regex = regex.replace(RDFMapper.CLOSE_PARENTHESIS, RDFMapper.BACKSLASH + RDFMapper.CLOSE_PARENTHESIS);
+        }
+
+        // column names
+        List<SQLSelectField> columnNames = template.getColumnNames();
+        for (SQLSelectField columnName: columnNames)
+            regex = regex.replace("{" + columnName.getColumnNameOrAlias() + "}", "(.*)");
+
+        return Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + regex + Symbols.DOLLAR + Symbols.DOUBLE_QUOTATION_MARK;
+    }
+
+    private boolean isPossibleToHavePattern(ObjectMap objectMap) {
+        Optional<Template> template = objectMap.getTemplate();
+        if (template.isPresent()) {
+            if (template.get().getLengthExceptColumnName() > 0)
+                return true;
+        }
+
+        return false;
     }
 }

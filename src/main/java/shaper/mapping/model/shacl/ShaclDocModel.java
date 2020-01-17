@@ -25,7 +25,7 @@ public class ShaclDocModel {
         shapes = new TreeSet<>();
     }
 
-    public String getRelativeIRI(final String absoluteIRIString) {
+    public String getRelativeIRIOr(final String absoluteIRIString) {
         Set<Map.Entry<URI, String>> entrySet = prefixMap.entrySet();
 
         for (Map.Entry<URI, String> entry: entrySet) {

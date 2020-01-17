@@ -32,7 +32,7 @@ public class NodeShape extends Shape {
 
         StringBuffer buffer = new StringBuffer();
 
-        String id = getShaclDocModel().getRelativeIRI(getID().toString());
+        String id = getShaclDocModel().getRelativeIRIOr(getID().toString());
         buffer.append(id);
         buffer.append(getNT());
 
@@ -40,7 +40,7 @@ public class NodeShape extends Shape {
         buffer.append(getSNT());
 
         for (IRI propertyShapeIRI: propertyShapes) {
-            String p = getShaclDocModel().getRelativeIRI(propertyShapeIRI.toString());
+            String p = getShaclDocModel().getRelativeIRIOr(propertyShapeIRI.toString());
             buffer.append(getPO("sh:property", p));
             buffer.append(getSNT());
         }
