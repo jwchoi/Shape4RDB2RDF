@@ -24,8 +24,9 @@ public class ShaclDocModelFactory {
         Set<TriplesMap> triplesMaps = r2rmlModel.getTriplesMaps();
 
         for (TriplesMap triplesMap : triplesMaps) {
+            SubjectMap subjectMap = triplesMap.getSubjectMap();
             //create a node shape
-            NodeShape nodeShape = new NodeShape(createNodeShapeID(triplesMap), triplesMap.getUri(), shaclDocModel);
+            NodeShape nodeShape = new NodeShape(createNodeShapeID(triplesMap), triplesMap.getUri(), subjectMap, shaclDocModel);
 
             List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
             int sizeOfPredicateObjectMaps = predicateObjectMaps.size();

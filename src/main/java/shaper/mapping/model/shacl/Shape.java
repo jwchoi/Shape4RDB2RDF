@@ -1,8 +1,10 @@
 package shaper.mapping.model.shacl;
 
 import shaper.mapping.Symbols;
+import shaper.mapping.model.r2rml.Template;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Shape implements Comparable<Shape> {
     private IRI id;
@@ -29,6 +31,15 @@ public abstract class Shape implements Comparable<Shape> {
     @Override
     public int compareTo(Shape o) {
         return id.getValue().compareTo(o.id.getValue());
+    }
+
+    protected boolean isPossibleToHavePattern(Optional<Template> template) {
+        if (template.isPresent()) {
+            if (template.get().getLengthExceptColumnName() > 0)
+                return true;
+        }
+
+        return false;
     }
 
     // \n\t

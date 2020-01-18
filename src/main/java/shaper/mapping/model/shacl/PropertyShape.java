@@ -1,13 +1,10 @@
 package shaper.mapping.model.shacl;
 
 import janus.database.SQLSelectField;
-import shaper.Shaper;
 import shaper.mapping.DatatypeMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.*;
-import shaper.mapping.model.shex.NodeKinds;
 
-import java.net.URI;
 import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Optional;
@@ -16,15 +13,15 @@ public class PropertyShape extends Shape {
     private enum MappingTypes { OBJECT_MAP, REF_OBJECT_MAP }
 
     private PredicateMap mappedPredicateMap;
-    private ObjectMap mappedObjectMap;
-    private RefObjectMap mappedRefObjectMap;
+    private Optional<ObjectMap> mappedObjectMap = Optional.empty();
+    private Optional<RefObjectMap> mappedRefObjectMap = Optional.empty();
 
     private MappingTypes mappingType;
 
     PropertyShape(IRI id, PredicateMap mappedPredicateMap, ObjectMap mappedObjectMap, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedPredicateMap = mappedPredicateMap;
-        this.mappedObjectMap = mappedObjectMap;
+        this.mappedObjectMap = Optional.of(mappedObjectMap);
 
         mappingType = MappingTypes.OBJECT_MAP;
     }
@@ -32,7 +29,7 @@ public class PropertyShape extends Shape {
     PropertyShape(IRI id, PredicateMap mappedPredicateMap, RefObjectMap mappedRefObjectMap, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedPredicateMap = mappedPredicateMap;
-        this.mappedRefObjectMap = mappedRefObjectMap;
+        this.mappedRefObjectMap = Optional.of(mappedRefObjectMap);
 
         mappingType = MappingTypes.REF_OBJECT_MAP;
     }
@@ -111,8 +108,9 @@ public class PropertyShape extends Shape {
         }
 
         // sh:pattern
-        if (isPossibleToHavePattern(mappedObjectMap)) {
-            o = buildRegex(mappedObjectMap.getTemplate().get());
+        Optional<String> regex = getRegex(mappedObjectMap);
+        if (regex.isPresent()) {
+            o = regex.get();
             buffer.append(getPO("sh:pattern", o));
             buffer.append(getSNT());
         }
@@ -179,11 +177,11 @@ public class PropertyShape extends Shape {
 
         // if RefObjectMap
         if (mappingType.equals(MappingTypes.REF_OBJECT_MAP))
-            buffer.append(buildSerializedPropertyShape(mappedRefObjectMap));
+            buffer.append(buildSerializedPropertyShape(mappedRefObjectMap.get()));
 
         // if ObjectMap
         if (mappingType.equals(MappingTypes.OBJECT_MAP))
-            buffer.append(buildSerializedPropertyShape(mappedObjectMap));
+            buffer.append(buildSerializedPropertyShape(mappedObjectMap.get()));
 
         buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
         buffer.append(getDNT());
@@ -191,41 +189,18 @@ public class PropertyShape extends Shape {
         return buffer.toString();
     }
 
-    private String buildRegex(Template template) {
-        String regex = template.getFormat();
+    private Optional<String> getRegex(ObjectMap objectMap) {
+        Optional<Template> template = objectMap.getTemplate();
 
-        // replace meta-characters in XPath
-        regex = regex.replace(Symbols.SLASH, Symbols.BACKSLASH + Symbols.SLASH);
-        regex = regex.replace(Symbols.DOT, Symbols.BACKSLASH + Symbols.DOT);
-        if (!template.isIRIPattern()) { // for LITERAL
-//            regex = regex.replace(RDFMapper.BACKSLASH, RDFMapper.BACKSLASH + RDFMapper.BACKSLASH);
-//            regex = regex.replace(RDFMapper.SLASH, RDFMapper.BACKSLASH + RDFMapper.SLASH);
-//            regex = regex.replace(RDFMapper.DOT, RDFMapper.BACKSLASH + RDFMapper.DOT);
-//            regex = regex.replace(RDFMapper.QUESTION_MARK, RDFMapper.BACKSLASH + RDFMapper.QUESTION_MARK);
-//            regex = regex.replace(RDFMapper.PLUS, RDFMapper.BACKSLASH + RDFMapper.PLUS);
-//            regex = regex.replace(RDFMapper.ASTERISK, RDFMapper.BACKSLASH + RDFMapper.ASTERISK);
-//            regex = regex.replace(RDFMapper.OR, RDFMapper.BACKSLASH + RDFMapper.OR);
-//            regex = regex.replace(RDFMapper.CARET, RDFMapper.BACKSLASH + RDFMapper.CARET);
-//            regex = regex.replace(RDFMapper.DOLLAR, RDFMapper.BACKSLASH + RDFMapper.DOLLAR);
-//            regex = regex.replace(RDFMapper.OPEN_PARENTHESIS, RDFMapper.BACKSLASH + RDFMapper.OPEN_PARENTHESIS);
-//            regex = regex.replace(RDFMapper.CLOSE_PARENTHESIS, RDFMapper.BACKSLASH + RDFMapper.CLOSE_PARENTHESIS);
-        }
+        if (!isPossibleToHavePattern(template)) return Optional.empty();
+
+        String regex = template.get().getFormat();
 
         // column names
-        List<SQLSelectField> columnNames = template.getColumnNames();
+        List<SQLSelectField> columnNames = template.get().getColumnNames();
         for (SQLSelectField columnName: columnNames)
             regex = regex.replace("{" + columnName.getColumnNameOrAlias() + "}", "(.*)");
 
-        return Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + regex + Symbols.DOLLAR + Symbols.DOUBLE_QUOTATION_MARK;
-    }
-
-    private boolean isPossibleToHavePattern(ObjectMap objectMap) {
-        Optional<Template> template = objectMap.getTemplate();
-        if (template.isPresent()) {
-            if (template.get().getLengthExceptColumnName() > 0)
-                return true;
-        }
-
-        return false;
+        return Optional.of(Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + regex + Symbols.DOLLAR + Symbols.DOUBLE_QUOTATION_MARK);
     }
 }

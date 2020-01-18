@@ -20,12 +20,14 @@ ex:Document_CreatorShape-dc-creator
     
 ex:Document_CreatorShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/document/(.+)$" ;
     sh:property ex:Document_CreatorShape-dc-creator  .
     
-ex:DocumentShape-dc-date
+ex:DocumentShape-dc-title
     a sh:PropertyShape ;
-    sh:path dc:date ;
-    sh:datatype xsd:integer ;
+    sh:path dc:title ;
+    sh:datatype xsd:string ;
     sh:maxCount 1  .
     
 ex:DocumentShape-conf-conference
@@ -34,17 +36,19 @@ ex:DocumentShape-conf-conference
     sh:datatype xsd:integer ;
     sh:maxCount 1  .
     
-ex:DocumentShape-dc-title
+ex:DocumentShape-dc-date
     a sh:PropertyShape ;
-    sh:path dc:title ;
-    sh:datatype xsd:string ;
+    sh:path dc:date ;
+    sh:datatype xsd:integer ;
     sh:maxCount 1  .
     
 ex:DocumentShape
     a sh:NodeShape ;
-    sh:property ex:DocumentShape-dc-date ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/document/(.+)$" ;
+    sh:property ex:DocumentShape-dc-title ;
     sh:property ex:DocumentShape-conf-conference ;
-    sh:property ex:DocumentShape-dc-title  .
+    sh:property ex:DocumentShape-dc-date  .
     
 ex:PersonShape-foaf-name
     a sh:PropertyShape ;
@@ -56,6 +60,8 @@ ex:PersonShape-foaf-name
     
 ex:PersonShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/person/(.+)$" ;
     sh:property ex:PersonShape-foaf-name  .
     
 ex:Person_research_interestsShape-conf-research_interests
@@ -65,6 +71,8 @@ ex:Person_research_interestsShape-conf-research_interests
     
 ex:Person_research_interestsShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/person/(.+)$" ;
     sh:property ex:Person_research_interestsShape-conf-research_interests  .
     
 ex:ConceptShape-skos-prefLabel
@@ -80,8 +88,16 @@ ex:ConceptShape-skos-broader
     
 ex:ConceptShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/concept/(.+)$" ;
     sh:property ex:ConceptShape-skos-prefLabel ;
     sh:property ex:ConceptShape-skos-broader  .
+    
+ex:PostalAddressShape-vcard-street
+    a sh:PropertyShape ;
+    sh:path vcard:street ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1  .
     
 ex:PostalAddressShape-vcard-pcode
     a sh:PropertyShape ;
@@ -95,17 +111,13 @@ ex:PostalAddressShape-vcard-country
     sh:datatype xsd:string ;
     sh:maxCount 1  .
     
-ex:PostalAddressShape-vcard-street
-    a sh:PropertyShape ;
-    sh:path vcard:street ;
-    sh:datatype xsd:string ;
-    sh:maxCount 1  .
-    
 ex:PostalAddressShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/postalAddress/(.+)$" ;
+    sh:property ex:PostalAddressShape-vcard-street ;
     sh:property ex:PostalAddressShape-vcard-pcode ;
-    sh:property ex:PostalAddressShape-vcard-country ;
-    sh:property ex:PostalAddressShape-vcard-street  .
+    sh:property ex:PostalAddressShape-vcard-country  .
     
 ex:Person_has_affiliationShape-conf-has_affiliation
     a sh:PropertyShape ;
@@ -114,6 +126,8 @@ ex:Person_has_affiliationShape-conf-has_affiliation
     
 ex:Person_has_affiliationShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/person/(.+)$" ;
     sh:property ex:Person_has_affiliationShape-conf-has_affiliation  .
     
 ex:Document_subjectShape-skos-subject
@@ -123,6 +137,8 @@ ex:Document_subjectShape-skos-subject
     
 ex:Document_subjectShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/document/(.+)$" ;
     sh:property ex:Document_subjectShape-skos-subject  .
     
 ex:OrganizationShape-rdfs-label
@@ -133,5 +149,7 @@ ex:OrganizationShape-rdfs-label
     
 ex:OrganizationShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/organization/(.+)$" ;
     sh:property ex:OrganizationShape-rdfs-label  .
     
