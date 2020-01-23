@@ -4,6 +4,7 @@ import gr.seab.r2rml.beans.Database;
 import gr.seab.r2rml.beans.Parser;
 import gr.seab.r2rml.entities.MappingDocument;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import shaper.Shaper;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.R2RMLModelFactory;
 import shaper.mapping.model.r2rml.TriplesMap;
@@ -13,6 +14,7 @@ import shaper.mapping.model.shacl.ShaclDocModelFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.util.*;
 
@@ -21,6 +23,8 @@ public class R2RMLShaclMapper extends ShaclMapper {
     private String propertiesFile;
     //<- for R2RML parser
 
+    private String r2rmlFileName;
+
     public R2RMLShaclMapper(String propertiesFile) { this.propertiesFile = propertiesFile; }
 
     private MappingDocument generateMappingDocument() {
@@ -28,6 +32,7 @@ public class R2RMLShaclMapper extends ShaclMapper {
 
         try {
             properties.load(new FileInputStream(propertiesFile));
+            r2rmlFileName = properties.getProperty("mapping.file");
         } catch (Exception ex) {
             System.err.println("Error reading properties file (" + propertiesFile + ").");
             return null;
@@ -76,6 +81,18 @@ public class R2RMLShaclMapper extends ShaclMapper {
     private void postProcess() {
         try {
             writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void preProcess() {
+        String fileName = r2rmlFileName.substring(r2rmlFileName.lastIndexOf("/")+1, r2rmlFileName.lastIndexOf("."));
+        fileName = fileName + Symbols.DASH + "SHACL";
+        output = new File(Shaper.DEFAULT_DIR_FOR_SHACL_FILE + fileName + "." + "ttl");
+
+        try {
+            writer = new PrintWriter(output);
         } catch (Exception e) {
             e.printStackTrace();
         }

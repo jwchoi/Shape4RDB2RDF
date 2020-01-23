@@ -1,6 +1,5 @@
 package shaper.mapping.shacl;
 
-import shaper.Shaper;
 import shaper.mapping.model.r2rml.R2RMLModel;
 import shaper.mapping.model.rdf.RDFMappingModel;
 import shaper.mapping.model.shacl.ShaclDocModel;
@@ -18,16 +17,4 @@ public abstract class ShaclMapper {
     protected PrintWriter writer;
 
     public abstract File generateShaclFile();
-
-    protected void preProcess() {
-        String catalog = Shaper.dbSchema.getCatalog();
-
-        output = new File(Shaper.DEFAULT_DIR_FOR_SHACL_FILE + catalog + "." + "ttl");
-
-        try {
-            writer = new PrintWriter(output);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

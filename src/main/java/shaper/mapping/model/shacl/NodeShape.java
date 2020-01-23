@@ -7,9 +7,7 @@ import shaper.mapping.model.r2rml.Template;
 import shaper.mapping.model.r2rml.TermMap;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class NodeShape extends Shape {
     private Optional<URI> mappedTriplesMap = Optional.empty(); // mapped rr:TriplesMap
@@ -36,24 +34,35 @@ public class NodeShape extends Shape {
 
         String o; // to be used as objects of different RDF triples
 
+        // sh:targetClass
+        Set<URI> classIRIs = new TreeSet(subjectMap.getClassIRIs());
+        for (URI classIRI: classIRIs) {
+            o = getShaclDocModel().getRelativeIRIOr(classIRI.toString());
+
+            buffer.append(getPO("sh:targetClass", o));
+            buffer.append(getSNT());
+        }
+
         // sh:nodeKind
         Optional<TermMap.TermTypes> termType = subjectMap.getTermType();
         if (termType.isPresent()) {
-            if (termType.get().equals(TermMap.TermTypes.BLANKNODE))
-                o = "sh:BlankNode";
+            o = termType.get().equals(TermMap.TermTypes.BLANKNODE) ? "sh:BlankNode" : "sh:IRI";
+
+            buffer.append(getPO("sh:nodeKind", o));
+            buffer.append(getSNT());
         }
 
-        o = "sh:IRI";
-
-        buffer.append(getPO("sh:nodeKind", o));
-        buffer.append(getSNT());
-
         // sh:pattern
-        Optional<String> regex = getRegex(subjectMap);
-        if (regex.isPresent()) {
-            o = regex.get();
-            buffer.append(getPO("sh:pattern", o));
-            buffer.append(getSNT());
+        if (termType.isPresent()) {
+            // only if rr:termType is rr:IRI
+            if (termType.get().equals(TermMap.TermTypes.IRI)) {
+                Optional<String> regex = getRegex(subjectMap);
+                if (regex.isPresent()) {
+                    o = regex.get();
+                    buffer.append(getPO("sh:pattern", o));
+                    buffer.append(getSNT());
+                }
+            }
         }
 
         return buffer.toString();

@@ -5,8 +5,19 @@ import shaper.mapping.model.rdf.RDFMappingModelFactory;
 import shaper.mapping.model.shacl.ShaclDocModelFactory;
 
 import java.io.File;
+import java.io.PrintWriter;
 
 public class DirectMappingShaclMapper extends ShaclMapper {
+
+    private void preProcess(String catalog) {
+        output = new File(Shaper.DEFAULT_DIR_FOR_SHACL_FILE + catalog + "." + "ttl");
+
+        try {
+            writer = new PrintWriter(output);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void writeDirectives() {}
 
@@ -25,7 +36,7 @@ public class DirectMappingShaclMapper extends ShaclMapper {
         rdfMappingModel = RDFMappingModelFactory.generateMappingModel();
         shaclDocModel = ShaclDocModelFactory.getSHACLDocModel(Shaper.dbSchema);
 
-        preProcess();
+        preProcess(Shaper.dbSchema.getCatalog());
         writeDirectives();
         writeShacl();
         postProcess();

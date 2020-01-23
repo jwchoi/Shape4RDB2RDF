@@ -169,6 +169,9 @@ public class R2RMLModelFactory {
     private static SQLSelectField createSQLSelectField(String selectField, String selectQuery, SQLResultSet sqlResultSet) {
         SQLSelectField sqlSelectField = new SQLSelectField(selectField, selectQuery);
 
+        if (selectField.startsWith("\"") && selectField.endsWith("\""))
+            selectField = selectField.substring(1, selectField.length()-1);
+
         // nullable
         Optional<Integer> nullable =  sqlResultSet.isNullable(selectField);
         if (nullable.isPresent())

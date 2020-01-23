@@ -77,19 +77,26 @@ public class ShaclDocModelFactory {
         return shaclDocModel;
     }
 
+    private static String obtainFragmentOrLastPathSegmentOf(URI uri) {
+        String postfix = uri.getFragment();
+        if (postfix == null) {
+            Path path = Path.of(uri.getPath());
+            postfix = path.getName(path.getNameCount()-1).toString();
+        }
+
+        return postfix;
+    }
+
     private static IRI createNodeShapeID(TriplesMap triplesMap) {
-        return IRI.create(shaclDocModel.getBaseIRI() + Symbols.HASH + triplesMap.getUri().getFragment() + "Shape");
+        String postfix = obtainFragmentOrLastPathSegmentOf(triplesMap.getUri());
+        return IRI.create(shaclDocModel.getBaseIRI() + Symbols.HASH + postfix + "Shape");
     }
 
     private static IRI createPropertyShapeID(IRI nodeShapeID, String predicateURIString) {
         URI predicateURI = URI.create(predicateURIString);
         String prefixOfPredicateURI = shaclDocModel.getPrefixOf(predicateURI);
 
-        String postfix = predicateURI.getFragment();
-        if (postfix == null) {
-            Path path = Path.of(predicateURI.getPath());
-            postfix = path.getName(path.getNameCount()-1).toString();
-        }
+        String postfix = obtainFragmentOrLastPathSegmentOf(predicateURI);
 
         if (prefixOfPredicateURI != null)
             postfix = prefixOfPredicateURI + Symbols.DASH + postfix;
