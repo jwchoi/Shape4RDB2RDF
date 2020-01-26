@@ -1,0 +1,34 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix ex: <http://example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+cse:TriplesMap2Shape-foaf-name
+    a sh:PropertyShape ;
+    sh:path foaf:name ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1  .
+    
+cse:TriplesMap2Shape
+    a sh:NodeShape ;
+    sh:targetClass ex:Sport ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/(.+)$" ;
+    sh:property cse:TriplesMap2Shape-foaf-name  .
+    
+cse:TriplesMap1Shape-foaf-name
+    a sh:PropertyShape ;
+    sh:path foaf:name ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1  .
+    
+cse:TriplesMap1Shape
+    a sh:NodeShape ;
+    sh:targetClass ex:Student ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/(.+)$" ;
+    sh:property cse:TriplesMap1Shape-foaf-name  .
+    

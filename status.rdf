@@ -1,5 +1,5 @@
 @prefix log:   <http://data.example.com/> .
 
 log:destinationFile  log:destinationFileSize
-                "230" ;
-        log:timestamp            "Thu Jan 23 19:48:09 GMT+09:00 2020" .
+                "185" ;
+        log:timestamp            "Sun Jan 26 17:22:02 GMT+09:00 2020" .

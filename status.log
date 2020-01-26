@@ -1,70 +1,70 @@
-2020-01-23 19:48:07,971 INFO  [ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@73ee04c8: startup date [Thu Jan 23 19:48:07 GMT+09:00 2020]; root of context hierarchy
-2020-01-23 19:48:08,014 INFO  [XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [app-context.xml]
-2020-01-23 19:48:08,316 INFO  [Parser] Initializing.
-2020-01-23 19:48:08,316 INFO  [Database] Establishing source (relational) connection.
-2020-01-23 19:48:08,318 INFO  [Database] Established source (relational) connection.
-2020-01-23 19:48:09,602 INFO  [Parser] Initialising Parser
-2020-01-23 19:48:09,607 INFO  [Parser] Initialized.
-2020-01-23 19:48:09,611 INFO  [Parser] Mapping document has 0 logical table views.
-2020-01-23 19:48:09,612 INFO  [Parser] Found logical table: <http://example.com/base/TriplesMap1>
-2020-01-23 19:48:09,614 INFO  [Parser] Looking up logical table view null
-2020-01-23 19:48:09,763 INFO  [Parser] Found tableName Student
-2020-01-23 19:48:09,786 INFO  [Parser] Result is: SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID
-2020-01-23 19:48:09,786 INFO  [SelectQuery] Processing query: 'SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID'
-2020-01-23 19:48:09,788 INFO  [SelectQuery] Adding table with: name 'Student ORDER BY ID', alias 'Student ORDER BY ID'
-2020-01-23 19:48:09,793 INFO  [Parser] Added logical table mapping from uri <http://example.com/base/TriplesMap1>
-2020-01-23 19:48:09,793 INFO  [Parser] Found resource with a table name: <null>
-2020-01-23 19:48:09,794 INFO  [Parser] Found table name: Student
-2020-01-23 19:48:09,806 INFO  [Parser] Result is: SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID
-2020-01-23 19:48:09,806 INFO  [SelectQuery] Processing query: 'SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID'
-2020-01-23 19:48:09,806 INFO  [SelectQuery] Adding table with: name 'Student ORDER BY ID', alias 'Student ORDER BY ID'
-2020-01-23 19:48:09,813 INFO  [Parser] Setting SQL query for table Student: SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID
-2020-01-23 19:48:09,815 INFO  [Parser] Found rr:tableName "Student" without parent.
-2020-01-23 19:48:09,819 INFO  [LocalResource] Local resource: http://example.com/base/TriplesMap1
-2020-01-23 19:48:09,819 INFO  [Parser] The rr:tableName "Student" is in triples map http://example.com/base/TriplesMap1
-2020-01-23 19:48:09,820 INFO  [Parser] Mapping document has 1 logical table mappings.
-2020-01-23 19:48:09,820 INFO  [Parser] Processing subject map for: <http://example.com/base/TriplesMap1>
-2020-01-23 19:48:09,820 INFO  [Parser] Processing literal subject template: http://example.com/Student{"ID"}
-2020-01-23 19:48:09,822 INFO  [Parser] Logical table mapping uri is http://example.com/base/TriplesMap1
-2020-01-23 19:48:09,822 INFO  [Parser] Processing predicate object maps for: <http://example.com/base/TriplesMap1>
-2020-01-23 19:48:09,823 INFO  [Parser] Processing object map template: {"FirstName"} {"LastName"}
-2020-01-23 19:48:09,823 INFO  [Parser] Found rr:termType Literal
-2020-01-23 19:48:09,836 INFO  [Generator] Finished generating jena model in memory.
-2020-01-23 19:48:09,842 INFO  [Generator] Full run: Writing model to output/rdf/dump.rdf. Model has 1 statements.
-2020-01-23 19:48:09,861 INFO  [Generator] Writing model to disk took 16 milliseconds.
-2020-01-23 19:48:09,861 INFO  [Generator] Not Writing reified model.
-2020-01-23 19:48:09,862 INFO  [Generator] Logging results to C:\Users\jwchoi\IdeaProjects\shaper\status.rdf
-2020-01-23 19:48:09,864 INFO  [Generator] Logging took 3 milliseconds.
-2020-01-23 19:48:09,865 INFO  [ClassPathXmlApplicationContext] Closing org.springframework.context.support.ClassPathXmlApplicationContext@73ee04c8: startup date [Thu Jan 23 19:48:07 GMT+09:00 2020]; root of context hierarchy
-2020-01-23 19:48:09,868 INFO  [ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4cee7fa0: startup date [Thu Jan 23 19:48:09 GMT+09:00 2020]; root of context hierarchy
-2020-01-23 19:48:09,869 INFO  [XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [app-context.xml]
-2020-01-23 19:48:09,900 INFO  [Parser] Initializing.
-2020-01-23 19:48:09,900 INFO  [Database] Establishing source (relational) connection.
-2020-01-23 19:48:09,902 INFO  [Database] Established source (relational) connection.
-2020-01-23 19:48:09,906 INFO  [Parser] Initialising Parser
-2020-01-23 19:48:09,906 INFO  [Parser] Initialized.
-2020-01-23 19:48:09,906 INFO  [Parser] Mapping document has 0 logical table views.
-2020-01-23 19:48:09,906 INFO  [Parser] Found logical table: <http://example.com/base/TriplesMap1>
-2020-01-23 19:48:09,906 INFO  [Parser] Looking up logical table view null
-2020-01-23 19:48:09,910 INFO  [Parser] Found tableName Student
-2020-01-23 19:48:09,924 INFO  [Parser] Result is: SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID
-2020-01-23 19:48:09,924 INFO  [SelectQuery] Processing query: 'SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID'
-2020-01-23 19:48:09,924 INFO  [SelectQuery] Adding table with: name 'Student ORDER BY ID', alias 'Student ORDER BY ID'
-2020-01-23 19:48:09,924 INFO  [Parser] Added logical table mapping from uri <http://example.com/base/TriplesMap1>
-2020-01-23 19:48:09,924 INFO  [Parser] Found resource with a table name: <null>
-2020-01-23 19:48:09,924 INFO  [Parser] Found table name: Student
-2020-01-23 19:48:09,935 INFO  [Parser] Result is: SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID
-2020-01-23 19:48:09,935 INFO  [SelectQuery] Processing query: 'SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID'
-2020-01-23 19:48:09,936 INFO  [SelectQuery] Adding table with: name 'Student ORDER BY ID', alias 'Student ORDER BY ID'
-2020-01-23 19:48:09,936 INFO  [Parser] Setting SQL query for table Student: SELECT Student.ID, Student.FirstName, Student.LastName FROM Student ORDER BY ID
-2020-01-23 19:48:09,936 INFO  [Parser] Found rr:tableName "Student" without parent.
-2020-01-23 19:48:09,938 INFO  [LocalResource] Local resource: http://example.com/base/TriplesMap1
-2020-01-23 19:48:09,938 INFO  [Parser] The rr:tableName "Student" is in triples map http://example.com/base/TriplesMap1
-2020-01-23 19:48:09,938 INFO  [Parser] Mapping document has 1 logical table mappings.
-2020-01-23 19:48:09,938 INFO  [Parser] Processing subject map for: <http://example.com/base/TriplesMap1>
-2020-01-23 19:48:09,938 INFO  [Parser] Processing literal subject template: http://example.com/Student{"ID"}
-2020-01-23 19:48:09,939 INFO  [Parser] Logical table mapping uri is http://example.com/base/TriplesMap1
-2020-01-23 19:48:09,939 INFO  [Parser] Processing predicate object maps for: <http://example.com/base/TriplesMap1>
-2020-01-23 19:48:09,939 INFO  [Parser] Processing object map template: {"FirstName"} {"LastName"}
-2020-01-23 19:48:09,939 INFO  [Parser] Found rr:termType Literal
-2020-01-23 19:48:09,939 INFO  [ClassPathXmlApplicationContext] Closing org.springframework.context.support.ClassPathXmlApplicationContext@4cee7fa0: startup date [Thu Jan 23 19:48:09 GMT+09:00 2020]; root of context hierarchy
+2020-01-26 17:22:00,690 INFO  [ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@6c779568: startup date [Sun Jan 26 17:22:00 GMT+09:00 2020]; root of context hierarchy
+2020-01-26 17:22:00,747 INFO  [XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [app-context.xml]
+2020-01-26 17:22:01,107 INFO  [Parser] Initializing.
+2020-01-26 17:22:01,107 INFO  [Database] Establishing source (relational) connection.
+2020-01-26 17:22:01,109 INFO  [Database] Established source (relational) connection.
+2020-01-26 17:22:02,392 INFO  [Parser] Initialising Parser
+2020-01-26 17:22:02,398 INFO  [Parser] Initialized.
+2020-01-26 17:22:02,402 INFO  [Parser] Mapping document has 0 logical table views.
+2020-01-26 17:22:02,403 INFO  [Parser] Found logical table: <http://example.com/base/TriplesMap1>
+2020-01-26 17:22:02,404 INFO  [Parser] Looking up logical table view null
+2020-01-26 17:22:02,578 INFO  [Parser] Found tableName Student
+2020-01-26 17:22:02,607 INFO  [Parser] Result is: SELECT Student.Name FROM Student ORDER BY Name
+2020-01-26 17:22:02,608 INFO  [SelectQuery] Processing query: 'SELECT Student.Name FROM Student ORDER BY Name'
+2020-01-26 17:22:02,609 INFO  [SelectQuery] Adding table with: name 'Student ORDER BY Name', alias 'Student ORDER BY Name'
+2020-01-26 17:22:02,615 INFO  [Parser] Added logical table mapping from uri <http://example.com/base/TriplesMap1>
+2020-01-26 17:22:02,615 INFO  [Parser] Found resource with a table name: <null>
+2020-01-26 17:22:02,616 INFO  [Parser] Found table name: Student
+2020-01-26 17:22:02,630 INFO  [Parser] Result is: SELECT Student.Name FROM Student ORDER BY Name
+2020-01-26 17:22:02,631 INFO  [SelectQuery] Processing query: 'SELECT Student.Name FROM Student ORDER BY Name'
+2020-01-26 17:22:02,631 INFO  [SelectQuery] Adding table with: name 'Student ORDER BY Name', alias 'Student ORDER BY Name'
+2020-01-26 17:22:02,638 INFO  [Parser] Setting SQL query for table Student: SELECT Student.Name FROM Student ORDER BY Name
+2020-01-26 17:22:02,638 INFO  [Parser] Found rr:tableName "Student" without parent.
+2020-01-26 17:22:02,643 INFO  [LocalResource] Local resource: http://example.com/base/TriplesMap1
+2020-01-26 17:22:02,643 INFO  [Parser] The rr:tableName "Student" is in triples map http://example.com/base/TriplesMap1
+2020-01-26 17:22:02,644 INFO  [Parser] Mapping document has 1 logical table mappings.
+2020-01-26 17:22:02,644 INFO  [Parser] Processing subject map for: <http://example.com/base/TriplesMap1>
+2020-01-26 17:22:02,645 INFO  [Parser] triples belong to graphMap null
+2020-01-26 17:22:02,645 INFO  [Parser] graphMap is either a template or a constant
+2020-01-26 17:22:02,645 INFO  [Parser] Processing predicate object maps for: <http://example.com/base/TriplesMap1>
+2020-01-26 17:22:02,646 INFO  [Parser] Adding predicate map constant uri: http://example.com/description.
+2020-01-26 17:22:02,648 INFO  [Parser] Adding object map constant literal: Bad Student
+2020-01-26 17:22:02,656 INFO  [Generator] Finished generating jena model in memory.
+2020-01-26 17:22:02,664 INFO  [Generator] Full run: Writing model to output/rdf/dump.rdf. Model has 0 statements.
+2020-01-26 17:22:02,687 INFO  [Generator] Writing model to disk took 19 milliseconds.
+2020-01-26 17:22:02,687 INFO  [Generator] Not Writing reified model.
+2020-01-26 17:22:02,687 INFO  [Generator] Logging results to C:\Users\jwchoi\IdeaProjects\shaper\status.rdf
+2020-01-26 17:22:02,693 INFO  [Generator] Logging took 6 milliseconds.
+2020-01-26 17:22:02,693 INFO  [ClassPathXmlApplicationContext] Closing org.springframework.context.support.ClassPathXmlApplicationContext@6c779568: startup date [Sun Jan 26 17:22:00 GMT+09:00 2020]; root of context hierarchy
+2020-01-26 17:22:02,699 INFO  [ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@6622a690: startup date [Sun Jan 26 17:22:02 GMT+09:00 2020]; root of context hierarchy
+2020-01-26 17:22:02,702 INFO  [XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [app-context.xml]
+2020-01-26 17:22:02,747 INFO  [Parser] Initializing.
+2020-01-26 17:22:02,747 INFO  [Database] Establishing source (relational) connection.
+2020-01-26 17:22:02,750 INFO  [Database] Established source (relational) connection.
+2020-01-26 17:22:02,755 INFO  [Parser] Initialising Parser
+2020-01-26 17:22:02,755 INFO  [Parser] Initialized.
+2020-01-26 17:22:02,755 INFO  [Parser] Mapping document has 0 logical table views.
+2020-01-26 17:22:02,755 INFO  [Parser] Found logical table: <http://example.com/base/TriplesMap1>
+2020-01-26 17:22:02,755 INFO  [Parser] Looking up logical table view null
+2020-01-26 17:22:02,761 INFO  [Parser] Found tableName Student
+2020-01-26 17:22:02,776 INFO  [Parser] Result is: SELECT Student.Name FROM Student ORDER BY Name
+2020-01-26 17:22:02,776 INFO  [SelectQuery] Processing query: 'SELECT Student.Name FROM Student ORDER BY Name'
+2020-01-26 17:22:02,776 INFO  [SelectQuery] Adding table with: name 'Student ORDER BY Name', alias 'Student ORDER BY Name'
+2020-01-26 17:22:02,776 INFO  [Parser] Added logical table mapping from uri <http://example.com/base/TriplesMap1>
+2020-01-26 17:22:02,777 INFO  [Parser] Found resource with a table name: <null>
+2020-01-26 17:22:02,777 INFO  [Parser] Found table name: Student
+2020-01-26 17:22:02,790 INFO  [Parser] Result is: SELECT Student.Name FROM Student ORDER BY Name
+2020-01-26 17:22:02,790 INFO  [SelectQuery] Processing query: 'SELECT Student.Name FROM Student ORDER BY Name'
+2020-01-26 17:22:02,791 INFO  [SelectQuery] Adding table with: name 'Student ORDER BY Name', alias 'Student ORDER BY Name'
+2020-01-26 17:22:02,791 INFO  [Parser] Setting SQL query for table Student: SELECT Student.Name FROM Student ORDER BY Name
+2020-01-26 17:22:02,791 INFO  [Parser] Found rr:tableName "Student" without parent.
+2020-01-26 17:22:02,793 INFO  [LocalResource] Local resource: http://example.com/base/TriplesMap1
+2020-01-26 17:22:02,794 INFO  [Parser] The rr:tableName "Student" is in triples map http://example.com/base/TriplesMap1
+2020-01-26 17:22:02,794 INFO  [Parser] Mapping document has 1 logical table mappings.
+2020-01-26 17:22:02,794 INFO  [Parser] Processing subject map for: <http://example.com/base/TriplesMap1>
+2020-01-26 17:22:02,794 INFO  [Parser] triples belong to graphMap null
+2020-01-26 17:22:02,794 INFO  [Parser] graphMap is either a template or a constant
+2020-01-26 17:22:02,794 INFO  [Parser] Processing predicate object maps for: <http://example.com/base/TriplesMap1>
+2020-01-26 17:22:02,794 INFO  [Parser] Adding predicate map constant uri: http://example.com/description.
+2020-01-26 17:22:02,795 INFO  [Parser] Adding object map constant literal: Bad Student
+2020-01-26 17:22:02,795 INFO  [ClassPathXmlApplicationContext] Closing org.springframework.context.support.ClassPathXmlApplicationContext@6622a690: startup date [Sun Jan 26 17:22:02 GMT+09:00 2020]; root of context hierarchy

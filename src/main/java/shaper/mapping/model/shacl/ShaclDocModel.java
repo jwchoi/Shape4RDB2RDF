@@ -26,18 +26,30 @@ public class ShaclDocModel {
     }
 
     public String getRelativeIRIOr(final String absoluteIRIString) {
+        String relativeIRI = null;
+
         Set<Map.Entry<URI, String>> entrySet = prefixMap.entrySet();
 
         for (Map.Entry<URI, String> entry: entrySet) {
             String uri = entry.getKey().toString();
-            if (absoluteIRIString.startsWith(uri))
-                return absoluteIRIString.replace(uri, entry.getValue() + Symbols.COLON);
+            if (absoluteIRIString.startsWith(uri)) {
+                relativeIRI = absoluteIRIString.replace(uri, entry.getValue() + Symbols.COLON);
+
+                if (isRelativeIRI(relativeIRI)) return relativeIRI;
+            }
         }
 
         if (absoluteIRIString.startsWith(baseIRI.toString()))
             return Symbols.LT + absoluteIRIString.substring(absoluteIRIString.length()) + Symbols.GT;
 
         return Symbols.LT + absoluteIRIString + Symbols.GT;
+    }
+
+    private boolean isRelativeIRI(String relativeIRI) {
+        if (relativeIRI.contains(Symbols.SLASH) || relativeIRI.contains(Symbols.HASH))
+            return false;
+
+        return true;
     }
 
     public String getSerializedPropertyShape(IRI propertyShapeID) {
