@@ -1,50 +1,21 @@
 package shaper.mapping.shex;
 
-import gr.seab.r2rml.beans.Database;
-import gr.seab.r2rml.beans.Parser;
-import gr.seab.r2rml.entities.MappingDocument;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.*;
 import shaper.mapping.model.shex.NodeConstraint;
 import shaper.mapping.model.shex.ShExSchemaFactory;
 import shaper.mapping.model.shex.Shape;
+import shaper.mapping.r2rml.R2RMLParser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.*;
 
 public class R2RMLShExMapper extends ShExMapper {
-    //-> for R2RML parser
-    private String propertiesFile;
-    //<- for R2RML parser
+    private String R2RMLPathname;
 
-    public R2RMLShExMapper(String propertiesFile) { this.propertiesFile = propertiesFile; }
+    public R2RMLShExMapper(String R2RMLPathname) { this.R2RMLPathname = R2RMLPathname; }
 
-    private MappingDocument generateMappingDocument() {
-        Properties properties = new Properties();
-
-        try {
-            properties.load(new FileInputStream(propertiesFile));
-        } catch (Exception ex) {
-            System.err.println("Error reading properties file (" + propertiesFile + ").");
-            return null;
-        }
-
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app-context.xml");
-
-        Database db = (Database) context.getBean("db");
-        db.setProperties(properties);
-
-        Parser parser = (Parser) context.getBean("parser");
-        parser.setProperties(properties);
-
-        MappingDocument mappingDocument = parser.parse();
-
-        context.close();
-
-        return mappingDocument;
-    }
+    private R2RMLParser getR2RMLParser() { return new R2RMLParser(R2RMLPathname, R2RMLParser.Lang.TTL); }
 
     private void writeDirectives() {
         // base
@@ -101,7 +72,7 @@ public class R2RMLShExMapper extends ShExMapper {
 
     @Override
     public File generateShExFile() {
-        r2rmlModel = R2RMLModelFactory.getR2RMLModel(generateMappingDocument());
+        r2rmlModel = R2RMLModelFactory.getR2RMLModel(getR2RMLParser());
         shExSchema = ShExSchemaFactory.getShExSchemaModel(r2rmlModel);
 
         preProcess();

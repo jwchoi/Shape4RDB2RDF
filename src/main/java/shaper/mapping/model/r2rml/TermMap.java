@@ -10,7 +10,7 @@ public abstract class TermMap {
         IRI, BLANKNODE, LITERAL
     }
 
-    private Optional<String> constant; // rr:constant: it must be an IRI in the context of subjectMap.
+    private Optional<String> constant; // rr:constant //  IRI in subject map
     private Optional<SQLSelectField> column; // rr:column
     private Optional<Template> template; // rr:template
     private Optional<TermTypes> termType; // rr:termType
@@ -28,13 +28,13 @@ public abstract class TermMap {
         inverseExpression = Optional.empty();
     }
 
-    public void setConstant(String constant) { this.constant = Optional.of(constant); }
-    public void setColumn(SQLSelectField column) { this.column = Optional.of(column); }
-    public void setTemplate(Template template) { this.template = Optional.of(template); }
-    public void setTermType(TermTypes termType) { this.termType = Optional.of(termType); }
-    public void setLanguage(String language) { this.language = Optional.of(language); }
-    public void setDatatype(String datatype) { this.datatype = Optional.of(datatype); }
-    public void setinverseExpression(String inverseExpression) { this.inverseExpression = Optional.of(inverseExpression); }
+    public void setConstant(String constant) { this.constant = Optional.ofNullable(constant); }
+    public void setColumn(SQLSelectField column) { this.column = Optional.ofNullable(column); }
+    public void setTemplate(Template template) { this.template = Optional.ofNullable(template); }
+    public void setTermType(TermTypes termType) { this.termType = Optional.ofNullable(termType); }
+    public void setLanguage(String language) { this.language = Optional.ofNullable(language); }
+    public void setDatatype(String datatype) { this.datatype = Optional.ofNullable(datatype); }
+    public void setinverseExpression(String inverseExpression) { this.inverseExpression = Optional.ofNullable(inverseExpression); }
 
     public Optional<Template> getTemplate() { return template; }
     public Optional<TermTypes> getTermType() { return termType; }

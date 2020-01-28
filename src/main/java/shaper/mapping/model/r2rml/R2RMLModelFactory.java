@@ -1,42 +1,138 @@
 package shaper.mapping.model.r2rml;
 
-import com.hp.hpl.jena.datatypes.BaseDatatype;
-import gr.seab.r2rml.entities.LogicalTableMapping;
-import gr.seab.r2rml.entities.LogicalTableView;
-import gr.seab.r2rml.entities.MappingDocument;
-import gr.seab.r2rml.entities.TermType;
-import gr.seab.r2rml.entities.sql.SelectQuery;
 import janus.database.SQLResultSet;
 import janus.database.SQLSelectField;
 import shaper.Shaper;
+import shaper.mapping.r2rml.R2RMLParser;
 
 import java.net.URI;
 import java.util.*;
 
 public class R2RMLModelFactory {
-    public static R2RMLModel getR2RMLModel(MappingDocument mappingDocument) {
+
+    public static R2RMLModel getR2RMLModel(R2RMLParser parser) {
         R2RMLModel r2rmlModel = new R2RMLModel();
 
         // prefixes
-        Map<String, String> prefixMap = mappingDocument.getPrefixes();
-        Set<Map.Entry<String, String>> entrySet = prefixMap.entrySet();
-        for (Map.Entry<String, String> entry: entrySet)
-            r2rmlModel.addPrefixMap(entry.getKey(), entry.getValue());
+        Map<String, String> prefixMap = parser.getPrefixes();
+        Set<String> keySet = prefixMap.keySet();
+        for (String key: keySet)
+            r2rmlModel.addPrefixMap(key, prefixMap.get(key));
 
         // logical tables
-        List<LogicalTableView> logicalTableViews = mappingDocument.getLogicalTableViews();
-        for (LogicalTableView logicalTableView: logicalTableViews) {
-            String uri = logicalTableView.getUri();
-            if (uri != null) {
-                LogicalTable logicalTable = new LogicalTable();
+        Set<URI> logicalTablesWithURI = parser.getLogicalTables();
+        for (URI logicalTableAsIRI: logicalTablesWithURI) {
+            LogicalTable logicalTable = new LogicalTable();
 
-                logicalTable.setUri(URI.create(uri));
+            logicalTable.setUri(logicalTableAsIRI);
+            logicalTable.setSqlQuery(parser.getSQLQuery(logicalTableAsIRI.toString()));
+            logicalTable.setTableName(parser.getTableName(logicalTableAsIRI.toString()));
 
-                SelectQuery selectQuery = logicalTableView.getSelectQuery();
-                if (selectQuery != null)
-                    logicalTable.setSqlQuery(selectQuery.getQuery());
+            Set<URI> sqlVersions = parser.getSQLVersions(logicalTableAsIRI.toString());
+            for (URI sqlVersion: sqlVersions)
+                logicalTable.addSqlVersion(sqlVersion);
 
-                r2rmlModel.addLogicalTable(logicalTable);
+            r2rmlModel.addLogicalTable(logicalTable);
+        }
+
+        // triples maps
+        Set<String> triplesMaps = parser.getTriplesMaps();
+        for (String triplesMapAsResource: triplesMaps) {
+
+            // logical table
+            String logicalTableAsResource = parser.getLogicalTable(triplesMapAsResource);
+
+            LogicalTable logicalTable;
+
+            if (R2RMLParser.isURI(logicalTableAsResource))
+                logicalTable = r2rmlModel.getLogicalTableBy(URI.create(logicalTableAsResource));
+            else {
+                // when logical table is a blank node
+                logicalTable = new LogicalTable();
+                logicalTable.setSqlQuery(parser.getSQLQuery(logicalTableAsResource));
+                logicalTable.setTableName(parser.getTableName(logicalTableAsResource));
+
+                Set<URI> sqlVersions = parser.getSQLVersions(logicalTableAsResource);
+                for (URI sqlVersion: sqlVersions)
+                    logicalTable.addSqlVersion(sqlVersion);
+            }
+
+            // subject map
+            String subjectMapAsResource = parser.getSubjectMap(triplesMapAsResource);
+
+            Set<URI> classes = parser.getClasses(subjectMapAsResource); // the size of classes could be zero.
+
+            SubjectMap subjectMap = new SubjectMap(classes);
+
+            subjectMap.setConstant(parser.getIRIConstant(subjectMapAsResource).toString()); // IRI in SubjectMap
+
+            String query = logicalTable.getSqlQuery();
+            SQLResultSet resultSet = Shaper.dbBridge.executeQuery(query);
+
+            String column = parser.getColumn(subjectMapAsResource);
+            if (column != null)
+                subjectMap.setColumn(createSQLSelectField(column, query, resultSet));
+
+            String template = parser.getTemplate(subjectMapAsResource);
+            if (template != null) {
+                List<SQLSelectField> columnNames = createSQLSelectFields(getColumnNamesIn(template), query, resultSet);
+                boolean isIRIFormat = isValidIRITemplate(template);
+                subjectMap.setTemplate(new Template(template, columnNames, isIRIFormat));
+            }
+
+
+
+
+
+
+            System.out.println("term type: " + parser.getTermType(subjectMapAsResource));
+            System.out.println("inverse expression: " + parser.getInverseExpression(subjectMapAsResource));
+
+            // predicate object map
+            Set<String> predicateObjectMaps = parser.getPredicateObjectMaps(triplesMapAsResource);
+            for (String predicateObjectMap: predicateObjectMaps) {
+                System.out.println("predicate object map: " + predicateObjectMap);
+
+                // predicate or predicate map
+                URI predicate = parser.getPredicate(predicateObjectMap);
+                if (predicate == null) {
+                    String predicateMap = parser.getPredicateMap(predicateObjectMap);
+                    predicate = parser.getIRIConstant(predicateMap);
+                }
+                System.out.println("predicate: " + predicate);
+
+                // object or object map
+                URI IRIObject = parser.getIRIObject(predicateObjectMap);
+                System.out.println("object: " + IRIObject + ", which is an IRI");
+                String literalObject = parser.getLiteralObject(predicateObjectMap);
+                System.out.println("object: " + literalObject + ", which is a literal");
+                if (IRIObject == null && literalObject == null) {
+                    String objectMap = parser.getObjectMap(predicateObjectMap);
+                    System.out.println(objectMap);
+
+                    URI IRIConstant = parser.getIRIConstant(objectMap);
+                    System.out.println("constant: " + IRIConstant + ", which is an IRI");
+                    String literalConstant = parser.getLiteralConstant(objectMap);
+                    System.out.println("constant: " + literalConstant + ", which is a literal");
+
+                    System.out.println("column: " + parser.getColumn(objectMap));
+                    System.out.println("template: " + parser.getTemplate(objectMap));
+                    System.out.println("term type: " + parser.getTermType(objectMap));
+                    System.out.println("inverse expression: " + parser.getInverseExpression(objectMap));
+                    System.out.println("language tag: " + parser.getLanguage(objectMap));
+                    System.out.println("datatype: " + parser.getDatatype(objectMap));
+
+                    // referencing object map
+                    String parentTriplesMap = parser.getParentTriplesMap(objectMap);
+                    System.out.println("parent triples map: " + parentTriplesMap);
+                    if (parentTriplesMap != null) {
+                        Set<String> joinConditions = parser.getJoinConditions(objectMap);
+                        for (String joinCondition: joinConditions) {
+                            System.out.println("child: " + parser.getChild(joinCondition));
+                            System.out.println("parent: " + parser.getParent(joinCondition));
+                        }
+                    }
+                }
             }
         }
 
@@ -183,5 +279,29 @@ public class R2RMLModelFactory {
             sqlSelectField.setSqlType(columnType.get());
 
         return sqlSelectField;
+    }
+
+    private static List<String> getColumnNamesIn(String template) {
+        List<String> columnNames = new LinkedList<>();
+
+        int length = template.length();
+        int fromIndex = 0;
+        while (fromIndex < length) {
+            int beginIndex = template.indexOf("{", fromIndex);
+            int endIndex = template.indexOf("}", fromIndex);
+            String columnName = template.substring(beginIndex + 1, endIndex);
+            columnNames.add(columnName);
+            fromIndex = endIndex + 1;
+        }
+
+        return columnNames;
+    }
+
+    private static boolean isValidIRITemplate(String template) {
+        template = template.replace("\"", "");
+        template = template.replace("{", "");
+        template = template.replace("}", "");
+
+        return R2RMLParser.isURI(template);
     }
 }

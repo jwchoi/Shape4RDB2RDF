@@ -2,6 +2,8 @@ package shaper.mapping.model.r2rml;
 
 import java.net.URI;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class LogicalTable {
 
@@ -9,14 +11,14 @@ public class LogicalTable {
 
     private Optional<String> tableName; // rr:tableName
     private Optional<String> sqlQuery; // rr:sqlQuery
-    private Optional<String> sqlVersion; // rr:sqlVersion, which is an IRI
+    private Set<URI> sqlVersions; // rr:sqlVersion, which is an IRI
 
     LogicalTable() {
         uri = Optional.empty();
 
         tableName = Optional.empty();
         sqlQuery = Optional.empty();
-        sqlVersion = Optional.empty();
+        sqlVersions = new TreeSet<>();
     }
 
     public void setUri(URI uri) {
@@ -31,11 +33,11 @@ public class LogicalTable {
         this.sqlQuery = Optional.ofNullable(sqlQuery);
     }
 
-    public void setSqlVersion(String sqlVersion) {
-        this.sqlVersion = Optional.ofNullable(sqlVersion);
+    public void addSqlVersion(URI sqlVersion) {
+        sqlVersions.add(sqlVersion);
     }
 
-    public Optional<String> getSqlQuery() { return sqlQuery; }
+    public String getSqlQuery() { return sqlQuery.isPresent() ? sqlQuery.get() : "SELECT * FROM " + tableName.get(); }
 
     public Optional<URI> getUri() { return uri; }
 }

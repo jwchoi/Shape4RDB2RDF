@@ -236,7 +236,7 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
         // replace meta-characters in XPath
         regex = regex.replace(Symbols.SLASH, Symbols.BACKSLASH + Symbols.SLASH);
         regex = regex.replace(Symbols.DOT, Symbols.BACKSLASH + Symbols.DOT);
-        if (!template.isIRIPattern()) { // for LITERAL
+        if (!template.isIRIFormat()) { // for LITERAL
             //regex = regex.replace(RDFMapper.BACKSLASH, RDFMapper.BACKSLASH + RDFMapper.BACKSLASH);
 //            regex = regex.replace(RDFMapper.SLASH, RDFMapper.BACKSLASH + RDFMapper.SLASH);
 //            regex = regex.replace(RDFMapper.DOT, RDFMapper.BACKSLASH + RDFMapper.DOT);

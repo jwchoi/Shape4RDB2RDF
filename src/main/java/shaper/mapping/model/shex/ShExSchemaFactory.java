@@ -100,7 +100,7 @@ public class ShExSchemaFactory {
                     }
 
                     // RR_CLASSES tripleConstraint
-                    derivedShape.addTripleConstraint(new TripleConstraint(new ArrayList<>(classIRIs)));
+                    derivedShape.addTripleConstraint(new TripleConstraint(classIRIs));
 
                     shExSchema.addShape(derivedShape);
                 }

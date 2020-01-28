@@ -20,13 +20,6 @@ public class R2RMLModel {
 
     public void addTriplesMap(TriplesMap triplesMap) { triplesMaps.add(triplesMap); }
 
-    public boolean isIRI(String template) {
-        for (String key : prefixMap.keySet())
-            if (template.startsWith(key + ":") || template.startsWith(prefixMap.get(key))) return true;
-
-        return template.startsWith("http") ? true : false;
-    }
-
     public Set<TriplesMap> getTriplesMaps() { return triplesMaps; }
 
     public LogicalTable getLogicalTableBy(URI iri) {

@@ -1,9 +1,5 @@
 package shaper.mapping.shacl;
 
-import gr.seab.r2rml.beans.Database;
-import gr.seab.r2rml.beans.Parser;
-import gr.seab.r2rml.entities.MappingDocument;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import shaper.Shaper;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.R2RMLModelFactory;
@@ -11,47 +7,19 @@ import shaper.mapping.model.r2rml.TriplesMap;
 import shaper.mapping.model.shacl.IRI;
 import shaper.mapping.model.shacl.NodeShape;
 import shaper.mapping.model.shacl.ShaclDocModelFactory;
+import shaper.mapping.r2rml.R2RMLParser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.util.*;
 
 public class R2RMLShaclMapper extends ShaclMapper {
-    //-> for R2RML parser
-    private String propertiesFile;
-    //<- for R2RML parser
+    private String R2RMLPathname;
 
-    private String r2rmlFileName;
+    public R2RMLShaclMapper(String R2RMLPathname) { this.R2RMLPathname = R2RMLPathname; }
 
-    public R2RMLShaclMapper(String propertiesFile) { this.propertiesFile = propertiesFile; }
-
-    private MappingDocument generateMappingDocument() {
-        Properties properties = new Properties();
-
-        try {
-            properties.load(new FileInputStream(propertiesFile));
-            r2rmlFileName = properties.getProperty("mapping.file");
-        } catch (Exception ex) {
-            System.err.println("Error reading properties file (" + propertiesFile + ").");
-            return null;
-        }
-
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app-context.xml");
-
-        Database db = (Database) context.getBean("db");
-        db.setProperties(properties);
-
-        Parser parser = (Parser) context.getBean("parser");
-        parser.setProperties(properties);
-
-        MappingDocument mappingDocument = parser.parse();
-
-        context.close();
-
-        return mappingDocument;
-    }
+    private R2RMLParser getR2RMLParser() { return new R2RMLParser(R2RMLPathname, R2RMLParser.Lang.TTL); }
 
     private void writeDirectives() {
         // base
@@ -87,7 +55,7 @@ public class R2RMLShaclMapper extends ShaclMapper {
     }
 
     private void preProcess() {
-        String fileName = r2rmlFileName.substring(r2rmlFileName.lastIndexOf("/")+1, r2rmlFileName.lastIndexOf("."));
+        String fileName = R2RMLPathname.substring(R2RMLPathname.lastIndexOf("/")+1, R2RMLPathname.lastIndexOf("."));
         fileName = fileName + Symbols.DASH + "SHACL";
         output = new File(Shaper.DEFAULT_DIR_FOR_SHACL_FILE + fileName + "." + "ttl");
 
@@ -100,7 +68,7 @@ public class R2RMLShaclMapper extends ShaclMapper {
 
     @Override
     public File generateShaclFile() {
-        r2rmlModel = R2RMLModelFactory.getR2RMLModel(generateMappingDocument());
+        r2rmlModel = R2RMLModelFactory.getR2RMLModel(getR2RMLParser());
         shaclDocModel = ShaclDocModelFactory.getSHACLDocModel(r2rmlModel);
 
         preProcess();

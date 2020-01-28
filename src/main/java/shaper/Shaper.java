@@ -18,7 +18,6 @@ import shaper.mapping.shex.ShExMapper;
 
 public class Shaper {
 	private static final String SHAPER_PROPERTIES_FILE = "shaper.properties";
-	private static final String R2RML_PARSER_PROPERTIES_FILE = "r2rml-parser.properties";
 
 	public static final String DEFAULT_DIR_FOR_RDF_FILE = "./output/rdf/";
 	public static final String DEFAULT_DIR_FOR_SHACL_FILE = "./output/shacl/";
@@ -106,7 +105,7 @@ public class Shaper {
 
 		switch (mappingType) {
 			case "dm": shaclMapper = new DirectMappingShaclMapper(); break;
-			case "r2rml": shaclMapper = new R2RMLShaclMapper(R2RML_PARSER_PROPERTIES_FILE); break;
+			case "r2rml": shaclMapper = new R2RMLShaclMapper(properties.getProperty("mapping.file")); break;
 		}
 
 		if (shaclMapper != null) {
@@ -124,7 +123,7 @@ public class Shaper {
 
 		switch (mappingType) {
 			case "dm": shexMapper = new DirectMappingShExMapper(); break;
-			case "r2rml": shexMapper = new R2RMLShExMapper(R2RML_PARSER_PROPERTIES_FILE); break;
+			case "r2rml": shexMapper = new R2RMLShExMapper(properties.getProperty("mapping.file")); break;
 		}
 
 		if (shexMapper != null) {
@@ -142,7 +141,7 @@ public class Shaper {
 
 		switch (mappingType) {
 			case "dm": rdfMapper = new DirectMappingRDFMapper(); break;
-			case "r2rml": rdfMapper = new R2RMLRDFMapper(R2RML_PARSER_PROPERTIES_FILE); break;
+			case "r2rml": rdfMapper = new R2RMLRDFMapper(properties.getProperty("mapping.file")); break;
 		}
 
 		if (rdfMapper != null) {

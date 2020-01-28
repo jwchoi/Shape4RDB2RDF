@@ -12,7 +12,6 @@ import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class TripleConstraint implements Comparable<TripleConstraint> {
 
@@ -161,8 +160,8 @@ public class TripleConstraint implements Comparable<TripleConstraint> {
 
     private String cardinality;
 
-    TripleConstraint(List<URI> classIRIs) {
-        this.classIRIs = new TreeSet<>(classIRIs);
+    TripleConstraint(Set<URI> classIRIs) {
+        this.classIRIs = classIRIs;
         mappedType = MappedTypes.RR_CLASSES;
     }
 

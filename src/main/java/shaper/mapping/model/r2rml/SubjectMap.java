@@ -1,14 +1,12 @@
 package shaper.mapping.model.r2rml;
 
 import java.net.URI;
-import java.util.List;
+import java.util.Set;
 
 public class SubjectMap extends TermMap {
-    private List<URI> classIRIs;
+    private Set<URI> classIRIs; // the size of classIRIs could be zero.
 
-    SubjectMap(List<URI> classIRIs) {
-        this.classIRIs = classIRIs;
-    }
+    SubjectMap(Set<URI> classIRIs) { this.classIRIs = classIRIs; }
 
-    public List<URI> getClassIRIs() { return classIRIs; }
+    public Set<URI> getClassIRIs() { return classIRIs; }
 }
