@@ -8,10 +8,26 @@ import shaper.mapping.Symbols;
 import shaper.mapping.model.rdf.RDFMappingModelFactory;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.util.*;
 
 public class DirectMappingRDFMapper extends RDFMapper {
+
+	private void preProcess(Extension extension) {
+		String catalog = Shaper.dbSchema.getCatalog();
+
+		switch (extension) {
+			case Turtle:
+				output = new File(Shaper.DEFAULT_DIR_FOR_RDF_FILE + catalog + "." + extension);
+				break;
+		}
+		try {
+			writer = new PrintWriter(output);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void writeDirectives(Extension extension) {
 		try {
@@ -21,9 +37,9 @@ public class DirectMappingRDFMapper extends RDFMapper {
 					writer.println(Symbols.AT + Symbols.base + Symbols.SPACE + Symbols.LT + Shaper.rdfBaseURI + Symbols.GT + Symbols.SPACE + Symbols.DOT);
 
 					// prefixID
-					writer.println(Symbols.AT + Symbols.prefix + Symbols.SPACE + PrefixMap.getPrefix(URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns")) + Symbols.COLON + Symbols.SPACE + "<http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + Symbols.SPACE + Symbols.DOT);
-					writer.println(Symbols.AT + Symbols.prefix + Symbols.SPACE + PrefixMap.getPrefix(URI.create("http://www.w3.org/2001/XMLSchema")) + Symbols.COLON + Symbols.SPACE + "<http://www.w3.org/2001/XMLSchema#>" + Symbols.SPACE + Symbols.DOT);
-					writer.println(Symbols.AT + Symbols.prefix + Symbols.SPACE + PrefixMap.getPrefix(URI.create("http://www.w3.org/2000/01/rdf-schema")) + Symbols.COLON + Symbols.SPACE + "<http://www.w3.org/2000/01/rdf-schema#>" + Symbols.SPACE + Symbols.DOT);
+					writer.println(Symbols.AT + Symbols.prefix + Symbols.SPACE + "rdf" + Symbols.COLON + Symbols.SPACE + Symbols.LT + PrefixMap.getURI("rdf") + Symbols.GT + Symbols.SPACE + Symbols.DOT);
+					writer.println(Symbols.AT + Symbols.prefix + Symbols.SPACE + "xsd" + Symbols.COLON + Symbols.SPACE + Symbols.LT + PrefixMap.getURI("xsd") + Symbols.GT + Symbols.SPACE + Symbols.DOT);
+					writer.println(Symbols.AT + Symbols.prefix + Symbols.SPACE + "rdfs" + Symbols.COLON + Symbols.SPACE + Symbols.LT + PrefixMap.getURI("rdfs") + Symbols.GT + Symbols.SPACE + Symbols.DOT);
 					writer.println();
 					break;
 			}

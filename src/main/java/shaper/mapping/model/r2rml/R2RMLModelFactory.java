@@ -60,191 +60,164 @@ public class R2RMLModelFactory {
             // subject map
             String subjectMapAsResource = parser.getSubjectMap(triplesMapAsResource);
 
+            // rr:class
             Set<URI> classes = parser.getClasses(subjectMapAsResource); // the size of classes could be zero.
 
             SubjectMap subjectMap = new SubjectMap(classes);
 
-            subjectMap.setConstant(parser.getIRIConstant(subjectMapAsResource).toString()); // IRI in SubjectMap
+            // ?x rr:subject ?y.
+            URI constant = parser.getIRIConstant(subjectMapAsResource);
+            if (constant != null)
+                subjectMap.setConstant(constant.toString());
 
             String query = logicalTable.getSqlQuery();
             SQLResultSet resultSet = Shaper.dbBridge.executeQuery(query);
 
+            // rr:column
             String column = parser.getColumn(subjectMapAsResource);
             if (column != null)
                 subjectMap.setColumn(createSQLSelectField(column, query, resultSet));
 
+            // rr:template
             String template = parser.getTemplate(subjectMapAsResource);
             if (template != null) {
                 List<SQLSelectField> columnNames = createSQLSelectFields(getColumnNamesIn(template), query, resultSet);
-                boolean isIRIFormat = isValidIRITemplate(template);
-                subjectMap.setTemplate(new Template(template, columnNames, isIRIFormat));
+                subjectMap.setTemplate(new Template(template, columnNames));
             }
 
+            // rr:inverseExpression
+            subjectMap.setinverseExpression(parser.getInverseExpression(subjectMapAsResource));
 
+            // rr:termType
+            URI termType = parser.getTermType(subjectMapAsResource);
+            if (termType != null)
+                subjectMap.setTermType(termType);
+            else
+                subjectMap.setTermType(TermMap.TermTypes.IRI);
 
-
-
-
-            System.out.println("term type: " + parser.getTermType(subjectMapAsResource));
-            System.out.println("inverse expression: " + parser.getInverseExpression(subjectMapAsResource));
+            // triples map
+            TriplesMap triplesMap = new TriplesMap(URI.create(triplesMapAsResource), logicalTable, subjectMap);
 
             // predicate object map
             Set<String> predicateObjectMaps = parser.getPredicateObjectMaps(triplesMapAsResource);
             for (String predicateObjectMap: predicateObjectMaps) {
-                System.out.println("predicate object map: " + predicateObjectMap);
-
                 // predicate or predicate map
+                // ?x rr:predicate ?y.
                 URI predicate = parser.getPredicate(predicateObjectMap);
                 if (predicate == null) {
+                    // ?x rr:predicateMap [ rr:constant ?y ].
                     String predicateMap = parser.getPredicateMap(predicateObjectMap);
                     predicate = parser.getIRIConstant(predicateMap);
                 }
-                System.out.println("predicate: " + predicate);
+                PredicateMap predicateMap = new PredicateMap(predicate.toString());
+                predicateMap.setTermType(TermMap.TermTypes.IRI);
 
-                // object or object map
+                // object
+
+                // ?x rr:object ?y.
                 URI IRIObject = parser.getIRIObject(predicateObjectMap);
-                System.out.println("object: " + IRIObject + ", which is an IRI");
-                String literalObject = parser.getLiteralObject(predicateObjectMap);
-                System.out.println("object: " + literalObject + ", which is a literal");
-                if (IRIObject == null && literalObject == null) {
-                    String objectMap = parser.getObjectMap(predicateObjectMap);
-                    System.out.println(objectMap);
+                if (IRIObject != null) {
+                    ObjectMap objectMap = new ObjectMap(IRIObject.toString());
+                    objectMap.setTermType(TermMap.TermTypes.IRI);
 
-                    URI IRIConstant = parser.getIRIConstant(objectMap);
-                    System.out.println("constant: " + IRIConstant + ", which is an IRI");
-                    String literalConstant = parser.getLiteralConstant(objectMap);
-                    System.out.println("constant: " + literalConstant + ", which is a literal");
+                    triplesMap.addPredicateObjectMap(new PredicateObjectMap(predicateMap, objectMap));
 
-                    System.out.println("column: " + parser.getColumn(objectMap));
-                    System.out.println("template: " + parser.getTemplate(objectMap));
-                    System.out.println("term type: " + parser.getTermType(objectMap));
-                    System.out.println("inverse expression: " + parser.getInverseExpression(objectMap));
-                    System.out.println("language tag: " + parser.getLanguage(objectMap));
-                    System.out.println("datatype: " + parser.getDatatype(objectMap));
-
-                    // referencing object map
-                    String parentTriplesMap = parser.getParentTriplesMap(objectMap);
-                    System.out.println("parent triples map: " + parentTriplesMap);
-                    if (parentTriplesMap != null) {
-                        Set<String> joinConditions = parser.getJoinConditions(objectMap);
-                        for (String joinCondition: joinConditions) {
-                            System.out.println("child: " + parser.getChild(joinCondition));
-                            System.out.println("parent: " + parser.getParent(joinCondition));
-                        }
-                    }
+                    continue;
                 }
-            }
-        }
 
-        // triples maps
-        List<LogicalTableMapping> logicalTableMappings = mappingDocument.getLogicalTableMappings();
-        for (LogicalTableMapping logicalTableMapping: logicalTableMappings) {
-            // uri
-            String uriOfTriplesMap = logicalTableMapping.getUri();
+                // ?x rr:object ?y.
+                String literalObject = parser.getLiteralObject(predicateObjectMap);
+                if (literalObject != null) {
+                    ObjectMap objectMap = new ObjectMap(literalObject);
+                    objectMap.setTermType(TermMap.TermTypes.LITERAL);
 
-            // logical table
-            LogicalTableView logicalTableView = logicalTableMapping.getView();
-            String uriOfLogicalTable = logicalTableView.getUri();
+                    triplesMap.addPredicateObjectMap(new PredicateObjectMap(predicateMap, objectMap));
 
-            LogicalTable logicalTable = new LogicalTable();
-            if (uriOfLogicalTable != null)
-                logicalTable.setUri(URI.create(uriOfLogicalTable));
-
-            SelectQuery selectQuery = logicalTableView.getSelectQuery();
-            if (selectQuery != null)
-                logicalTable.setSqlQuery(selectQuery.getQuery());
-
-            // subject map
-            gr.seab.r2rml.entities.SubjectMap subjectMap = logicalTableMapping.getSubjectMap();
-
-            List<String> classUris = subjectMap.getClassUris();
-            List<URI> classIRIs = new ArrayList<>();
-
-            for (String classUri: classUris)
-                classIRIs.add(URI.create(classUri));
-
-            SubjectMap sMap = new SubjectMap(classIRIs);
-
-            gr.seab.r2rml.entities.Template template = subjectMap.getTemplate();
-
-            // rr:termType
-            TermType termType = template.getTermType();
-            if (termType.equals(TermType.BLANKNODE))
-                sMap.setTermType(TermMap.TermTypes.BLANKNODE);
-            else
-                sMap.setTermType(TermMap.TermTypes.IRI);
-
-            /*// rr:constant: Not Supported in Parser
-            List<String> fields = template.getFields();
-            if (template.isUri() && (termType.equals(TermType.IRI) || fields.size() < 1))
-                sMap.setConstant(template.getText());
-
-            // rr:column: handle as template case in parser
-            String text = template.getText();
-            if (fields.size() == 1) {
-                if (text.replace("{" + fields.get(0) + "}", "").length() < 1)
-                    sMap.setColumn(fields.get(0));
-            }*/
-
-            // execute sql query
-            String query = selectQuery != null ? selectQuery.getQuery() : mappingDocument.findLogicalTableViewByUri(uriOfLogicalTable).getSelectQuery().getQuery();
-            SQLResultSet sqlResultSet = Shaper.dbBridge.executeQuery(query);
-
-            // rr:template
-            sMap.setTemplate(new Template(template.getText(), createSQLSelectFields(template.getFields(), query, sqlResultSet), template.isUri()));
-
-            TriplesMap triplesMap = new TriplesMap(URI.create(uriOfTriplesMap), logicalTable, sMap);
-
-            // rr:predicateObjectMap
-            List<gr.seab.r2rml.entities.PredicateObjectMap> predicateObjectMaps = logicalTableMapping.getPredicateObjectMaps();
-            for (gr.seab.r2rml.entities.PredicateObjectMap predicateObjectMap: predicateObjectMaps) {
-                // rr:predicateMap
-                PredicateMap pMap = new PredicateMap(predicateObjectMap.getPredicates().get(0));
+                    continue;
+                }
 
                 // rr:objectMap
-                String objectColumn = predicateObjectMap.getObjectColumn();
-                gr.seab.r2rml.entities.Template objectTemplate = predicateObjectMap.getObjectTemplate();
-                gr.seab.r2rml.entities.RefObjectMap refObjectMap = predicateObjectMap.getRefObjectMap();
-                if (refObjectMap != null) {
-                    // rr:parentTriplesMap
-                    String parentTriplesMapUri = refObjectMap.getParentTriplesMapUri();
+                String objectMapAsResource = parser.getObjectMap(predicateObjectMap);
+                if (objectMapAsResource != null) {
+                    String parentTriplesMap = parser.getParentTriplesMap(objectMapAsResource);
+                    if (parentTriplesMap != null) {
+                        // referencing object map
+                        RefObjectMap refObjectMap = new RefObjectMap(URI.create(parentTriplesMap));
 
-                    RefObjectMap referencingObjectMap = new RefObjectMap(URI.create(parentTriplesMapUri));
+                        Set<String> joinConditions = parser.getJoinConditions(objectMapAsResource);
+                        for (String joinCondition: joinConditions) {
+                            String child = parser.getChild(joinCondition);
+                            String parent = parser.getParent(joinCondition);
 
-                    // rr:child & rr:parent
-                    String child = refObjectMap.getChild();
-                    String parent = refObjectMap.getParent();
-                    if (child != null && parent != null)
-                        referencingObjectMap.addJoinCondition(child, parent);
+                            refObjectMap.addJoinCondition(child, parent);
+                        }
 
-                    triplesMap.addPredicateObjectMap(new PredicateObjectMap(pMap, referencingObjectMap));
-                } else {
-                    ObjectMap objectMap;
+                        triplesMap.addPredicateObjectMap(new PredicateObjectMap(predicateMap, refObjectMap));
+                    } else {
+                        // object map
+                        ObjectMap objectMap = null;
 
-                    if (objectColumn != null)
-                        objectMap = new ObjectMap(createSQLSelectField(objectColumn, query, sqlResultSet)); // rr:column
-                    else
-                        objectMap = new ObjectMap(new Template(objectTemplate.getText(), createSQLSelectFields(objectTemplate.getFields(), query, sqlResultSet), objectTemplate.isUri())); // rr:template
+                        // ?x rr:objectMap [ rr:constant ?y ].
+                        URI IRIConstant = parser.getIRIConstant(objectMapAsResource);
+                        if (IRIConstant != null) {
+                            objectMap = new ObjectMap(IRIConstant.toString());
+                            objectMap.setTermType(TermMap.TermTypes.IRI);
+                        }
 
-                    // rr:termType
-                    switch (objectTemplate.getTermType()) {
-                        case IRI: objectMap.setTermType(TermMap.TermTypes.IRI);
-                        case BLANKNODE: objectMap.setTermType(TermMap.TermTypes.BLANKNODE);
-                        case LITERAL: objectMap.setTermType(TermMap.TermTypes.LITERAL);
-                        case AUTO: break;
+                        // ?x rr:objectMap [ rr:constant ?y ].
+                        String literalConstant = parser.getLiteralConstant(objectMapAsResource);
+                        if (literalConstant != null) {
+                            objectMap = new ObjectMap(literalConstant);
+                            objectMap.setTermType(TermMap.TermTypes.LITERAL);
+                        }
+
+                        // column
+                        column = parser.getColumn(objectMapAsResource);
+                        if (column != null) {
+                            objectMap = new ObjectMap(createSQLSelectField(column, query, resultSet));
+
+                            termType = parser.getTermType(objectMapAsResource);
+                            if (termType != null)
+                                objectMap.setTermType(termType);
+                            else
+                                objectMap.setTermType(TermMap.TermTypes.LITERAL);
+
+                            // rr:inverseExpression
+                            objectMap.setinverseExpression(parser.getInverseExpression(objectMapAsResource));
+                        }
+
+                        // rr:template
+                        template = parser.getTemplate(objectMapAsResource);
+                        if (template != null) {
+                            List<SQLSelectField> columnNames = createSQLSelectFields(getColumnNamesIn(template), query, resultSet);
+                            objectMap = new ObjectMap(new Template(template, columnNames));
+
+                            termType = parser.getTermType(objectMapAsResource);
+                            if (termType != null)
+                                objectMap.setTermType(termType);
+                            else
+                                objectMap.setTermType(TermMap.TermTypes.IRI);
+
+                            // rr:inverseExpression
+                            objectMap.setinverseExpression(parser.getInverseExpression(objectMapAsResource));
+                        }
+
+                        // rr:language
+                        String language = parser.getLanguage(objectMapAsResource);
+                        if (language != null) {
+                            objectMap.setLanguage(language);
+                            objectMap.setTermType(TermMap.TermTypes.LITERAL);
+                        }
+
+                        // rr:datatype
+                        URI datatype = parser.getDatatype(objectMapAsResource);
+                        if (datatype != null) {
+                            objectMap.setDatatype(datatype);
+                            objectMap.setTermType(TermMap.TermTypes.LITERAL);
+                        }
+
+                        triplesMap.addPredicateObjectMap(new PredicateObjectMap(predicateMap, objectMap));
                     }
-
-                    // rr:language
-                    String language = objectTemplate.getLanguage();
-                    if (language != null && language.length() > 0)
-                        objectMap.setLanguage(language);
-
-                    // rr:datatype
-                    BaseDatatype dataType = predicateObjectMap.getDataType();
-                    if (dataType != null)
-                        objectMap.setDatatype(dataType.getURI());
-
-                    triplesMap.addPredicateObjectMap(new PredicateObjectMap(pMap, objectMap));
                 }
             }
 
@@ -282,26 +255,32 @@ public class R2RMLModelFactory {
     }
 
     private static List<String> getColumnNamesIn(String template) {
+        // because backslashes need to be escaped by a second backslash in the Turtle syntax,
+        // a double backslash is needed to escape each curly brace,
+        // and to get one literal backslash in the output one needs to write four backslashes in the template.
+        template = template.replace("\\\\", "\\");
+
         List<String> columnNames = new LinkedList<>();
 
         int length = template.length();
         int fromIndex = 0;
         while (fromIndex < length) {
-            int beginIndex = template.indexOf("{", fromIndex);
-            int endIndex = template.indexOf("}", fromIndex);
-            String columnName = template.substring(beginIndex + 1, endIndex);
+            int openBrace = template.indexOf("{", fromIndex);
+            while (openBrace > 0 && template.charAt(openBrace - 1) == '\\')
+                openBrace = template.indexOf("{", openBrace + 1);
+
+            int closeBrace = template.indexOf("}", fromIndex);
+            while (closeBrace > 0 && template.charAt(closeBrace - 1) == '\\')
+                closeBrace = template.indexOf("}", closeBrace + 1);
+
+            String columnName = template.substring(openBrace + 1, closeBrace);
+            columnName = columnName.replace("\\{", "{");
+            columnName = columnName.replace("\\}", "}");
+
             columnNames.add(columnName);
-            fromIndex = endIndex + 1;
+            fromIndex = closeBrace + 1;
         }
 
         return columnNames;
-    }
-
-    private static boolean isValidIRITemplate(String template) {
-        template = template.replace("\"", "");
-        template = template.replace("{", "");
-        template = template.replace("}", "");
-
-        return R2RMLParser.isURI(template);
     }
 }

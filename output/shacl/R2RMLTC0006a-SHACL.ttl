@@ -6,15 +6,13 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-cse:TriplesMap1Shape-foaf-name
+cse:ddc257bf-1413-4edb-9c99-635d918aeacaShape-ex-description
     a sh:PropertyShape ;
-    sh:path foaf:name ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxCount 1  .
+    sh:path ex:description ;
+    sh:nodeKind sh:Literal  .
     
-cse:TriplesMap1Shape
+cse:ddc257bf-1413-4edb-9c99-635d918aeacaShape
     a sh:NodeShape ;
-    sh:nodeKind sh:BlankNode ;
-    sh:property cse:TriplesMap1Shape-foaf-name  .
+    sh:nodeKind sh:IRI ;
+    sh:property cse:ddc257bf-1413-4edb-9c99-635d918aeacaShape-ex-description  .
     

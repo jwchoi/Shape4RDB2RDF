@@ -11,4 +11,6 @@ public class ObjectMap extends TermMap {
     ObjectMap(Template template) {
         setTemplate(template);
     }
+
+    ObjectMap(String constant) { setConstant(constant); }
 }

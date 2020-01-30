@@ -18,16 +18,4 @@ public abstract class ShExMapper {
     PrintWriter writer;
 
     public abstract File generateShExFile();
-
-    void preProcess() {
-        String catalog = Shaper.dbSchema.getCatalog();
-
-        output = new File(Shaper.DEFAULT_DIR_FOR_SHEX_FILE + catalog + "." + "shex");
-
-        try {
-            writer = new PrintWriter(output);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

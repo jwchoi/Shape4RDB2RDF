@@ -7,11 +7,9 @@ import java.util.List;
 public class Template {
     private String format;
     private List<SQLSelectField> columnNames;
-    private boolean isIRIFormat;
 
-    Template(String format, List<SQLSelectField> columnNames, boolean isIRIFormat) {
+    Template(String format, List<SQLSelectField> columnNames) {
         this.format = format;
-        this.isIRIFormat = isIRIFormat;
         this.columnNames = columnNames;
     }
 
@@ -26,9 +24,5 @@ public class Template {
             format = format.replace("{" + columnName.getColumnNameOrAlias() + "}", "");
 
         return format.length();
-    }
-
-    public boolean isIRIFormat() {
-        return isIRIFormat;
     }
 }

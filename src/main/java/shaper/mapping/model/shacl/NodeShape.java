@@ -34,21 +34,21 @@ public class NodeShape extends Shape {
 
         String o; // to be used as objects of different RDF triples
 
-        // sh:targetClass
-        Set<URI> classIRIs = new TreeSet(subjectMap.getClassIRIs());
-        for (URI classIRI: classIRIs) {
-            o = getShaclDocModel().getRelativeIRIOr(classIRI.toString());
-
-            buffer.append(getPO("sh:targetClass", o));
-            buffer.append(getSNT());
-        }
-
         // sh:nodeKind
         Optional<TermMap.TermTypes> termType = subjectMap.getTermType();
         if (termType.isPresent()) {
             o = termType.get().equals(TermMap.TermTypes.BLANKNODE) ? "sh:BlankNode" : "sh:IRI";
 
             buffer.append(getPO("sh:nodeKind", o));
+            buffer.append(getSNT());
+        }
+
+        // sh:class
+        Set<URI> classIRIs = new TreeSet(subjectMap.getClassIRIs());
+        for (URI classIRI: classIRIs) {
+            o = getShaclDocModel().getRelativeIRIOr(classIRI.toString());
+
+            buffer.append(getPO("sh:class", o));
             buffer.append(getSNT());
         }
 

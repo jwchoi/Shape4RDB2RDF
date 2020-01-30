@@ -2,6 +2,7 @@ package shaper.mapping.model.shacl;
 
 import janus.database.DBSchema;
 import shaper.Shaper;
+import shaper.mapping.PrefixMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.*;
 
@@ -25,6 +26,7 @@ public class ShaclDocModelFactory {
 
         for (TriplesMap triplesMap : triplesMaps) {
             SubjectMap subjectMap = triplesMap.getSubjectMap();
+
             //create a node shape
             NodeShape nodeShape = new NodeShape(createNodeShapeID(triplesMap), triplesMap.getUri(), subjectMap, shaclDocModel);
 
@@ -109,6 +111,8 @@ public class ShaclDocModelFactory {
         Set<Map.Entry<String, String>> entrySet = r2rmlModel.getPrefixMap().entrySet();
         for (Map.Entry<String, String> entry: entrySet)
             shaclDocModel.addPrefixDecl(entry.getKey(), entry.getValue());
+
+        shaclDocModel.addPrefixDecl("rdf", PrefixMap.getURI("rdf").toString());
     }
 
     //Direct Mapping

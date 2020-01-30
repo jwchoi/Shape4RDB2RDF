@@ -7,6 +7,7 @@ import shaper.mapping.model.rdf.RDFMappingModelFactory;
 import shaper.mapping.model.shex.ShExSchemaFactory;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
@@ -21,9 +22,9 @@ public class DirectMappingShExMapper extends ShExMapper {
         writer.println(Symbols.PREFIX + Symbols.SPACE + shExSchema.getPrefix() + Symbols.COLON + Symbols.SPACE + Symbols.LT + shExSchema.getBaseIRI() + Symbols.HASH + Symbols.GT);
 
         // prefixID
-        writer.println(Symbols.PREFIX + Symbols.SPACE + PrefixMap.getPrefix(URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns")) + Symbols.COLON + Symbols.SPACE + "<http://www.w3.org/1999/02/22-rdf-syntax-ns#>");
-        writer.println(Symbols.PREFIX + Symbols.SPACE + PrefixMap.getPrefix(URI.create("http://www.w3.org/2001/XMLSchema")) + Symbols.COLON + Symbols.SPACE + "<http://www.w3.org/2001/XMLSchema#>");
-        writer.println(Symbols.PREFIX + Symbols.SPACE + PrefixMap.getPrefix(URI.create("http://www.w3.org/2000/01/rdf-schema")) + Symbols.COLON + Symbols.SPACE + "<http://www.w3.org/2000/01/rdf-schema#>");
+        writer.println(Symbols.PREFIX + Symbols.SPACE + "rdf" + Symbols.COLON + Symbols.SPACE + Symbols.LT + PrefixMap.getURI("rdf") + Symbols.GT);
+        writer.println(Symbols.PREFIX + Symbols.SPACE + "xsd" + Symbols.COLON + Symbols.SPACE + Symbols.LT + PrefixMap.getURI("xsd") + Symbols.GT);
+        writer.println(Symbols.PREFIX + Symbols.SPACE + "rdfs" + Symbols.COLON + Symbols.SPACE + Symbols.LT + PrefixMap.getURI("rdfs") + Symbols.GT);
         writer.println();
     }
 
@@ -40,6 +41,18 @@ public class DirectMappingShExMapper extends ShExMapper {
 
             writer.println(shExSchema.getMappedShape(table));
             writer.println();
+        }
+    }
+
+    private void preProcess() {
+        String catalog = Shaper.dbSchema.getCatalog();
+
+        output = new File(Shaper.DEFAULT_DIR_FOR_SHEX_FILE + catalog + "." + "shex");
+
+        try {
+            writer = new PrintWriter(output);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

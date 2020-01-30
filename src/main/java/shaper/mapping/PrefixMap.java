@@ -12,11 +12,11 @@ public final class PrefixMap {
 	private static Map<URI, String> map = new Hashtable<URI, String>();
 	
 	static {
-		map.put(URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns"), "rdf");
-		map.put(URI.create("http://www.w3.org/2001/XMLSchema"), "xsd");
+		map.put(URI.create("http://www.w3.org/1999/02/22-rdf-syntax-ns#"), "rdf");
+		map.put(URI.create("http://www.w3.org/2001/XMLSchema#"), "xsd");
 		map.put(URI.create("http://www.w3.org/2004/02/skos/core"), "skos");
 		map.put(URI.create("http://www.w3.org/XML/1998/namespace"), "xml");
-		map.put(URI.create("http://www.w3.org/2000/01/rdf-schema"), "rdfs");
+		map.put(URI.create("http://www.w3.org/2000/01/rdf-schema#"), "rdfs");
 		map.put(URI.create("http://www.w3.org/2002/07/owl"), "owl");
 		map.put(URI.create("http://www.w3.org/ns/shacl#"), "sh");
 		map.put(URI.create("http://www.w3.org/ns/r2rml#"), "rr");

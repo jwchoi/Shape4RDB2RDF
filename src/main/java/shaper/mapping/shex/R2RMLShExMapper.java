@@ -1,5 +1,6 @@
 package shaper.mapping.shex;
 
+import shaper.Shaper;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.*;
 import shaper.mapping.model.shex.NodeConstraint;
@@ -8,6 +9,7 @@ import shaper.mapping.model.shex.Shape;
 import shaper.mapping.r2rml.R2RMLParser;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class R2RMLShExMapper extends ShExMapper {
@@ -59,6 +61,18 @@ public class R2RMLShExMapper extends ShExMapper {
         for (Shape derivedShape: derivedShapes) {
             writer.println(derivedShape);
             writer.println();
+        }
+    }
+
+    private void preProcess() {
+        String fileName = R2RMLPathname.substring(R2RMLPathname.lastIndexOf("/")+1, R2RMLPathname.lastIndexOf("."));
+        fileName = fileName + Symbols.DASH + "ShEx";
+        output = new File(Shaper.DEFAULT_DIR_FOR_SHEX_FILE + fileName + "." + "shex");
+
+        try {
+            writer = new PrintWriter(output);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

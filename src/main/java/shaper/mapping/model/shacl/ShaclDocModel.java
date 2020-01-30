@@ -25,6 +25,10 @@ public class ShaclDocModel {
         shapes = new TreeSet<>();
     }
 
+    public String getRelativeIRIOr(final URI uri) {
+        return getRelativeIRIOr(uri.toString());
+    }
+
     public String getRelativeIRIOr(final String absoluteIRIString) {
         String relativeIRI = null;
 

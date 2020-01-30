@@ -211,10 +211,10 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
         }
 
         // datatype
-        Optional<String> datatype = objectMap.getDatatype();
+        Optional<URI> datatype = objectMap.getDatatype();
         if (datatype.isPresent()) { // from rr:column
-            String dt = datatype.get();
-            Optional<String> relativeDatatype = Shaper.shexMapper.r2rmlModel.getRelativeIRI(URI.create(dt));
+            String dt = datatype.get().toString();
+            Optional<String> relativeDatatype = Shaper.shexMapper.r2rmlModel.getRelativeIRI(datatype.get());
             if (relativeDatatype.isPresent())
                 dt = relativeDatatype.get();
 
@@ -236,19 +236,6 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
         // replace meta-characters in XPath
         regex = regex.replace(Symbols.SLASH, Symbols.BACKSLASH + Symbols.SLASH);
         regex = regex.replace(Symbols.DOT, Symbols.BACKSLASH + Symbols.DOT);
-        if (!template.isIRIFormat()) { // for LITERAL
-            //regex = regex.replace(RDFMapper.BACKSLASH, RDFMapper.BACKSLASH + RDFMapper.BACKSLASH);
-//            regex = regex.replace(RDFMapper.SLASH, RDFMapper.BACKSLASH + RDFMapper.SLASH);
-//            regex = regex.replace(RDFMapper.DOT, RDFMapper.BACKSLASH + RDFMapper.DOT);
-//            regex = regex.replace(RDFMapper.QUESTION_MARK, RDFMapper.BACKSLASH + RDFMapper.QUESTION_MARK);
-//            regex = regex.replace(RDFMapper.PLUS, RDFMapper.BACKSLASH + RDFMapper.PLUS);
-//            regex = regex.replace(RDFMapper.ASTERISK, RDFMapper.BACKSLASH + RDFMapper.ASTERISK);
-//            regex = regex.replace(RDFMapper.OR, RDFMapper.BACKSLASH + RDFMapper.OR);
-//            regex = regex.replace(RDFMapper.CARET, RDFMapper.BACKSLASH + RDFMapper.CARET);
-//            regex = regex.replace(RDFMapper.DOLLAR, RDFMapper.BACKSLASH + RDFMapper.DOLLAR);
-//            regex = regex.replace(RDFMapper.OPEN_PARENTHESIS, RDFMapper.BACKSLASH + RDFMapper.OPEN_PARENTHESIS);
-//            regex = regex.replace(RDFMapper.CLOSE_PARENTHESIS, RDFMapper.BACKSLASH + RDFMapper.CLOSE_PARENTHESIS);
-        }
 
         // column names
         List<SQLSelectField> columnNames = template.getColumnNames();

@@ -25,9 +25,7 @@ public class LogicalTable {
         this.uri = Optional.ofNullable(uri);
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = Optional.ofNullable(tableName);
-    }
+    public void setTableName(String tableName) { this.tableName = Optional.ofNullable(tableName); }
 
     public void setSqlQuery(String sqlQuery) {
         this.sqlQuery = Optional.ofNullable(sqlQuery);
@@ -37,7 +35,20 @@ public class LogicalTable {
         sqlVersions.add(sqlVersion);
     }
 
-    public String getSqlQuery() { return sqlQuery.isPresent() ? sqlQuery.get() : "SELECT * FROM " + tableName.get(); }
+    public String getSqlQuery() {
+        if (sqlQuery.isPresent())
+            return sqlQuery.get();
+
+        if (tableName.isPresent()) {
+            String tableName = this.tableName.get();
+            if (tableName.startsWith("\"") && tableName.endsWith("\""))
+                tableName = tableName.substring(1, tableName.length() - 1);
+
+            return "SELECT * FROM " + tableName;
+        }
+
+        return null;
+    }
 
     public Optional<URI> getUri() { return uri; }
 }

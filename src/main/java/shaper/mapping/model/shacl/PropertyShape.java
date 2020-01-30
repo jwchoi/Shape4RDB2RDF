@@ -5,6 +5,7 @@ import shaper.mapping.DatatypeMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.*;
 
+import java.net.URI;
 import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Optional;
@@ -91,7 +92,7 @@ public class PropertyShape extends Shape {
         // sh:datatype
         o = null;
 
-        Optional<String> datatype = mappedObjectMap.getDatatype();
+        Optional<URI> datatype = mappedObjectMap.getDatatype();
         if (datatype.isPresent()) {
             // from rr:column
             o = getShaclDocModel().getRelativeIRIOr(datatype.get());

@@ -397,7 +397,8 @@ public class R2RMLParser {
     private Optional<URI> getBase(File r2rmlFile) {
         Optional<URI> base = Optional.empty();
         try(LineNumberReader reader = new LineNumberReader(new FileReader(r2rmlFile))) {
-            for (String line = reader.readLine().trim(); line != null; line = reader.readLine().trim()) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+                line = line.trim();
                 if (line.startsWith("@base")
                         || line.regionMatches(true, 0, "BASE", 0, 4)) {
                     base = Optional.of(URI.create(line.substring(line.indexOf("<") + 1, line.lastIndexOf(">"))));
