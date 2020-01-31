@@ -79,7 +79,9 @@ public class PropertyShape extends Shape {
         String o; // to be used as objects of different RDF triples
 
         // sh:node
-        o = getShaclDocModel().getRelativeIRIOr(mappedRefObjectMap.getParentTriplesMap().toString());
+        URI parentTriplesMap = mappedRefObjectMap.getParentTriplesMap();
+        NodeShape mappedNodeShape = getShaclDocModel().getMappedNodeShape(parentTriplesMap);
+        o = getShaclDocModel().getRelativeIRIOr(mappedNodeShape.getID().toString());
         buffer.append(getPO("sh:node", o));
         buffer.append(getSNT());
 

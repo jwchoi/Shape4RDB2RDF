@@ -25,7 +25,7 @@ cse:TriplesMap2Shape
 cse:TriplesMap1Shape-ex-Sport
     a sh:PropertyShape ;
     sh:path ex:Sport ;
-    sh:node <http://example.com/base/TriplesMap2>  .
+    sh:node cse:TriplesMap2Shape  .
     
 cse:TriplesMap1Shape-ex-id
     a sh:PropertyShape ;
