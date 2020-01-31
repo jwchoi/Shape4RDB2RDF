@@ -1,6 +1,7 @@
 @base <http://cse.ssu.ac.kr/> .
 @prefix cse: <http://cse.ssu.ac.kr/#> .
 @prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rr: <http://www.w3.org/ns/r2rml#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -9,25 +10,28 @@
 cse:TriplesMap1Shape-ex-lname
     a sh:PropertyShape ;
     sh:path <http://example.com/base/IOUs#lname> ;
+    sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:maxCount 1  .
     
 cse:TriplesMap1Shape-ex-fname
     a sh:PropertyShape ;
     sh:path <http://example.com/base/IOUs#fname> ;
+    sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:maxCount 1  .
     
 cse:TriplesMap1Shape-ex-amount
     a sh:PropertyShape ;
     sh:path <http://example.com/base/IOUs#amount> ;
+    sh:nodeKind sh:Literal ;
     sh:datatype xsd:double ;
     sh:maxCount 1  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
-    sh:targetClass <http://example.com/base/IOUs> ;
     sh:nodeKind sh:BlankNode ;
+    sh:class <http://example.com/base/IOUs> ;
     sh:property cse:TriplesMap1Shape-ex-lname ;
     sh:property cse:TriplesMap1Shape-ex-fname ;
     sh:property cse:TriplesMap1Shape-ex-amount  .

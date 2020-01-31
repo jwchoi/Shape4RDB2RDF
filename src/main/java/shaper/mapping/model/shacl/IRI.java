@@ -2,7 +2,7 @@ package shaper.mapping.model.shacl;
 
 import java.net.URI;
 
-public class IRI extends Node {
+public class IRI extends Node implements Comparable<IRI> {
     private URI value;
 
     IRI(URI value) {
@@ -19,7 +19,21 @@ public class IRI extends Node {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof IRI)
+            return value.equals(((IRI) obj).value);
+
+        return super.equals(obj);
+    }
+
+    @Override
     public String toString() {
         return value.toString();
+    }
+
+
+    @Override
+    public int compareTo(IRI iri) {
+        return value.compareTo(iri.value);
     }
 }

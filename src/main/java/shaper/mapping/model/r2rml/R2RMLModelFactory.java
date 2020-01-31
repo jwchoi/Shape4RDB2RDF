@@ -19,22 +19,6 @@ public class R2RMLModelFactory {
         for (String key: keySet)
             r2rmlModel.addPrefixMap(key, prefixMap.get(key));
 
-        // logical tables
-        Set<URI> logicalTablesWithURI = parser.getLogicalTables();
-        for (URI logicalTableAsIRI: logicalTablesWithURI) {
-            LogicalTable logicalTable = new LogicalTable();
-
-            logicalTable.setUri(logicalTableAsIRI);
-            logicalTable.setSqlQuery(parser.getSQLQuery(logicalTableAsIRI.toString()));
-            logicalTable.setTableName(parser.getTableName(logicalTableAsIRI.toString()));
-
-            Set<URI> sqlVersions = parser.getSQLVersions(logicalTableAsIRI.toString());
-            for (URI sqlVersion: sqlVersions)
-                logicalTable.addSqlVersion(sqlVersion);
-
-            r2rmlModel.addLogicalTable(logicalTable);
-        }
-
         // triples maps
         Set<String> triplesMaps = parser.getTriplesMaps();
         for (String triplesMapAsResource: triplesMaps) {
@@ -42,20 +26,15 @@ public class R2RMLModelFactory {
             // logical table
             String logicalTableAsResource = parser.getLogicalTable(triplesMapAsResource);
 
-            LogicalTable logicalTable;
+            LogicalTable logicalTable = new LogicalTable();
 
-            if (R2RMLParser.isURI(logicalTableAsResource))
-                logicalTable = r2rmlModel.getLogicalTableBy(URI.create(logicalTableAsResource));
-            else {
-                // when logical table is a blank node
-                logicalTable = new LogicalTable();
-                logicalTable.setSqlQuery(parser.getSQLQuery(logicalTableAsResource));
-                logicalTable.setTableName(parser.getTableName(logicalTableAsResource));
+            logicalTable.setUri(URI.create(logicalTableAsResource));
+            logicalTable.setSqlQuery(parser.getSQLQuery(logicalTableAsResource));
+            logicalTable.setTableName(parser.getTableName(logicalTableAsResource));
 
-                Set<URI> sqlVersions = parser.getSQLVersions(logicalTableAsResource);
-                for (URI sqlVersion: sqlVersions)
-                    logicalTable.addSqlVersion(sqlVersion);
-            }
+            Set<URI> sqlVersions = parser.getSQLVersions(logicalTableAsResource);
+            for (URI sqlVersion: sqlVersions)
+                logicalTable.addSqlVersion(sqlVersion);
 
             // subject map
             String subjectMapAsResource = parser.getSubjectMap(triplesMapAsResource);

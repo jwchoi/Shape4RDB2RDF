@@ -38,7 +38,7 @@ public class R2RMLShaclMapper extends ShaclMapper {
         for (TriplesMap triplesMap : triplesMaps) {
             NodeShape nodeShape = shaclDocModel.getMappedNodeShape(triplesMap.getUri());
 
-            List<IRI> propertyShapeIDs = nodeShape.getPropertyShapeIDs();
+            Set<IRI> propertyShapeIDs = nodeShape.getPropertyShapeIDs();
             for (IRI propertyShapeID: propertyShapeIDs)
                 writer.println(shaclDocModel.getSerializedPropertyShape(propertyShapeID));
 

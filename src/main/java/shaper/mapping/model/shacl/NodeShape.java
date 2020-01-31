@@ -13,17 +13,17 @@ public class NodeShape extends Shape {
     private Optional<URI> mappedTriplesMap = Optional.empty(); // mapped rr:TriplesMap
     private Optional<SubjectMap> subjectMapOfMappedTriplesMap = Optional.empty();
 
-    private List<IRI> propertyShapes;
+    private Set<IRI> propertyShapes;
 
     NodeShape(IRI id, URI mappedTriplesMap, SubjectMap subjectMapOfMappedTriplesMap, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedTriplesMap = Optional.of(mappedTriplesMap);
         this.subjectMapOfMappedTriplesMap = Optional.of(subjectMapOfMappedTriplesMap);
 
-        propertyShapes = new ArrayList<>();
+        propertyShapes = new TreeSet<>();
     }
 
-    public List<IRI> getPropertyShapeIDs() { return propertyShapes; }
+    public Set<IRI> getPropertyShapeIDs() { return propertyShapes; }
 
     Optional<URI> getMappedTriplesMap() { return mappedTriplesMap; }
 
@@ -49,6 +49,18 @@ public class NodeShape extends Shape {
             o = getShaclDocModel().getRelativeIRIOr(classIRI.toString());
 
             buffer.append(getPO("sh:class", o));
+            buffer.append(getSNT());
+        }
+
+        // sh:hasValue
+        Optional<String> constant = subjectMap.getConstant();
+        if (constant.isPresent()) {
+            o = constant.get();
+            if (termType.isPresent() && termType.get().equals(TermMap.TermTypes.IRI))
+                o = getShaclDocModel().getRelativeIRIOr(o);
+
+
+            buffer.append(getPO("sh:hasValue", o));
             buffer.append(getSNT());
         }
 

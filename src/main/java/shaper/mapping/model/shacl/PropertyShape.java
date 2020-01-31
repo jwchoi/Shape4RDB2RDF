@@ -11,28 +11,42 @@ import java.util.List;
 import java.util.Optional;
 
 public class PropertyShape extends Shape {
-    private enum MappingTypes { OBJECT_MAP, REF_OBJECT_MAP }
+    private enum MappingTypes { OBJECT_MAP, REF_OBJECT_MAP, DUPLICATED_PREDICATE }
 
     private PredicateMap mappedPredicateMap;
     private Optional<ObjectMap> mappedObjectMap = Optional.empty();
     private Optional<RefObjectMap> mappedRefObjectMap = Optional.empty();
 
+    private int multiplicity = 1; // only for DUPLICATED_PREDICATE
+
     private MappingTypes mappingType;
 
-    PropertyShape(IRI id, PredicateMap mappedPredicateMap, ObjectMap mappedObjectMap, ShaclDocModel shaclDocModel) {
+    private boolean hasQualifiedValueShape = false;
+
+    PropertyShape(IRI id, PredicateMap mappedPredicateMap, ObjectMap mappedObjectMap, boolean hasQualifiedValueShape, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedPredicateMap = mappedPredicateMap;
         this.mappedObjectMap = Optional.of(mappedObjectMap);
+        this.hasQualifiedValueShape = hasQualifiedValueShape;
 
         mappingType = MappingTypes.OBJECT_MAP;
     }
 
-    PropertyShape(IRI id, PredicateMap mappedPredicateMap, RefObjectMap mappedRefObjectMap, ShaclDocModel shaclDocModel) {
+    PropertyShape(IRI id, PredicateMap mappedPredicateMap, RefObjectMap mappedRefObjectMap, boolean hasQualifiedValueShape, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedPredicateMap = mappedPredicateMap;
         this.mappedRefObjectMap = Optional.of(mappedRefObjectMap);
+        this.hasQualifiedValueShape = hasQualifiedValueShape;
 
         mappingType = MappingTypes.REF_OBJECT_MAP;
+    }
+
+    PropertyShape(IRI id, PredicateMap mappedPredicateMap, int multiplicity, ShaclDocModel shaclDocModel) {
+        super(id, shaclDocModel);
+        this.mappedPredicateMap = mappedPredicateMap;
+        this.multiplicity = multiplicity;
+
+        mappingType = MappingTypes.DUPLICATED_PREDICATE;
     }
 
     @Override
@@ -44,6 +58,19 @@ public class PropertyShape extends Shape {
         }
 
         return serializedPropertyShape;
+    }
+
+    private String buildSerializedPropertyShape(int multiplicity) {
+        StringBuffer buffer = new StringBuffer();
+
+        String o; // to be used as objects of different RDF triples
+
+        // sh:maxCount
+        o = Integer.toString(multiplicity);
+        buffer.append(getPO("sh:maxCount", o));
+        buffer.append(getSNT());
+
+        return buffer.toString();
     }
 
     private String buildSerializedPropertyShape(RefObjectMap mappedRefObjectMap) {
@@ -59,7 +86,7 @@ public class PropertyShape extends Shape {
         return buffer.toString();
     }
 
-    private String buildSerializedPropertyShape(ObjectMap mappedObjectMap) {
+    private String buildSerializedPropertyShape(ObjectMap mappedObjectMap, boolean hasQualifiedValueShape) {
         StringBuffer buffer = new StringBuffer();
 
         String o; // to be used as objects of different RDF triples
@@ -79,6 +106,28 @@ public class PropertyShape extends Shape {
                 buffer.append(getPO("sh:nodeKind", o));
                 buffer.append(getSNT());
             }
+        }
+
+        // sh:in
+        Optional<String> constant = mappedObjectMap.getConstant();
+        if (constant.isPresent()) {
+            o = constant.get();
+
+            if (termType.isPresent()) {
+                switch (termType.get()) {
+                    case IRI: o = getShaclDocModel().getRelativeIRIOr(o); break;
+                    case LITERAL: o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK; break;
+                }
+            }
+
+            o = Symbols.OPEN_PARENTHESIS + Symbols.SPACE + o + Symbols.SPACE + Symbols.CLOSE_PARENTHESIS;
+
+            if (hasQualifiedValueShape)
+                buffer.append(getPO("sh:qualifiedValueShape", getUBN("sh:in", o)));
+            else
+                buffer.append(getPO("sh:in", o));
+
+            buffer.append(getSNT());
         }
 
         // sh:languageIn
@@ -116,43 +165,79 @@ public class PropertyShape extends Shape {
             buffer.append(getSNT());
         }
 
+        // sh:qualifiedValueShapesDisjoint
+        if (hasQualifiedValueShape) {
+            buffer.append(getPO("sh:qualifiedValueShapesDisjoint", "true"));
+            buffer.append(getSNT());
+        }
+
         // cardinality
         o = "1";
+        // cardinality: rr:column
         Optional<SQLSelectField> sqlSelectField = mappedObjectMap.getColumn();
         if (sqlSelectField.isPresent()) {
             switch (sqlSelectField.get().getNullable()) {
                 case ResultSetMetaData.columnNoNulls:
                     // "exactly one"
-                    buffer.append(getPO("sh:minCount", o));
+                    if (hasQualifiedValueShape)
+                        buffer.append(getPO("sh:qualifiedMinCount", o));
+                    else
+                        buffer.append(getPO("sh:minCount", o));
                     buffer.append(getSNT());
                 case ResultSetMetaData.columnNullable:
                 case ResultSetMetaData.columnNullableUnknown:
                     // "zero or one"
-                    buffer.append(getPO("sh:maxCount", o));
-                    buffer.append(getSNT());
-            }
-        } else {
-            Optional<Template> template = mappedObjectMap.getTemplate();
-            if (template.isPresent()) {
-                List<SQLSelectField> columnNames = template.get().getColumnNames();
-                boolean isEveryColumnNoNulls = true;
-                for (SQLSelectField columnName: columnNames) {
-                    // "?" - zero or one
-                    if (columnName.getNullable() != ResultSetMetaData.columnNoNulls) {
+                    if (hasQualifiedValueShape)
+                        buffer.append(getPO("sh:qualifiedMaxCount", o));
+                    else
                         buffer.append(getPO("sh:maxCount", o));
-                        buffer.append(getSNT());
-                        isEveryColumnNoNulls = false;
-                        break;
-                    }
-                }
-                // "exactly one"
-                if (isEveryColumnNoNulls) {
-                    buffer.append(getPO("sh:minCount", o));
                     buffer.append(getSNT());
-                    buffer.append(getPO("sh:maxCount", o));
+            }
+        }
+        // cardinality: rr:template
+        Optional<Template> template = mappedObjectMap.getTemplate();
+        if (template.isPresent()) {
+            List<SQLSelectField> columnNames = template.get().getColumnNames();
+            boolean isEveryColumnNoNulls = true;
+            for (SQLSelectField columnName: columnNames) {
+                // "?" - zero or one
+                if (columnName.getNullable() != ResultSetMetaData.columnNoNulls) {
+                    if (hasQualifiedValueShape)
+                        buffer.append(getPO("sh:qualifiedMaxCount", o));
+                    else
+                        buffer.append(getPO("sh:maxCount", o));
                     buffer.append(getSNT());
+                    isEveryColumnNoNulls = false;
+                    break;
                 }
             }
+            // "exactly one"
+            if (isEveryColumnNoNulls) {
+                if (hasQualifiedValueShape)
+                    buffer.append(getPO("sh:qualifiedMinCount", o));
+                else
+                    buffer.append(getPO("sh:minCount", o));
+                buffer.append(getSNT());
+                if (hasQualifiedValueShape)
+                    buffer.append(getPO("sh:qualifiedMaxCount", o));
+                else
+                    buffer.append(getPO("sh:maxCount", o));
+                buffer.append(getSNT());
+            }
+        }
+        // cardinality: rr:constant or rr:object
+        if (constant.isPresent()) {
+            // "exactly one"
+            if (hasQualifiedValueShape)
+                buffer.append(getPO("sh:qualifiedMinCount", o));
+            else
+                buffer.append(getPO("sh:minCount", o));
+            buffer.append(getSNT());
+            if (hasQualifiedValueShape)
+                buffer.append(getPO("sh:qualifiedMaxCount", o));
+            else
+                buffer.append(getPO("sh:maxCount", o));
+            buffer.append(getSNT());
         }
 
         return buffer.toString();
@@ -182,7 +267,11 @@ public class PropertyShape extends Shape {
 
         // if ObjectMap
         if (mappingType.equals(MappingTypes.OBJECT_MAP))
-            buffer.append(buildSerializedPropertyShape(mappedObjectMap.get()));
+            buffer.append(buildSerializedPropertyShape(mappedObjectMap.get(), hasQualifiedValueShape));
+
+        // if DUPLICATED_PREDICATE
+        if (mappingType.equals(MappingTypes.DUPLICATED_PREDICATE))
+            buffer.append(buildSerializedPropertyShape(multiplicity));
 
         buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
         buffer.append(getDNT());

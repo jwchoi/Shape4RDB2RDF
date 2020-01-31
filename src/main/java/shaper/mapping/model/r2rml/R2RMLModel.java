@@ -6,33 +6,17 @@ import java.util.*;
 public class R2RMLModel {
     private Map<String, String> prefixMap;
     private Set<TriplesMap> triplesMaps;
-    private List<LogicalTable> logicalTables;
 
     R2RMLModel() {
         prefixMap = new HashMap<>();
-        logicalTables = new ArrayList<>();
         triplesMaps = new HashSet<>();
     }
 
     public void addPrefixMap(String prefix, String uri) { prefixMap.put(prefix, uri); }
 
-    public void addLogicalTable(LogicalTable logicalTable) { logicalTables.add(logicalTable); }
-
     public void addTriplesMap(TriplesMap triplesMap) { triplesMaps.add(triplesMap); }
 
     public Set<TriplesMap> getTriplesMaps() { return triplesMaps; }
-
-    public LogicalTable getLogicalTableBy(URI iri) {
-        for (LogicalTable logicalTable: logicalTables) {
-            Optional<URI> iriOfLogicalTable = logicalTable.getUri();
-            if (iriOfLogicalTable.isPresent()) {
-                if (iriOfLogicalTable.get().equals(iri))
-                    return logicalTable;
-            }
-        }
-
-        return null;
-    }
 
     public Optional<String> getRelativeIRI(URI iri) {
         Optional<String> relativeIRI = Optional.empty();

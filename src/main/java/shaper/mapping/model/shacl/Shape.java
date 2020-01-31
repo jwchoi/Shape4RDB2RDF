@@ -50,4 +50,7 @@ public abstract class Shape implements Comparable<Shape> {
     protected String getDNT() { return Symbols.SPACE + Symbols.DOT + Symbols.NEWLINE + Symbols.TAB; }
 
     protected String getPO(String p, String o) { return p + Symbols.SPACE + o; }
+
+    // Unlabeled Blank Node
+    protected String getUBN(String p, String o) { return Symbols.OPEN_BRACKET + Symbols.SPACE + p + Symbols.SPACE + o + Symbols.SPACE + Symbols.CLOSE_BRACKET; }
 }
