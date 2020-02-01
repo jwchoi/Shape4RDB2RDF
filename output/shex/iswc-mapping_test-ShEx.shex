@@ -23,9 +23,9 @@ cse:Person_research_interestsShape IRI
 cse:PostalAddressShape IRI
  /^http:\/\/data\.example\.com\/postalAddress\/(.+)$/ {
   a [ conf:PostalAddress ]  ;
-  vcard:country xsd:string ? ;
   vcard:pcode xsd:string ? ;
-  vcard:street xsd:string ? 
+  vcard:street xsd:string ? ;
+  vcard:country xsd:string ? 
 }
 
 cse:PersonShape_Obj1 LITERAL /^(.*) (.*)$/
@@ -48,9 +48,9 @@ cse:ConceptShape IRI
 cse:DocumentShape IRI
  /^http:\/\/data\.example\.com\/document\/(.+)$/ {
   a [ foaf:Document ]  ;
-  dc:date xsd:integer ? ;
   conf:conference xsd:integer ? ;
-  dc:title xsd:string ? 
+  dc:title xsd:string ? ;
+  dc:date xsd:integer ? 
 }
 
 
@@ -120,18 +120,18 @@ cse:Person_research_interestsPersonPerson_has_affiliationShape IRI
 
 cse:DocumentDocument_subjectShape IRI
  /^http:\/\/data\.example\.com\/document\/(.+)$/ {
-  dc:date xsd:integer ? ;
   conf:conference xsd:integer ? ;
   dc:title xsd:string ? ;
+  dc:date xsd:integer ? ;
   skos:subject @cse:ConceptShape * ;
   a [ foaf:Document ]  
 }
 
 cse:DocumentDocument_CreatorShape IRI
  /^http:\/\/data\.example\.com\/document\/(.+)$/ {
-  dc:date xsd:integer ? ;
   conf:conference xsd:integer ? ;
   dc:title xsd:string ? ;
+  dc:date xsd:integer ? ;
   (
      dc:creator @cse:PersonShape *
     |
@@ -161,9 +161,9 @@ cse:Document_subjectDocument_CreatorShape IRI
 
 cse:DocumentDocument_subjectDocument_CreatorShape IRI
  /^http:\/\/data\.example\.com\/document\/(.+)$/ {
-  dc:date xsd:integer ? ;
   conf:conference xsd:integer ? ;
   dc:title xsd:string ? ;
+  dc:date xsd:integer ? ;
   skos:subject @cse:ConceptShape * ;
   (
      dc:creator @cse:PersonShape *

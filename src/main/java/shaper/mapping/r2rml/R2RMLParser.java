@@ -143,22 +143,18 @@ public class R2RMLParser {
         return objects.size() > 0 ? objects.toArray(new String[0])[0] : null;
     }
 
-    public String getLiteralObject(String predicateObjectMap) {
+    public Set<String> getLiteralObjects(String predicateObjectMap) {
         Resource s = createResource(predicateObjectMap);
         Property p = createRRProperty("object");
 
-        Set<String> objects = getLiteralObjectsOf(s, p);
-
-        return objects.size() > 0 ? objects.toArray(new String[0])[0] : null;
+        return getLiteralObjectsOf(s, p);
     }
 
-    public URI getIRIObject(String predicateObjectMap) {
+    public Set<URI> getIRIObjects(String predicateObjectMap) {
         Resource s = createResource(predicateObjectMap);
         Property p = createRRProperty("object");
 
-        Set<URI> objects = getIRIObjectsOf(s, p);
-
-        return objects.size() > 0 ? objects.toArray(new URI[0])[0] : null;
+        return getIRIObjectsOf(s, p);
     }
 
     public Set<URI> getGraphs(String subjectMapOrPredicateObjectMap) {
@@ -168,13 +164,11 @@ public class R2RMLParser {
         return getIRIObjectsOf(s, p);
     }
 
-    public URI getPredicate(String predicateObjectMap) {
+    public Set<URI> getPredicates(String predicateObjectMap) {
         Resource s = createResource(predicateObjectMap);
         Property p = createRRProperty("predicate");
 
-        Set<URI> objects = getIRIObjectsOf(s, p);
-
-        return objects.size() > 0 ? objects.toArray(new URI[0])[0] : null;
+        return getIRIObjectsOf(s, p);
     }
 
     public URI getTermType(String termMap) {
@@ -233,13 +227,11 @@ public class R2RMLParser {
         return objects.size() > 0 ? objects.toArray(new String[0])[0] : null;
     }
 
-    public String getObjectMap(String predicateObjectMap) {
+    public Set<String> getObjectMaps(String predicateObjectMap) {
         Resource s = createResource(predicateObjectMap);
         Property p = createRRProperty("objectMap");
 
-        Set<String> objects = getResourceObjectsOf(s, p);
-
-        return objects.toArray(new String[0])[0];
+        return getResourceObjectsOf(s, p);
     }
 
     public Set<String> getGraphMaps(String subjectMapOrPredicateObjectMap) {
@@ -249,13 +241,11 @@ public class R2RMLParser {
         return getResourceObjectsOf(s, p);
     }
 
-    public String getPredicateMap(String predicateObjectMap) {
+    public Set<String> getPredicateMaps(String predicateObjectMap) {
         Resource s = createResource(predicateObjectMap);
         Property p = createRRProperty("predicateMap");
 
-        Set<String> objects = getResourceObjectsOf(s, p);
-
-        return objects.toArray(new String[0])[0];
+        return getResourceObjectsOf(s, p);
     }
 
     public String getChild(String joinCondition) {

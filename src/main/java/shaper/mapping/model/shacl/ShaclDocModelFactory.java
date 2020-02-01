@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ShaclDocModelFactory {
     private static R2RMLModel r2rmlModel;
@@ -24,8 +25,8 @@ public class ShaclDocModelFactory {
 
         Set<TriplesMap> triplesMaps = r2rmlModel.getTriplesMaps();
 
-        // add NodeShapes to the ShaclDocModel
-        // add ObjectMap-based PropertyShapes to the NodeShape
+        // add PropertyShapes to NodeShape
+        // add NodeShapes to ShaclDocModel
         for (TriplesMap triplesMap : triplesMaps) {
             SubjectMap subjectMap = triplesMap.getSubjectMap();
 
@@ -33,81 +34,69 @@ public class ShaclDocModelFactory {
             NodeShape nodeShape = new NodeShape(createNodeShapeID(triplesMap), triplesMap.getUri(), subjectMap, shaclDocModel);
 
             List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
-            int sizeOfPredicateObjectMaps = predicateObjectMaps.size();
-            for (int i = 0; i < sizeOfPredicateObjectMaps; i++) {
-                PredicateObjectMap predicateObjectMap = predicateObjectMaps.get(i);
+            for (PredicateObjectMap predicateObjectMap: predicateObjectMaps) {
+                List<PredicateObjectMap.PredicateObjectPair> predicateObjectPairs = predicateObjectMap.getPredicateObjectPairs();
+                for (PredicateObjectMap.PredicateObjectPair predicateObjectPair: predicateObjectPairs) {
+                    PredicateMap predicateMap = predicateObjectPair.getPredicateMap();
 
-                // when referencing object map
-                if (predicateObjectMap.getRefObjectMap().isPresent()) continue;
+                    // create property shape from a predicate-object pair
+                    String predicate = predicateMap.getConstant().get();
+                    int multiplicity = getMultiplicity(triplesMap, URI.create(predicate));
+                    boolean hasQualifiedValueShape = multiplicity > 1 ? true : false;
+                    IRI propertyShapeID = createPropertyShapeID(nodeShape, predicate, hasQualifiedValueShape);
 
-                PredicateMap predicateMap = predicateObjectMap.getPredicateMap();
-                ObjectMap objectMap = predicateObjectMap.getObjectMap().get();
+                    PropertyShape propertyShape;
 
-                // create property shape from ObjectMap of predicate-object map
-                String predicate = predicateMap.getConstant().get();
-                int multiplicity = getMultiplicity(triplesMap, URI.create(predicate));
-                boolean hasQualifiedValueShape = multiplicity > 1 ? true : false;
-                IRI propertyShapeID = createPropertyShapeID(nodeShape, predicate, hasQualifiedValueShape);
-                PropertyShape propertyShape = new PropertyShape(propertyShapeID, predicateMap, objectMap, hasQualifiedValueShape, shaclDocModel);
-                shaclDocModel.addShape(propertyShape);
+                    if (predicateObjectPair.getRefObjectMap().isPresent()) {
+                        // when referencing object map
+                        RefObjectMap refObjectMap = predicateObjectPair.getRefObjectMap().get();
+                        propertyShape = new PropertyShape(propertyShapeID, predicateMap, refObjectMap, hasQualifiedValueShape, shaclDocModel);
+                    } else {
+                        // when object map
+                        ObjectMap objectMap = predicateObjectPair.getObjectMap().get();
+                        propertyShape = new PropertyShape(propertyShapeID, predicateMap, objectMap, hasQualifiedValueShape, shaclDocModel);
+                    }
+                    shaclDocModel.addShape(propertyShape);
 
-                // for reference from node shape to property shape
-                nodeShape.addPropertyShape(propertyShape.getID());
+                    // for reference from node shape to property shape
+                    nodeShape.addPropertyShape(propertyShape.getID());
+                }
             }
 
             shaclDocModel.addShape(nodeShape);
-        }
-
-        // add RefObjectMap-base PropertyShapes to the NodeShape
-        for (TriplesMap triplesMap : triplesMaps) {
-            // find the mapped shape
-            NodeShape nodeShape = shaclDocModel.getMappedNodeShape(triplesMap.getUri());
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
-            for (PredicateObjectMap predicateObjectMap : predicateObjectMaps) {
-
-                // when object map
-                if (predicateObjectMap.getObjectMap().isPresent()) continue;
-
-                PredicateMap predicateMap = predicateObjectMap.getPredicateMap();
-                RefObjectMap refObjectMap = predicateObjectMap.getRefObjectMap().get();
-
-                // create property shape from RefObjectMap of predicate-object map
-                String predicate = predicateMap.getConstant().get();
-                int multiplicity = getMultiplicity(triplesMap, URI.create(predicate));
-                boolean hasQualifiedValueShape = multiplicity > 1 ? true : false;
-                IRI propertyShapeID = createPropertyShapeID(nodeShape, predicate, hasQualifiedValueShape);
-                PropertyShape propertyShape = new PropertyShape(propertyShapeID, predicateMap, refObjectMap, hasQualifiedValueShape, shaclDocModel);
-                shaclDocModel.addShape(propertyShape);
-
-                // for reference from node shape to property shape
-                nodeShape.addPropertyShape(propertyShape.getID());
-            }
         }
 
         // add PropertyShapes additionally generated due to duplicated predicates to the NodeShape
         for (TriplesMap triplesMap : triplesMaps) {
             // find the mapped shape
             NodeShape nodeShape = shaclDocModel.getMappedNodeShape(triplesMap.getUri());
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            Set<String> checkedPredicates = new TreeSet<>();
+
             List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
             for (PredicateObjectMap predicateObjectMap : predicateObjectMaps) {
+                List<PredicateObjectMap.PredicateObjectPair> predicateObjectPairs = predicateObjectMap.getPredicateObjectPairs();
+                for (PredicateObjectMap.PredicateObjectPair predicateObjectPair: predicateObjectPairs) {
+                    PredicateMap predicateMap = predicateObjectPair.getPredicateMap();
 
-                PredicateMap predicateMap = predicateObjectMap.getPredicateMap();
+                    String predicate = predicateMap.getConstant().get();
+                    if (!checkedPredicates.contains(predicate)) {
 
-                // create property shape from RefObjectMap of predicate-object map
-                String predicate = predicateMap.getConstant().get();
-                int multiplicity = getMultiplicity(triplesMap, URI.create(predicate));
+                        int multiplicity = getMultiplicity(triplesMap, URI.create(predicate));
 
-                if (multiplicity < 2) continue;
+                        if (multiplicity < 2) continue;
 
-                boolean hasQualifiedValueShape = false;
-                IRI propertyShapeID = createPropertyShapeID(nodeShape, predicate, hasQualifiedValueShape);
-                PropertyShape propertyShape = new PropertyShape(propertyShapeID, predicateMap, multiplicity, shaclDocModel);
-                shaclDocModel.addShape(propertyShape);
+                        boolean hasQualifiedValueShape = false;
+                        IRI propertyShapeID = createPropertyShapeID(nodeShape, predicate, hasQualifiedValueShape);
+                        PropertyShape propertyShape = new PropertyShape(propertyShapeID, predicateMap, multiplicity, shaclDocModel);
+                        shaclDocModel.addShape(propertyShape);
 
-                // for reference from node shape to property shape
-                nodeShape.addPropertyShape(propertyShape.getID());
+                        // for reference from node shape to property shape
+                        nodeShape.addPropertyShape(propertyShape.getID());
+                    }
+
+                    checkedPredicates.add(predicate);
+                }
             }
         }
 
@@ -133,11 +122,15 @@ public class ShaclDocModelFactory {
         int multiplicity = 0;
 
         List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
-
         for (PredicateObjectMap predicateObjectMap: predicateObjectMaps) {
-            PredicateMap predicateMap = predicateObjectMap.getPredicateMap();
-            if (predicateMap.getConstant().isPresent() && predicateMap.getConstant().get().equals(predicate.toString()))
-                multiplicity++;
+
+            List<PredicateObjectMap.PredicateObjectPair> predicateObjectPairs = predicateObjectMap.getPredicateObjectPairs();
+            for (PredicateObjectMap.PredicateObjectPair predicateObjectPair: predicateObjectPairs) {
+
+                PredicateMap predicateMap = predicateObjectPair.getPredicateMap();
+                if (predicateMap.getConstant().isPresent() && predicateMap.getConstant().get().equals(predicate.toString()))
+                    multiplicity++;
+            }
         }
 
         return multiplicity;

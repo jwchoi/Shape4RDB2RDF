@@ -28,25 +28,30 @@ public class ShExSchemaFactory {
             TripleConstraint tcFromClasses = new TripleConstraint(subjectMap.getClassIRIs());
             shape.addTripleConstraint(tcFromClasses);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            int postfix = 0;
+
             List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
-            int sizeOfPredicateObjectMaps = predicateObjectMaps.size();
-            for (int i = 0; i < sizeOfPredicateObjectMaps; i++) {
-                PredicateObjectMap predicateObjectMap = predicateObjectMaps.get(i);
+            for (PredicateObjectMap predicateObjectMap: predicateObjectMaps) {
+                List<PredicateObjectMap.PredicateObjectPair> predicateObjectPairs = predicateObjectMap.getPredicateObjectPairs();
+                for (PredicateObjectMap.PredicateObjectPair predicateObjectPair: predicateObjectPairs) {
 
-                // when referencing object map
-                if (predicateObjectMap.getRefObjectMap().isPresent()) continue;
+                    // when referencing object map
+                    if (predicateObjectPair.getRefObjectMap().isPresent()) continue;
 
-                PredicateMap predicateMap = predicateObjectMap.getPredicateMap();
-                ObjectMap objectMap = predicateObjectMap.getObjectMap().get();
+                    PredicateMap predicateMap = predicateObjectPair.getPredicateMap();
+                    ObjectMap objectMap = predicateObjectPair.getObjectMap().get();
 
-                // create Node Constraint From predicate-object map
-                String nodeConstraintID = shape.getShapeID() + "_Obj" + (i+1);
-                NodeConstraint nodeConstraint = new NodeConstraint(nodeConstraintID, objectMap);
-                shExSchema.addNodeConstraint(nodeConstraint);
+                    // create Node Constraint From predicate-object map
+                    String nodeConstraintID = shape.getShapeID() + "_Obj" + (++postfix);
+                    NodeConstraint nodeConstraint = new NodeConstraint(nodeConstraintID, objectMap);
+                    shExSchema.addNodeConstraint(nodeConstraint);
 
-                // create Triple Constraint From predicate-object map
-                TripleConstraint tcFromPOMap = new TripleConstraint(predicateMap, objectMap);
-                shape.addTripleConstraint(tcFromPOMap);
+                    // create Triple Constraint From predicate-object map
+                    TripleConstraint tcFromPOMap = new TripleConstraint(predicateMap, objectMap);
+                    shape.addTripleConstraint(tcFromPOMap);
+                }
+
             }
 
             shExSchema.addShape(shape);
@@ -58,16 +63,18 @@ public class ShExSchemaFactory {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
             for (PredicateObjectMap predicateObjectMap : predicateObjectMaps) {
+                List<PredicateObjectMap.PredicateObjectPair> predicateObjectPairs = predicateObjectMap.getPredicateObjectPairs();
+                for (PredicateObjectMap.PredicateObjectPair predicateObjectPair: predicateObjectPairs) {
+                    // when object map
+                    if (predicateObjectPair.getObjectMap().isPresent()) continue;
 
-                // when object map
-                if (predicateObjectMap.getObjectMap().isPresent()) continue;
+                    PredicateMap predicateMap = predicateObjectPair.getPredicateMap();
+                    RefObjectMap refObjectMap = predicateObjectPair.getRefObjectMap().get();
 
-                PredicateMap predicateMap = predicateObjectMap.getPredicateMap();
-                RefObjectMap refObjectMap = predicateObjectMap.getRefObjectMap().get();
-
-                // create Triple Constraint From referencing-object map
-                TripleConstraint tcFromPROMap = new TripleConstraint(predicateMap, refObjectMap);
-                shape.addTripleConstraint(tcFromPROMap);
+                    // create Triple Constraint From referencing-object map
+                    TripleConstraint tcFromPROMap = new TripleConstraint(predicateMap, refObjectMap);
+                    shape.addTripleConstraint(tcFromPROMap);
+                }
             }
         }
 

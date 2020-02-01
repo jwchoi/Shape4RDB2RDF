@@ -79,45 +79,50 @@ public class R2RMLModelFactory {
 
             // predicate object map
             Set<String> predicateObjectMaps = parser.getPredicateObjectMaps(triplesMapAsResource);
-            for (String predicateObjectMap: predicateObjectMaps) {
+            for (String predicateObjectMapAsResource: predicateObjectMaps) {
+                PredicateObjectMap predicateObjectMap = new PredicateObjectMap();
+
                 // predicate or predicate map
                 // ?x rr:predicate ?y.
-                URI predicate = parser.getPredicate(predicateObjectMap);
-                if (predicate == null) {
-                    // ?x rr:predicateMap [ rr:constant ?y ].
-                    String predicateMap = parser.getPredicateMap(predicateObjectMap);
-                    predicate = parser.getIRIConstant(predicateMap);
+                Set<URI> predicates = parser.getPredicates(predicateObjectMapAsResource);
+
+                // ?x rr:predicateMap [ rr:constant ?y ].
+                Set<String> predicateMapsAsResource = parser.getPredicateMaps(predicateObjectMapAsResource);
+                for (String predicateMapAsResource: predicateMapsAsResource)
+                    predicates.add(parser.getIRIConstant(predicateMapAsResource));
+
+                Set<PredicateMap> predicateMaps = new TreeSet<>();
+                for (URI predicate: predicates) {
+                    PredicateMap predicateMap = new PredicateMap(predicate.toString());
+                    predicateMap.setTermType(TermMap.TermTypes.IRI);
+                    predicateMaps.add(predicateMap);
                 }
-                PredicateMap predicateMap = new PredicateMap(predicate.toString());
-                predicateMap.setTermType(TermMap.TermTypes.IRI);
+
+                predicateObjectMap.setPredicateMaps(predicateMaps);
 
                 // object
 
                 // ?x rr:object ?y.
-                URI IRIObject = parser.getIRIObject(predicateObjectMap);
-                if (IRIObject != null) {
+                Set<URI> IRIObjects = parser.getIRIObjects(predicateObjectMapAsResource);
+                for (URI IRIObject: IRIObjects) {
                     ObjectMap objectMap = new ObjectMap(IRIObject.toString());
                     objectMap.setTermType(TermMap.TermTypes.IRI);
 
-                    triplesMap.addPredicateObjectMap(new PredicateObjectMap(predicateMap, objectMap));
-
-                    continue;
+                    predicateObjectMap.addObjectMap(objectMap);
                 }
 
                 // ?x rr:object ?y.
-                String literalObject = parser.getLiteralObject(predicateObjectMap);
-                if (literalObject != null) {
+                Set<String> literalObjects = parser.getLiteralObjects(predicateObjectMapAsResource);
+                for (String literalObject: literalObjects) {
                     ObjectMap objectMap = new ObjectMap(literalObject);
                     objectMap.setTermType(TermMap.TermTypes.LITERAL);
 
-                    triplesMap.addPredicateObjectMap(new PredicateObjectMap(predicateMap, objectMap));
-
-                    continue;
+                    predicateObjectMap.addObjectMap(objectMap);
                 }
 
                 // rr:objectMap
-                String objectMapAsResource = parser.getObjectMap(predicateObjectMap);
-                if (objectMapAsResource != null) {
+                Set<String> objectMapsAsResource = parser.getObjectMaps(predicateObjectMapAsResource);
+                for (String objectMapAsResource: objectMapsAsResource) {
                     String parentTriplesMap = parser.getParentTriplesMap(objectMapAsResource);
                     if (parentTriplesMap != null) {
                         // referencing object map
@@ -131,7 +136,7 @@ public class R2RMLModelFactory {
                             refObjectMap.addJoinCondition(child, parent);
                         }
 
-                        triplesMap.addPredicateObjectMap(new PredicateObjectMap(predicateMap, refObjectMap));
+                        predicateObjectMap.addRefObjectMap(refObjectMap);
                     } else {
                         // object map
                         ObjectMap objectMap = null;
@@ -195,9 +200,11 @@ public class R2RMLModelFactory {
                             objectMap.setTermType(TermMap.TermTypes.LITERAL);
                         }
 
-                        triplesMap.addPredicateObjectMap(new PredicateObjectMap(predicateMap, objectMap));
+                        predicateObjectMap.addObjectMap(objectMap);
                     }
                 }
+
+                triplesMap.addPredicateObjectMap(predicateObjectMap);
             }
 
             r2rmlModel.addTriplesMap(triplesMap);

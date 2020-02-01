@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RefObjectMap {
+public class RefObjectMap implements Comparable<RefObjectMap> {
 
     private URI parentTriplesMap;
     private List<JoinCondition> joinConditions;
@@ -17,4 +17,9 @@ public class RefObjectMap {
     public void addJoinCondition(String child, String parent) { joinConditions.add(new JoinCondition(child, parent)); }
 
     public URI getParentTriplesMap() { return parentTriplesMap; }
+
+    @Override
+    public int compareTo(RefObjectMap refObjectMap) {
+        return parentTriplesMap.compareTo(refObjectMap.parentTriplesMap);
+    }
 }
