@@ -293,6 +293,14 @@ public class PropertyShape extends Shape {
         for (SQLSelectField columnName: columnNames)
             regex = regex.replace("{" + columnName.getColumnNameOrAlias() + "}", "(.*)");
 
+        // because backslashes need to be escaped by a second backslash in the Turtle syntax,
+        // a double backslash is needed to escape each curly brace,
+        // and to get one literal backslash in the output one needs to write four backslashes in the template.
+        regex = regex.replace("\\\\", "\\");
+
+        regex = regex.replace("\\{", "{");
+        regex = regex.replace("\\}", "}");
+
         return Optional.of(Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + regex + Symbols.DOLLAR + Symbols.DOUBLE_QUOTATION_MARK);
     }
 }

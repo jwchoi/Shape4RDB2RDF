@@ -1,0 +1,44 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+cse:TriplesMap2Shape-rdfs-label
+    a sh:PropertyShape ;
+    sh:path rdfs:label ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1  .
+    
+cse:TriplesMap2Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class <http://example.com/ontology/Sport> ;
+    sh:pattern "^http://example.com/resource/sport_(.+)$" ;
+    sh:property cse:TriplesMap2Shape-rdfs-label  .
+    
+cse:TriplesMap1Shape-ex-practises
+    a sh:PropertyShape ;
+    sh:path <http://example.com/ontology/practises> ;
+    sh:node cse:TriplesMap2Shape  .
+    
+cse:TriplesMap1Shape-foaf-name
+    a sh:PropertyShape ;
+    sh:path foaf:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1  .
+    
+cse:TriplesMap1Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class <http://example.com/ontology/Student> ;
+    sh:pattern "^http://example.com/resource/student_(.+)$" ;
+    sh:property cse:TriplesMap1Shape-ex-practises ;
+    sh:property cse:TriplesMap1Shape-foaf-name  .
+    

@@ -1,5 +1,8 @@
 package shaper.mapping.model.r2rml;
 
+import janus.database.DBMSTypes;
+import shaper.mapping.Symbols;
+
 import java.net.URI;
 import java.util.Optional;
 import java.util.Set;
@@ -35,14 +38,20 @@ public class LogicalTable {
         sqlVersions.add(sqlVersion);
     }
 
-    public String getSqlQuery() {
+    public String getSqlQuery(DBMSTypes DBMSType) {
         if (sqlQuery.isPresent())
             return sqlQuery.get();
 
         if (tableName.isPresent()) {
             String tableName = this.tableName.get();
-            if (tableName.startsWith("\"") && tableName.endsWith("\""))
-                tableName = tableName.substring(1, tableName.length() - 1);
+            if (tableName.startsWith("\"") && tableName.endsWith("\"")) {
+                switch (DBMSType) {
+                    case MARIADB:
+                    case MYSQL:
+                        tableName = Symbols.GRAVE_ACCENT + tableName.substring(1, tableName.length() - 1) + Symbols.GRAVE_ACCENT;
+                        break;
+                }
+            }
 
             return "SELECT * FROM " + tableName;
         }

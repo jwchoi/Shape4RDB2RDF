@@ -2,7 +2,9 @@ package janus.database;
 
 public enum DBMSTypes {
 	MYSQL("org.gjt.mm.mysql.Driver"),
-	MARIADB("org.mariadb.jdbc.Driver");
+	MARIADB("org.mariadb.jdbc.Driver"),
+	ORACLE("oracle.jdbc.driver.OracleDriver"),
+	POSTGRESQL("org.postgresql.Driver");
 	
 	private final String driver;
 	

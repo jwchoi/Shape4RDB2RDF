@@ -49,7 +49,7 @@ public class R2RMLModelFactory {
             if (constant != null)
                 subjectMap.setConstant(constant.toString());
 
-            String query = logicalTable.getSqlQuery();
+            String query = logicalTable.getSqlQuery(Shaper.DBMSType);
             SQLResultSet resultSet = Shaper.dbBridge.executeQuery(query);
 
             // rr:column
@@ -225,7 +225,7 @@ public class R2RMLModelFactory {
         SQLSelectField sqlSelectField = new SQLSelectField(selectField, selectQuery);
 
         if (selectField.startsWith("\"") && selectField.endsWith("\""))
-            selectField = selectField.substring(1, selectField.length()-1);
+            selectField = selectField.substring(1, selectField.length() - 1);
 
         // nullable
         Optional<Integer> nullable =  sqlResultSet.isNullable(selectField);
@@ -252,10 +252,12 @@ public class R2RMLModelFactory {
         int fromIndex = 0;
         while (fromIndex < length) {
             int openBrace = template.indexOf("{", fromIndex);
+            if (openBrace == -1) break;
             while (openBrace > 0 && template.charAt(openBrace - 1) == '\\')
                 openBrace = template.indexOf("{", openBrace + 1);
 
             int closeBrace = template.indexOf("}", fromIndex);
+            if (closeBrace == -1) break;
             while (closeBrace > 0 && template.charAt(closeBrace - 1) == '\\')
                 closeBrace = template.indexOf("}", closeBrace + 1);
 

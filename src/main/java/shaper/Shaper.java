@@ -30,7 +30,8 @@ public class Shaper {
 
 	public static String shapeBaseURI;
 	public static String prefixForShapeBaseURI;
-	
+
+	public static DBMSTypes DBMSType;
 	public static DBBridge dbBridge;
 	public static DBSchema dbSchema;
 
@@ -186,11 +187,14 @@ public class Shaper {
 	private static boolean connectDatabase() {
 		String driver = properties.getProperty("db.driver");
 
-		DBMSTypes DBMSType = null;
-		if (DBMSTypes.MYSQL.driver().equals(driver))
-			DBMSType = DBMSTypes.MYSQL;
-		else if (DBMSTypes.MARIADB.driver().equals(driver))
+		if (DBMSTypes.MARIADB.driver().equals(driver))
 			DBMSType = DBMSTypes.MARIADB;
+		else if (DBMSTypes.MYSQL.driver().equals(driver))
+			DBMSType = DBMSTypes.MYSQL;
+		else if (DBMSTypes.ORACLE.driver().equals(driver))
+			DBMSType = DBMSTypes.ORACLE;
+		else if (DBMSTypes.POSTGRESQL.driver().equals(driver))
+			DBMSType = DBMSTypes.POSTGRESQL;
 
 		String host = properties.getProperty("db.host");
 		String port = properties.getProperty("db.port");
