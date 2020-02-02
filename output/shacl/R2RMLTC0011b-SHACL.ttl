@@ -1,0 +1,61 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+cse:LinkMap_1_2Shape-ex-plays
+    a sh:PropertyShape ;
+    sh:path ex:plays ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/sport/(.*)$" ;
+    sh:minCount 1  .
+    
+cse:LinkMap_1_2Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/student/(.+)$" ;
+    sh:property cse:LinkMap_1_2Shape-ex-plays  .
+    
+cse:TriplesMap2Shape-ex-description
+    a sh:PropertyShape ;
+    sh:path ex:description ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:TriplesMap2Shape-ex-id
+    a sh:PropertyShape ;
+    sh:path ex:id ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minCount 1  .
+    
+cse:TriplesMap2Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/sport/(.+)$" ;
+    sh:property cse:TriplesMap2Shape-ex-description ;
+    sh:property cse:TriplesMap2Shape-ex-id  .
+    
+cse:TriplesMap1Shape-ex-firstName
+    a sh:PropertyShape ;
+    sh:path ex:firstName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:TriplesMap1Shape-ex-lastName
+    a sh:PropertyShape ;
+    sh:path ex:lastName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:TriplesMap1Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/student/(.+)$" ;
+    sh:property cse:TriplesMap1Shape-ex-firstName ;
+    sh:property cse:TriplesMap1Shape-ex-lastName  .
+    

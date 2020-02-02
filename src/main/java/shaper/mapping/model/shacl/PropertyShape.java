@@ -180,19 +180,11 @@ public class PropertyShape extends Shape {
         if (sqlSelectField.isPresent()) {
             switch (sqlSelectField.get().getNullable()) {
                 case ResultSetMetaData.columnNoNulls:
-                    // "exactly one"
+                    // "at least one"
                     if (hasQualifiedValueShape)
                         buffer.append(getPO("sh:qualifiedMinCount", o));
                     else
                         buffer.append(getPO("sh:minCount", o));
-                    buffer.append(getSNT());
-                case ResultSetMetaData.columnNullable:
-                case ResultSetMetaData.columnNullableUnknown:
-                    // "zero or one"
-                    if (hasQualifiedValueShape)
-                        buffer.append(getPO("sh:qualifiedMaxCount", o));
-                    else
-                        buffer.append(getPO("sh:maxCount", o));
                     buffer.append(getSNT());
             }
         }
@@ -202,43 +194,28 @@ public class PropertyShape extends Shape {
             List<SQLSelectField> columnNames = template.get().getColumnNames();
             boolean isEveryColumnNoNulls = true;
             for (SQLSelectField columnName: columnNames) {
-                // "?" - zero or one
+                // Is a nullable column?
                 if (columnName.getNullable() != ResultSetMetaData.columnNoNulls) {
-                    if (hasQualifiedValueShape)
-                        buffer.append(getPO("sh:qualifiedMaxCount", o));
-                    else
-                        buffer.append(getPO("sh:maxCount", o));
-                    buffer.append(getSNT());
                     isEveryColumnNoNulls = false;
                     break;
                 }
             }
-            // "exactly one"
+            // "at least one"
             if (isEveryColumnNoNulls) {
                 if (hasQualifiedValueShape)
                     buffer.append(getPO("sh:qualifiedMinCount", o));
                 else
                     buffer.append(getPO("sh:minCount", o));
                 buffer.append(getSNT());
-                if (hasQualifiedValueShape)
-                    buffer.append(getPO("sh:qualifiedMaxCount", o));
-                else
-                    buffer.append(getPO("sh:maxCount", o));
-                buffer.append(getSNT());
             }
         }
         // cardinality: rr:constant or rr:object
         if (constant.isPresent()) {
-            // "exactly one"
+            // "at least one"
             if (hasQualifiedValueShape)
                 buffer.append(getPO("sh:qualifiedMinCount", o));
             else
                 buffer.append(getPO("sh:minCount", o));
-            buffer.append(getSNT());
-            if (hasQualifiedValueShape)
-                buffer.append(getPO("sh:qualifiedMaxCount", o));
-            else
-                buffer.append(getPO("sh:maxCount", o));
             buffer.append(getSNT());
         }
 

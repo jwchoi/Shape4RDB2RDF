@@ -66,40 +66,6 @@ public class ShaclDocModelFactory {
             shaclDocModel.addShape(nodeShape);
         }
 
-        // add PropertyShapes additionally generated due to duplicated predicates to the NodeShape
-        for (TriplesMap triplesMap : triplesMaps) {
-            // find the mapped shape
-            NodeShape nodeShape = shaclDocModel.getMappedNodeShape(triplesMap.getUri());
-
-            Set<String> checkedPredicates = new TreeSet<>();
-
-            List<PredicateObjectMap> predicateObjectMaps = triplesMap.getPredicateObjectMaps();
-            for (PredicateObjectMap predicateObjectMap : predicateObjectMaps) {
-                List<PredicateObjectMap.PredicateObjectPair> predicateObjectPairs = predicateObjectMap.getPredicateObjectPairs();
-                for (PredicateObjectMap.PredicateObjectPair predicateObjectPair: predicateObjectPairs) {
-                    PredicateMap predicateMap = predicateObjectPair.getPredicateMap();
-
-                    String predicate = predicateMap.getConstant().get();
-                    if (!checkedPredicates.contains(predicate)) {
-
-                        int multiplicity = getMultiplicity(triplesMap, URI.create(predicate));
-
-                        if (multiplicity < 2) continue;
-
-                        boolean hasQualifiedValueShape = false;
-                        IRI propertyShapeID = createPropertyShapeID(nodeShape, predicate, hasQualifiedValueShape);
-                        PropertyShape propertyShape = new PropertyShape(propertyShapeID, predicateMap, multiplicity, shaclDocModel);
-                        shaclDocModel.addShape(propertyShape);
-
-                        // for reference from node shape to property shape
-                        nodeShape.addPropertyShape(propertyShape.getID());
-                    }
-
-                    checkedPredicates.add(predicate);
-                }
-            }
-        }
-
         return shaclDocModel;
     }
 
