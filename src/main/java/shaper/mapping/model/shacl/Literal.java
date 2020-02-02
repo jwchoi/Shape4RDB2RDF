@@ -10,7 +10,7 @@ public class Literal extends Node {
 
     Literal(String value) {
         this.value = value;
-        nodeKind = NodeKinds.LITERAL;
+        nodeKind = NodeKinds.Literal;
     }
 
     Literal(String value, URI datatype) {

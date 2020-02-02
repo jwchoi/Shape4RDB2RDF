@@ -8,19 +8,6 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-cse:TriplesMap2Shape-rdfs-label
-    a sh:PropertyShape ;
-    sh:path rdfs:label ;
-    sh:nodeKind sh:Literal ;
-    sh:languageIn ( "es" ) ;
-    sh:datatype xsd:string  .
-    
-cse:TriplesMap2Shape
-    a sh:NodeShape ;
-    sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/(.+)$" ;
-    sh:property cse:TriplesMap2Shape-rdfs-label  .
-    
 cse:TriplesMap1Shape-rdfs-label
     a sh:PropertyShape ;
     sh:path rdfs:label ;
@@ -33,4 +20,28 @@ cse:TriplesMap1Shape
     sh:nodeKind sh:IRI ;
     sh:pattern "^http://example.com/(.+)$" ;
     sh:property cse:TriplesMap1Shape-rdfs-label  .
+    
+cse:TriplesMap1_TriplesMap2_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:TriplesMap1Shape
+        ]
+        [
+                sh:qualifiedValueShape cse:TriplesMap2Shape
+        ]
+    ) .
+
+cse:TriplesMap2Shape-rdfs-label
+    a sh:PropertyShape ;
+    sh:path rdfs:label ;
+    sh:nodeKind sh:Literal ;
+    sh:languageIn ( "es" ) ;
+    sh:datatype xsd:string  .
+    
+cse:TriplesMap2Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/(.+)$" ;
+    sh:property cse:TriplesMap2Shape-rdfs-label  .
     

@@ -10,17 +10,31 @@ import java.net.URI;
 import java.util.*;
 
 public class NodeShape extends Shape {
+
+    private enum MappingTypes { TRIPLES_MAP, NODE_SHAPES_OF_SAME_SUBJECTS }
+
+    private MappingTypes mappingType;
+
     private Optional<URI> mappedTriplesMap = Optional.empty(); // mapped rr:TriplesMap
     private Optional<SubjectMap> subjectMapOfMappedTriplesMap = Optional.empty();
 
-    private Set<IRI> propertyShapes;
+    private Set<IRI> propertyShapes = new TreeSet<>();
+
+    private Optional<Set<IRI>> nodeShapesOfSameSubject = Optional.empty();
 
     NodeShape(IRI id, URI mappedTriplesMap, SubjectMap subjectMapOfMappedTriplesMap, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedTriplesMap = Optional.of(mappedTriplesMap);
         this.subjectMapOfMappedTriplesMap = Optional.of(subjectMapOfMappedTriplesMap);
 
-        propertyShapes = new TreeSet<>();
+        mappingType = MappingTypes.TRIPLES_MAP;
+    }
+
+    NodeShape(IRI id, Set<IRI> nodeShapesOfSameSubject, ShaclDocModel shaclDocModel) {
+        super(id, shaclDocModel);
+        this.nodeShapesOfSameSubject = Optional.of(nodeShapesOfSameSubject);
+
+        mappingType = MappingTypes.NODE_SHAPES_OF_SAME_SUBJECTS;
     }
 
     public Set<IRI> getPropertyShapeIDs() { return propertyShapes; }
@@ -29,15 +43,25 @@ public class NodeShape extends Shape {
 
     void addPropertyShape(IRI propertyShape) { propertyShapes.add(propertyShape); }
 
+    Node.NodeKinds getNodeKind() {
+        if (subjectMapOfMappedTriplesMap.isPresent()) {
+            Optional<TermMap.TermTypes> termType = subjectMapOfMappedTriplesMap.get().getTermType();
+            if (termType.isPresent())
+                return termType.get().equals(TermMap.TermTypes.BLANKNODE) ? Node.NodeKinds.BlankNode : Node.NodeKinds.IRI;
+        }
+
+        return null;
+    }
+
     String buildSerializedNodeShape(SubjectMap subjectMap) {
         StringBuffer buffer = new StringBuffer();
 
         String o; // to be used as objects of different RDF triples
 
         // sh:nodeKind
-        Optional<TermMap.TermTypes> termType = subjectMap.getTermType();
-        if (termType.isPresent()) {
-            o = termType.get().equals(TermMap.TermTypes.BLANKNODE) ? "sh:BlankNode" : "sh:IRI";
+        Node.NodeKinds nodeKind = getNodeKind();
+        if (nodeKind != null) {
+            o = nodeKind.equals(Node.NodeKinds.BlankNode) ? "sh:BlankNode" : "sh:IRI";
 
             buffer.append(getPO("sh:nodeKind", o));
             buffer.append(getSNT());
@@ -56,7 +80,7 @@ public class NodeShape extends Shape {
         Optional<String> constant = subjectMap.getConstant();
         if (constant.isPresent()) {
             o = constant.get();
-            if (termType.isPresent() && termType.get().equals(TermMap.TermTypes.IRI))
+            if (nodeKind.equals(Node.NodeKinds.IRI))
                 o = getShaclDocModel().getRelativeIRIOr(o);
 
 
@@ -65,16 +89,34 @@ public class NodeShape extends Shape {
         }
 
         // sh:pattern
-        if (termType.isPresent()) {
-            // only if rr:termType is rr:IRI
-            if (termType.get().equals(TermMap.TermTypes.IRI)) {
-                Optional<String> regex = getRegex(subjectMap);
-                if (regex.isPresent()) {
-                    o = regex.get();
-                    buffer.append(getPO("sh:pattern", o));
-                    buffer.append(getSNT());
-                }
+        // only if rr:termType is rr:IRI
+        if (nodeKind.equals(Node.NodeKinds.IRI)) {
+            Optional<String> regex = getRegexOnlyForPrint(subjectMap);
+            if (regex.isPresent()) {
+                o = regex.get();
+                buffer.append(getPO("sh:pattern", o));
+                buffer.append(getSNT());
             }
+        }
+
+        return buffer.toString();
+    }
+
+    String buildSerializedNodeShape(Set<IRI> nodeShapesOfSameSubject) {
+        StringBuffer buffer = new StringBuffer();
+
+        List<String> qualifiedValueShapes = new ArrayList<>();
+
+        for (IRI nodeShapeOfSameSubject: nodeShapesOfSameSubject) {
+            String o = getShaclDocModel().getRelativeIRIOr(nodeShapeOfSameSubject.toString());
+            qualifiedValueShapes.add(getMultipleLineUBN("sh:qualifiedValueShape", o, 8));
+        }
+
+        if (qualifiedValueShapes.size() > 0) {
+            buffer.append("sh:and" + Symbols.SPACE + Symbols.OPEN_PARENTHESIS + Symbols.NEWLINE);
+            for (String qualifiedValueShape: qualifiedValueShapes)
+                buffer.append(qualifiedValueShape);
+            buffer.append(Symbols.TAB + Symbols.CLOSE_PARENTHESIS + Symbols.SPACE + Symbols.DOT + Symbols.NEWLINE);
         }
 
         return buffer.toString();
@@ -97,29 +139,41 @@ public class NodeShape extends Shape {
         buffer.append(getPO(Symbols.A, "sh:NodeShape"));
         buffer.append(getSNT());
 
-        // if SubjectMap
-        if (subjectMapOfMappedTriplesMap.isPresent())
-            buffer.append(buildSerializedNodeShape(subjectMapOfMappedTriplesMap.get()));
+        switch (mappingType) {
+            case TRIPLES_MAP:
 
-        // sh:property
-        for (IRI propertyShapeIRI: propertyShapes) {
-            o = getShaclDocModel().getRelativeIRIOr(propertyShapeIRI.toString());
-            buffer.append(getPO("sh:property", o));
-            buffer.append(getSNT());
+                // if SubjectMap
+                if (subjectMapOfMappedTriplesMap.isPresent())
+                    buffer.append(buildSerializedNodeShape(subjectMapOfMappedTriplesMap.get()));
+
+                // sh:property
+                for (IRI propertyShapeIRI : propertyShapes) {
+                    o = getShaclDocModel().getRelativeIRIOr(propertyShapeIRI.toString());
+                    buffer.append(getPO("sh:property", o));
+                    buffer.append(getSNT());
+                }
+
+                buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
+                buffer.append(getDNT());
+
+                break;
+
+            case NODE_SHAPES_OF_SAME_SUBJECTS:
+                if (nodeShapesOfSameSubject.isPresent())
+                    buffer.append(buildSerializedNodeShape(nodeShapesOfSameSubject.get()));
         }
-
-        buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
-        buffer.append(getDNT());
-
+        
         serializedNodeShape = buffer.toString();
         setSerializedShape(serializedNodeShape);
         return serializedNodeShape;
     }
 
-    private Optional<String> getRegex(SubjectMap subjectMap) {
-        Optional<Template> template = subjectMap.getTemplate();
+    Optional<String> getRegex() {
+        if (subjectMapOfMappedTriplesMap.isEmpty()) return Optional.empty();
 
-        if (!isPossibleToHavePattern(template)) return Optional.empty();
+        Optional<Template> template = subjectMapOfMappedTriplesMap.get().getTemplate();
+
+        if (template.isEmpty()) return Optional.empty();
 
         String regex = template.get().getFormat();
 
@@ -129,5 +183,13 @@ public class NodeShape extends Shape {
             regex = regex.replace("{" + columnName.getColumnNameOrAlias() + "}", "(.+)");
 
         return Optional.of(Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + regex + Symbols.DOLLAR + Symbols.DOUBLE_QUOTATION_MARK);
+    }
+
+    private Optional<String> getRegexOnlyForPrint(SubjectMap subjectMap) {
+        Optional<Template> template = subjectMap.getTemplate();
+
+        if (!isPossibleToHavePattern(template)) return Optional.empty();
+
+        return getRegex();
     }
 }

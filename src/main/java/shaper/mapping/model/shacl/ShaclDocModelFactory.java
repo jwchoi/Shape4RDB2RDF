@@ -5,13 +5,12 @@ import shaper.Shaper;
 import shaper.mapping.PrefixMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.*;
+import shaper.mapping.model.shex.Shape;
+import shaper.mapping.model.shex.TripleConstraint;
 
 import java.net.URI;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class ShaclDocModelFactory {
     private static R2RMLModel r2rmlModel;
@@ -66,6 +65,31 @@ public class ShaclDocModelFactory {
             shaclDocModel.addShape(nodeShape);
         }
 
+        Set<URI> checkedTriplesMaps = new HashSet<>();
+        for (TriplesMap triplesMap : triplesMaps) {
+            URI uriOfTriplesMap = triplesMap.getUri();
+            if (!checkedTriplesMaps.contains(uriOfTriplesMap)) {
+                // find the mapped node shape
+                NodeShape mappedNodeShape = shaclDocModel.getMappedNodeShape(uriOfTriplesMap);
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                Set<NodeShape> baseNodeShapes = shaclDocModel.getNodeShapesOfSameSubject(mappedNodeShape);
+                for (NodeShape baseNodeShape : baseNodeShapes)
+                    checkedTriplesMaps.add(baseNodeShape.getMappedTriplesMap().get());
+
+                Set<Set<NodeShape>> setsForDerivedNodeShapes = shaclDocModel.getSubsetOfPowerSetOf(baseNodeShapes);
+                for (Set<NodeShape> set: setsForDerivedNodeShapes) {
+
+                    Set<IRI> nodeShapeIRIs = new TreeSet<>();
+                    for (NodeShape nodeShape: set)
+                        nodeShapeIRIs.add(nodeShape.getID());
+
+                    NodeShape derivedShape = new NodeShape(createNodeShapeID(set), nodeShapeIRIs, shaclDocModel);
+
+                    shaclDocModel.addShape(derivedShape);
+                }
+            }
+        }
+
         return shaclDocModel;
     }
 
@@ -77,6 +101,19 @@ public class ShaclDocModelFactory {
         }
 
         return postfix;
+    }
+
+    private static IRI createNodeShapeID(Set<NodeShape> nodeShapes) {
+        StringBuffer postfix = new StringBuffer();
+        for (NodeShape nodeShape: nodeShapes) {
+            if (nodeShape.getMappedTriplesMap().isPresent()) {
+                postfix.append(obtainFragmentOrLastPathSegmentOf(nodeShape.getMappedTriplesMap().get()));
+                postfix.append(Symbols.UNDERSCORE);
+            }
+        }
+        postfix.append("Shape");
+
+        return IRI.create(shaclDocModel.getBaseIRI() + Symbols.HASH + postfix);
     }
 
     private static IRI createNodeShapeID(TriplesMap triplesMap) {

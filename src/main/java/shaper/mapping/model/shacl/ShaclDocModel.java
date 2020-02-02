@@ -5,6 +5,7 @@ import shaper.mapping.Symbols;
 
 import java.net.URI;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class ShaclDocModel {
     private URI baseIRI;
@@ -24,6 +25,8 @@ public class ShaclDocModel {
 
         shapes = new TreeSet<>();
     }
+
+    public Set<Shape> getShapes() { return shapes; }
 
     public String getRelativeIRIOr(final URI uri) {
         return getRelativeIRIOr(uri.toString());
@@ -106,4 +109,44 @@ public class ShaclDocModel {
         return baseIRI;
     }
     public String getPrefix() { return prefix; }
+
+    Set<NodeShape> getNodeShapesOfSameSubject(NodeShape nodeShape) {
+        Set<NodeShape> equivalentNodeShapes = new TreeSet<>();
+
+        for (Shape existingShape: shapes) {
+            if (existingShape instanceof PropertyShape) continue;
+
+            NodeShape existingNodeShape = (NodeShape) existingShape;
+
+            if (!existingNodeShape.getNodeKind().equals(nodeShape.getNodeKind())) continue;
+
+            if (existingNodeShape.getRegex().equals(nodeShape.getRegex()))
+                equivalentNodeShapes.add(existingNodeShape);
+        }
+
+        return equivalentNodeShapes;
+    }
+
+    // The cardinality of each element returned subset is greater than 1.
+    Set<Set<NodeShape>> getSubsetOfPowerSetOf(Set<NodeShape> baseNodeShapes) {
+        List<NodeShape> baseNodeShapeList = new ArrayList<>(baseNodeShapes);
+        int size = baseNodeShapeList.size();
+
+        Set<Set<NodeShape>> setsForDerivedNodeShapes = new HashSet<>();
+
+        for (int i = 0; i < (1 << size); i++) {
+            int oneBitsCount = Integer.bitCount(i);
+            if (Integer.bitCount(i) > 1) {
+                Set<NodeShape> set = new TreeSet<>();
+                StringBuffer binaryString = new StringBuffer(Integer.toBinaryString(i)).reverse();
+                for (int j = 0, fromIndex = 0; j < oneBitsCount; j++) {
+                    fromIndex = binaryString.indexOf("1", fromIndex);
+                    set.add(baseNodeShapeList.get(fromIndex++));
+                }
+                setsForDerivedNodeShapes.add(set);
+            }
+        }
+
+        return setsForDerivedNodeShapes;
+    }
 }

@@ -109,7 +109,7 @@ public class ShExSchema {
         return equivalentShapes;
     }
 
-     static Set<Set<Shape>> createSetsForDerivedShapes(Set<Shape> baseShapes) {
+    static Set<Set<Shape>> createSetsForDerivedShapes(Set<Shape> baseShapes) {
         List<Shape> baseShapeList = new ArrayList<>(baseShapes);
         int size = baseShapeList.size();
 
