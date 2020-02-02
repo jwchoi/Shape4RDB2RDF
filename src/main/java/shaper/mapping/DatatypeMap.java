@@ -28,7 +28,7 @@ public final class DatatypeMap {
 		map.put(Integer.valueOf(java.sql.Types.ARRAY), XSD_STRING); // ws
 		map.put(Integer.valueOf(java.sql.Types.BIGINT), XSD_INTEGER); // nm
 		map.put(Integer.valueOf(java.sql.Types.BINARY), XSD_HEX_BINARY); // nm
-		map.put(Integer.valueOf(java.sql.Types.BIT), XSD_HEX_BINARY); // nm
+		map.put(Integer.valueOf(java.sql.Types.BIT), XSD_BOOLEAN); // nm
 		map.put(Integer.valueOf(java.sql.Types.BLOB), XSD_HEX_BINARY); // nm
 		map.put(Integer.valueOf(java.sql.Types.BOOLEAN), XSD_BOOLEAN); // nm
 		map.put(Integer.valueOf(java.sql.Types.CHAR), XSD_STRING); // nm

@@ -145,13 +145,24 @@ public class PropertyShape extends Shape {
 
         Optional<URI> datatype = mappedObjectMap.getDatatype();
         if (datatype.isPresent()) {
-            // from rr:column
             o = getShaclDocModel().getRelativeIRIOr(datatype.get());
         } else {
-            // Natural Mapping of SQL Values
-            Optional<SQLSelectField> sqlSelectField = mappedObjectMap.getColumn();
-            if (sqlSelectField.isPresent())
-                o = DatatypeMap.getMappedXSD(sqlSelectField.get().getSqlType());
+
+            boolean isBlankNodeOrIRI = false;
+            if (termType.isPresent()) {
+                switch (termType.get()) {
+                    case BLANKNODE:
+                    case IRI:
+                        isBlankNodeOrIRI = true;
+                }
+            }
+
+            if (!isBlankNodeOrIRI) {
+                // Natural Mapping of SQL Values
+                Optional<SQLSelectField> sqlSelectField = mappedObjectMap.getColumn();
+                if (sqlSelectField.isPresent())
+                    o = DatatypeMap.getMappedXSD(sqlSelectField.get().getSqlType());
+            }
         }
 
         if (o != null) {
@@ -163,7 +174,12 @@ public class PropertyShape extends Shape {
         Optional<String> regex = getRegex(mappedObjectMap);
         if (regex.isPresent()) {
             o = regex.get();
-            buffer.append(getPO("sh:pattern", o));
+
+            if (hasQualifiedValueShape)
+                buffer.append(getPO("sh:qualifiedValueShape", getUBN("sh:pattern", o)));
+            else
+                buffer.append(getPO("sh:pattern", o));
+
             buffer.append(getSNT());
         }
 
@@ -211,11 +227,16 @@ public class PropertyShape extends Shape {
         }
         // cardinality: rr:constant or rr:object
         if (constant.isPresent()) {
-            // "at least one"
+            // "exactly one"
             if (hasQualifiedValueShape)
                 buffer.append(getPO("sh:qualifiedMinCount", o));
             else
                 buffer.append(getPO("sh:minCount", o));
+            buffer.append(getSNT());
+            if (hasQualifiedValueShape)
+                buffer.append(getPO("sh:qualifiedMaxCount", o));
+            else
+                buffer.append(getPO("sh:maxCount", o));
             buffer.append(getSNT());
         }
 

@@ -1,0 +1,20 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+cse:TriplesMap1Shape-foaf-name
+    a sh:PropertyShape ;
+    sh:path foaf:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:TriplesMap1Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:property cse:TriplesMap1Shape-foaf-name  .
+    

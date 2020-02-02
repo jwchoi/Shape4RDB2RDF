@@ -1,0 +1,22 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix dept: <http://example.com/dept#> .
+@prefix emp: <http://example.com/emp#> .
+@prefix ex: <http://example.com/ns#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:TriplesMap4Shape-ex-role
+    a sh:PropertyShape ;
+    sh:path ex:role ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/roles/(.*)$"  .
+    
+cse:TriplesMap4Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://data.example.com/employee/(.+)$" ;
+    sh:property cse:TriplesMap4Shape-ex-role  .
+    

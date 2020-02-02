@@ -30,7 +30,8 @@ cse:TriplesMap2Shape-emp-empno
 cse:TriplesMap2Shape-emp-emptype
     a sh:PropertyShape ;
     sh:path emp:emptype ;
-    sh:nodeKind sh:IRI  .
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/emp/etype/(.*)$"  .
     
 cse:TriplesMap2Shape-emp-etype
     a sh:PropertyShape ;
@@ -47,7 +48,8 @@ cse:TriplesMap2Shape-emp-job
 cse:TriplesMap2Shape-emp-jobtype
     a sh:PropertyShape ;
     sh:path emp:jobtype ;
-    sh:nodeKind sh:IRI  .
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/emp/job/(.*)$"  .
     
 cse:TriplesMap2Shape-emp-name
     a sh:PropertyShape ;
@@ -59,17 +61,20 @@ cse:TriplesMap2Shape-rdf-type-q1
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
+    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/etype/(.*)$" ] ;
     sh:qualifiedValueShapesDisjoint true  .
     
 cse:TriplesMap2Shape-rdf-type-q2
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
+    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/job/(.*)$" ] ;
     sh:qualifiedValueShapesDisjoint true  .
     
 cse:TriplesMap2Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/emp/(.+)$" ;
     sh:property cse:TriplesMap2Shape-emp-c_ref_deptno ;
     sh:property cse:TriplesMap2Shape-emp-deptNum ;
     sh:property cse:TriplesMap2Shape-emp-empno ;
@@ -86,13 +91,14 @@ cse:TriplesMap1Shape-dept-COMPANY
     sh:path dept:COMPANY ;
     sh:nodeKind sh:Literal ;
     sh:in ( "EXAMPLE Corporation" ) ;
-    sh:minCount 1  .
+    sh:minCount 1 ;
+    sh:maxCount 1  .
     
 cse:TriplesMap1Shape-dept-deptno
     a sh:PropertyShape ;
     sh:path dept:deptno ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:integer  .
+    sh:datatype xsd:positiveInteger  .
     
 cse:TriplesMap1Shape-dept-location
     a sh:PropertyShape ;
