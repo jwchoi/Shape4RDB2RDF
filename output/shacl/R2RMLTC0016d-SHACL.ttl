@@ -18,12 +18,13 @@ cse:TriplesMap1Shape-rdf-type
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
     sh:in ( foaf:Person ) ;
-    sh:minCount 1  .
+    sh:minCount 1 ;
+    sh:maxCount 1  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/Patient(.+)$" ;
+    sh:pattern "^http://example.com/Patient(.*)$" ;
     sh:property cse:TriplesMap1Shape-ex-paid ;
     sh:property cse:TriplesMap1Shape-rdf-type  .
     

@@ -17,13 +17,14 @@ cse:TriplesMap1Shape-foaf-name
     a sh:PropertyShape ;
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 15  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:class foaf:Person ;
-    sh:pattern "^http://example.com/(.+)$" ;
+    sh:pattern "^http://example.com/(.*)$" ;
     sh:property cse:TriplesMap1Shape-ex-id ;
     sh:property cse:TriplesMap1Shape-foaf-name  .
     

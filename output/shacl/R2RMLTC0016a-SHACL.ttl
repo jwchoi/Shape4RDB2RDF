@@ -11,13 +11,15 @@ cse:TriplesMap1Shape-ex-firstName
     a sh:PropertyShape ;
     sh:path ex:firstName ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
     
 cse:TriplesMap1Shape-ex-gender
     a sh:PropertyShape ;
     sh:path ex:gender ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 6  .
     
 cse:TriplesMap1Shape-ex-id
     a sh:PropertyShape ;
@@ -30,19 +32,21 @@ cse:TriplesMap1Shape-ex-lastName
     a sh:PropertyShape ;
     sh:path ex:lastName ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
     
 cse:TriplesMap1Shape-rdf-type
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
     sh:in ( foaf:Person ) ;
-    sh:minCount 1  .
+    sh:minCount 1 ;
+    sh:maxCount 1  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/Patient/(.+)$" ;
+    sh:pattern "^http://example.com/Patient/(.*)$" ;
     sh:property cse:TriplesMap1Shape-ex-firstName ;
     sh:property cse:TriplesMap1Shape-ex-gender ;
     sh:property cse:TriplesMap1Shape-ex-id ;

@@ -27,13 +27,15 @@ cse:TriplesMap1Shape-dept-location
     a sh:PropertyShape ;
     sh:path dept:location ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 100  .
     
 cse:TriplesMap1Shape-dept-name
     a sh:PropertyShape ;
     sh:path dept:name ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 30  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
@@ -71,13 +73,15 @@ cse:TriplesMap2Shape-emp-etype
     a sh:PropertyShape ;
     sh:path emp:etype ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 30  .
     
 cse:TriplesMap2Shape-emp-job
     a sh:PropertyShape ;
     sh:path emp:job ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 30  .
     
 cse:TriplesMap2Shape-emp-jobtype
     a sh:PropertyShape ;
@@ -89,26 +93,27 @@ cse:TriplesMap2Shape-emp-name
     a sh:PropertyShape ;
     sh:path emp:name ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 100  .
     
 cse:TriplesMap2Shape-rdf-type-q1
-    a sh:PropertyShape ;
-    sh:path rdf:type ;
-    sh:nodeKind sh:IRI ;
-    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/job/(.*)$" ] ;
-    sh:qualifiedValueShapesDisjoint true  .
-    
-cse:TriplesMap2Shape-rdf-type-q2
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
     sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/etype/(.*)$" ] ;
     sh:qualifiedValueShapesDisjoint true  .
     
+cse:TriplesMap2Shape-rdf-type-q2
+    a sh:PropertyShape ;
+    sh:path rdf:type ;
+    sh:nodeKind sh:IRI ;
+    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/job/(.*)$" ] ;
+    sh:qualifiedValueShapesDisjoint true  .
+    
 cse:TriplesMap2Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/emp/(.+)$" ;
+    sh:pattern "^http://example.com/emp/(.*)$" ;
     sh:property cse:TriplesMap2Shape-emp-c_ref_deptno ;
     sh:property cse:TriplesMap2Shape-emp-deptNum ;
     sh:property cse:TriplesMap2Shape-emp-empno ;

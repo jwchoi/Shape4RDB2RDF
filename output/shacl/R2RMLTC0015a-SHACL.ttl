@@ -13,12 +13,12 @@ cse:TriplesMap1Shape-rdfs-label
     sh:path rdfs:label ;
     sh:nodeKind sh:Literal ;
     sh:languageIn ( "en" ) ;
-    sh:datatype xsd:string  .
+    sh:maxLength 100  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/(.+)$" ;
+    sh:pattern "^http://example.com/(.*)$" ;
     sh:property cse:TriplesMap1Shape-rdfs-label  .
     
 cse:TriplesMap1_TriplesMap2_Shape
@@ -37,11 +37,11 @@ cse:TriplesMap2Shape-rdfs-label
     sh:path rdfs:label ;
     sh:nodeKind sh:Literal ;
     sh:languageIn ( "es" ) ;
-    sh:datatype xsd:string  .
+    sh:maxLength 100  .
     
 cse:TriplesMap2Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/(.+)$" ;
+    sh:pattern "^http://example.com/(.*)$" ;
     sh:property cse:TriplesMap2Shape-rdfs-label  .
     

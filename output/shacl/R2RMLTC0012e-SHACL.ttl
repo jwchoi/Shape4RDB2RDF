@@ -7,39 +7,6 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-cse:TriplesMap2Shape-ex-city
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/IOUs#city> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
-cse:TriplesMap2Shape-ex-fname
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/IOUs#fname> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
-cse:TriplesMap2Shape-ex-lname
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/IOUs#lname> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
-cse:TriplesMap2Shape-rdf-type
-    a sh:PropertyShape ;
-    sh:path rdf:type ;
-    sh:nodeKind sh:IRI ;
-    sh:in ( <http://example.com/base/Lives> ) ;
-    sh:minCount 1  .
-    
-cse:TriplesMap2Shape
-    a sh:NodeShape ;
-    sh:nodeKind sh:BlankNode ;
-    sh:property cse:TriplesMap2Shape-ex-city ;
-    sh:property cse:TriplesMap2Shape-ex-fname ;
-    sh:property cse:TriplesMap2Shape-ex-lname ;
-    sh:property cse:TriplesMap2Shape-rdf-type  .
-    
 cse:TriplesMap1Shape-ex-amount
     a sh:PropertyShape ;
     sh:path <http://example.com/base/IOUs#amount> ;
@@ -50,20 +17,23 @@ cse:TriplesMap1Shape-ex-fname
     a sh:PropertyShape ;
     sh:path <http://example.com/base/IOUs#fname> ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 20  .
     
 cse:TriplesMap1Shape-ex-lname
     a sh:PropertyShape ;
     sh:path <http://example.com/base/IOUs#lname> ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 20  .
     
 cse:TriplesMap1Shape-rdf-type
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
     sh:in ( <http://example.com/base/IOUs> ) ;
-    sh:minCount 1  .
+    sh:minCount 1 ;
+    sh:maxCount 1  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
@@ -72,4 +42,52 @@ cse:TriplesMap1Shape
     sh:property cse:TriplesMap1Shape-ex-fname ;
     sh:property cse:TriplesMap1Shape-ex-lname ;
     sh:property cse:TriplesMap1Shape-rdf-type  .
+    
+cse:TriplesMap1_TriplesMap2_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:TriplesMap1Shape
+        ]
+        [
+                sh:qualifiedValueShape cse:TriplesMap2Shape
+        ]
+    ) .
+
+cse:TriplesMap2Shape-ex-city
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/IOUs#city> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 20  .
+    
+cse:TriplesMap2Shape-ex-fname
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/IOUs#fname> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 20  .
+    
+cse:TriplesMap2Shape-ex-lname
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/IOUs#lname> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 20  .
+    
+cse:TriplesMap2Shape-rdf-type
+    a sh:PropertyShape ;
+    sh:path rdf:type ;
+    sh:nodeKind sh:IRI ;
+    sh:in ( <http://example.com/base/Lives> ) ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:TriplesMap2Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:BlankNode ;
+    sh:property cse:TriplesMap2Shape-ex-city ;
+    sh:property cse:TriplesMap2Shape-ex-fname ;
+    sh:property cse:TriplesMap2Shape-ex-lname ;
+    sh:property cse:TriplesMap2Shape-rdf-type  .
     

@@ -12,23 +12,22 @@ cse:TriplesMap1Shape-ex-Sport
     sh:path ex:Sport ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:maxCount 1  .
+    sh:maxLength 50  .
     
 cse:TriplesMap1Shape-ex-id
     a sh:PropertyShape ;
     sh:path ex:id ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer ;
-    sh:minCount 1 ;
-    sh:maxCount 1  .
+    sh:minCount 1  .
     
 cse:TriplesMap1Shape-foaf-name
     a sh:PropertyShape ;
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:minCount 1 ;
-    sh:maxCount 1  .
+    sh:maxLength 50 ;
+    sh:minCount 1  .
     
 cse:TriplesMap1Shape-rdf-type
     a sh:PropertyShape ;
@@ -41,7 +40,7 @@ cse:TriplesMap1Shape-rdf-type
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/Student/(.+)/(.+)$" ;
+    sh:pattern "^http://example.com/Student/(.*)/(.*)$" ;
     sh:property cse:TriplesMap1Shape-ex-Sport ;
     sh:property cse:TriplesMap1Shape-ex-id ;
     sh:property cse:TriplesMap1Shape-foaf-name ;

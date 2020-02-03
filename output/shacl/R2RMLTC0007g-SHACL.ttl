@@ -12,7 +12,7 @@ cse:TriplesMap1Shape-foaf-name
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:maxCount 1  .
+    sh:maxLength 50  .
     
 cse:TriplesMap1Shape-rdf-type
     a sh:PropertyShape ;
@@ -25,7 +25,7 @@ cse:TriplesMap1Shape-rdf-type
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/Student/(.+)/(.+)$" ;
+    sh:pattern "^http://example.com/Student/(.*)/(.*)$" ;
     sh:property cse:TriplesMap1Shape-foaf-name ;
     sh:property cse:TriplesMap1Shape-rdf-type  .
     

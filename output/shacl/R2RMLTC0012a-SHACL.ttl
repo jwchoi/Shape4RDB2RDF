@@ -17,7 +17,7 @@ cse:TriplesMap1Shape-foaf-name
     a sh:PropertyShape ;
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
-    sh:pattern "^(.*) (.*)$"  .
+    sh:pattern "^(.{0,20}) (.{0,20})$"  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
