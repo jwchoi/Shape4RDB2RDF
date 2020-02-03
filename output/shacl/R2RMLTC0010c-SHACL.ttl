@@ -11,7 +11,7 @@ cse:TriplesMap1Shape-ex-code
     a sh:PropertyShape ;
     sh:path ex:code ;
     sh:nodeKind sh:Literal ;
-    sh:pattern "^{{{ (.*) }}}$"  .
+    sh:pattern "^{{{ (.{0,10}) }}}$"  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;

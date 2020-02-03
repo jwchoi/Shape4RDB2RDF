@@ -12,7 +12,7 @@ public enum XSDs {
     XSD_DECIMAL(URI.create(PrefixMap.getURI("xsd") + "decimal")),
     XSD_DOUBLE(URI.create(PrefixMap.getURI("xsd") + "double")),
     XSD_HEX_BINARY(URI.create(PrefixMap.getURI("xsd") + "hexBinary")),
-    XSD_INTEGER(URI.create(PrefixMap.getURI("xsd") + "anyinteger")),
+    XSD_INTEGER(URI.create(PrefixMap.getURI("xsd") + "integer")),
     XSD_STRING(URI.create(PrefixMap.getURI("xsd") + "string")),
     XSD_TIME(URI.create(PrefixMap.getURI("xsd") + "time"));
 

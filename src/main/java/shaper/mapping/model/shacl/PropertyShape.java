@@ -300,8 +300,17 @@ public class PropertyShape extends Shape {
 
         // column names
         List<SQLSelectField> columnNames = template.get().getColumnNames();
-        for (SQLSelectField columnName: columnNames)
-            regex = regex.replace("{" + columnName.getColumnNameOrAlias() + "}", "(.*)");
+        for (SQLSelectField columnName: columnNames) {
+            String replacement = "(.*)";
+
+            Optional<NodeKinds> nodeKind = getNodeKind();
+            if (nodeKind.isPresent() && nodeKind.get().equals(NodeKinds.Literal)) {
+                int displaySize = columnName.getDisplaySize();
+                replacement = "(.{0," + displaySize + "})";
+            }
+
+            regex = regex.replace("{" + columnName.getColumnNameOrAlias() + "}", replacement);
+        }
 
         // because backslashes need to be escaped by a second backslash in the Turtle syntax,
         // a double backslash is needed to escape each curly brace,

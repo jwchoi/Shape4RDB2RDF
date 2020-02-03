@@ -17,256 +17,263 @@ cse:ConceptShape-skos-broader
     a sh:PropertyShape ;
     sh:path skos:broader ;
     sh:node cse:ConceptShape  .
-    
+
 cse:ConceptShape-skos-prefLabel
     a sh:PropertyShape ;
     sh:path skos:prefLabel ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
+
 cse:ConceptShape
     a sh:NodeShape ;
     sh:targetClass skos:Concept ;
     sh:nodeKind sh:IRI ;
     sh:class skos:Concept ;
-    sh:pattern "^http://data.example.com/concept/(.+)$" ;
+    sh:pattern "^http://data.example.com/concept/(.*)$" ;
     sh:property cse:ConceptShape-skos-broader ;
     sh:property cse:ConceptShape-skos-prefLabel  .
-    
+
 cse:DocumentShape-conf-conference
     a sh:PropertyShape ;
     sh:path conf:conference ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
+    sh:datatype xsd:string ;
+    sh:maxLength 152  .
+
 cse:DocumentShape-dc-date
     a sh:PropertyShape ;
     sh:path dc:date ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer  .
-    
+
 cse:DocumentShape-dc-title
     a sh:PropertyShape ;
     sh:path dc:title ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
+    sh:datatype xsd:string ;
+    sh:maxLength 200  .
+
 cse:DocumentShape
     a sh:NodeShape ;
     sh:targetClass foaf:Document ;
     sh:nodeKind sh:IRI ;
     sh:class foaf:Document ;
-    sh:pattern "^http://data.example.com/document/(.+)$" ;
+    sh:pattern "^http://data.example.com/document/(.*)$" ;
     sh:property cse:DocumentShape-conf-conference ;
     sh:property cse:DocumentShape-dc-date ;
     sh:property cse:DocumentShape-dc-title  .
-    
+
 cse:Document_CreatorShape-dc-creator
     a sh:PropertyShape ;
     sh:path dc:creator ;
     sh:node cse:PersonShape  .
-    
+
 cse:Document_CreatorShape
     a sh:NodeShape ;
     sh:targetClass foaf:Document ;
     sh:nodeKind sh:IRI ;
     sh:class foaf:Document ;
-    sh:pattern "^http://data.example.com/document/(.+)$" ;
+    sh:pattern "^http://data.example.com/document/(.*)$" ;
     sh:property cse:Document_CreatorShape-dc-creator  .
-    
+
 cse:Document_Creator_Document_subject_Shape
     a sh:NodeShape ;
     sh:targetClass foaf:Document ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:Document_CreatorShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_subjectShape
-        ]
-    ) .
+               [
+                   sh:qualifiedValueShape cse:Document_CreatorShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Document_subjectShape
+               ]
+           ) .
 
 cse:Document_Document_Creator_Document_subject_Shape
     a sh:NodeShape ;
     sh:targetClass foaf:Document ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:DocumentShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_CreatorShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_subjectShape
-        ]
-    ) .
+               [
+                   sh:qualifiedValueShape cse:DocumentShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Document_CreatorShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Document_subjectShape
+               ]
+           ) .
 
 cse:Document_Document_Creator_Shape
     a sh:NodeShape ;
     sh:targetClass foaf:Document ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:DocumentShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_CreatorShape
-        ]
-    ) .
+               [
+                   sh:qualifiedValueShape cse:DocumentShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Document_CreatorShape
+               ]
+           ) .
 
 cse:Document_Document_subject_Shape
     a sh:NodeShape ;
     sh:targetClass foaf:Document ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:DocumentShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_subjectShape
-        ]
-    ) .
+               [
+                   sh:qualifiedValueShape cse:DocumentShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Document_subjectShape
+               ]
+           ) .
 
 cse:Document_subjectShape-skos-subject
     a sh:PropertyShape ;
     sh:path skos:subject ;
     sh:node cse:ConceptShape  .
-    
+
 cse:Document_subjectShape
     a sh:NodeShape ;
     sh:targetClass foaf:Document ;
     sh:nodeKind sh:IRI ;
     sh:class foaf:Document ;
-    sh:pattern "^http://data.example.com/document/(.+)$" ;
+    sh:pattern "^http://data.example.com/document/(.*)$" ;
     sh:property cse:Document_subjectShape-skos-subject  .
-    
+
 cse:OrganizationShape-rdfs-label
     a sh:PropertyShape ;
     sh:path rdfs:label ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
+    sh:datatype xsd:string ;
+    sh:maxLength 200  .
+
 cse:OrganizationShape
     a sh:NodeShape ;
     sh:targetClass conf:Organization ;
     sh:nodeKind sh:IRI ;
     sh:class conf:Organization ;
-    sh:pattern "^http://data.example.com/organization/(.+)$" ;
+    sh:pattern "^http://data.example.com/organization/(.*)$" ;
     sh:property cse:OrganizationShape-rdfs-label  .
-    
+
 cse:PersonShape-foaf-name
     a sh:PropertyShape ;
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
-    sh:pattern "^(.*) (.*)$"  .
-    
+    sh:pattern "^(.{0,100}) (.{0,100})$"  .
+
 cse:PersonShape
     a sh:NodeShape ;
     sh:targetClass foaf:Person ;
     sh:nodeKind sh:IRI ;
     sh:class foaf:Person ;
-    sh:pattern "^http://data.example.com/person/(.+)$" ;
+    sh:pattern "^http://data.example.com/person/(.*)$" ;
     sh:property cse:PersonShape-foaf-name  .
-    
+
 cse:Person_Person_has_affiliation_Person_research_interests_Shape
     a sh:NodeShape ;
-    sh:class foaf:Person ;
+    sh:targetClass foaf:Person ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:PersonShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_has_affiliationShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_research_interestsShape
-        ]
-    ) .
+               [
+                   sh:qualifiedValueShape cse:PersonShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Person_has_affiliationShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Person_research_interestsShape
+               ]
+           ) .
 
 cse:Person_Person_has_affiliation_Shape
     a sh:NodeShape ;
-    sh:class foaf:Person ;
+    sh:targetClass foaf:Person ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:PersonShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_has_affiliationShape
-        ]
-    ) .
+               [
+                   sh:qualifiedValueShape cse:PersonShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Person_has_affiliationShape
+               ]
+           ) .
 
 cse:Person_Person_research_interests_Shape
     a sh:NodeShape ;
-    sh:class foaf:Person ;
+    sh:targetClass foaf:Person ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:PersonShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_research_interestsShape
-        ]
-    ) .
+               [
+                   sh:qualifiedValueShape cse:PersonShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Person_research_interestsShape
+               ]
+           ) .
 
 cse:Person_has_affiliationShape-conf-has_affiliation
     a sh:PropertyShape ;
     sh:path conf:has_affiliation ;
     sh:node cse:OrganizationShape  .
-    
+
 cse:Person_has_affiliationShape
     a sh:NodeShape ;
     sh:targetClass foaf:Person ;
     sh:nodeKind sh:IRI ;
     sh:class foaf:Person ;
-    sh:pattern "^http://data.example.com/person/(.+)$" ;
+    sh:pattern "^http://data.example.com/person/(.*)$" ;
     sh:property cse:Person_has_affiliationShape-conf-has_affiliation  .
-    
+
 cse:Person_has_affiliation_Person_research_interests_Shape
     a sh:NodeShape ;
-    sh:class foaf:Person ;
+    sh:targetClass foaf:Person ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:Person_has_affiliationShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_research_interestsShape
-        ]
-    ) .
+               [
+                   sh:qualifiedValueShape cse:Person_has_affiliationShape
+               ]
+               [
+                   sh:qualifiedValueShape cse:Person_research_interestsShape
+               ]
+           ) .
 
 cse:Person_research_interestsShape-conf-research_interests
     a sh:PropertyShape ;
     sh:path conf:research_interests ;
     sh:node cse:ConceptShape  .
-    
+
 cse:Person_research_interestsShape
     a sh:NodeShape ;
     sh:targetClass foaf:Person ;
     sh:nodeKind sh:IRI ;
     sh:class foaf:Person ;
-    sh:pattern "^http://data.example.com/person/(.+)$" ;
+    sh:pattern "^http://data.example.com/person/(.*)$" ;
     sh:property cse:Person_research_interestsShape-conf-research_interests  .
-    
+
 cse:PostalAddressShape-vcard-country
     a sh:PropertyShape ;
     sh:path vcard:country ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
+
 cse:PostalAddressShape-vcard-pcode
     a sh:PropertyShape ;
     sh:path vcard:pcode ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
+    sh:datatype xsd:string ;
+    sh:maxLength 10  .
+
 cse:PostalAddressShape-vcard-street
     a sh:PropertyShape ;
     sh:path vcard:street ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
+    sh:datatype xsd:string ;
+    sh:maxLength 65535  .
+
 cse:PostalAddressShape
     a sh:NodeShape ;
     sh:targetClass conf:PostalAddress ;
     sh:nodeKind sh:IRI ;
     sh:class conf:PostalAddress ;
-    sh:pattern "^http://data.example.com/postalAddress/(.+)$" ;
+    sh:pattern "^http://data.example.com/postalAddress/(.*)$" ;
     sh:property cse:PostalAddressShape-vcard-country ;
     sh:property cse:PostalAddressShape-vcard-pcode ;
     sh:property cse:PostalAddressShape-vcard-street  .
