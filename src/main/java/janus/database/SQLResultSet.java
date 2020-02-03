@@ -1,6 +1,7 @@
 package janus.database;
 
-import shaper.mapping.DatatypeMap;
+import shaper.mapping.SqlXsdMap;
+import shaper.mapping.XSDs;
 
 import javax.xml.bind.DatatypeConverter;
 import java.sql.ResultSet;
@@ -48,7 +49,7 @@ public class SQLResultSet {
 			rs.absolute(row);
 
 			for (int i = 1 ; i <= cnt; i++) {
-				if (DatatypeMap.getMappedXSD(rsmd.getColumnType(i)).equals(DatatypeMap.XSD_HEX_BINARY))
+				if (SqlXsdMap.getMappedXSD(rsmd.getColumnType(i)).equals(XSDs.XSD_HEX_BINARY))
 					v.add(DatatypeConverter.printHexBinary(rs.getBytes(i)));
 				else v.add(rs.getString(i));
 			}
@@ -93,6 +94,23 @@ public class SQLResultSet {
 		}
 
 		return columnTypeName;
+	}
+
+	public int getColumnDisplaySize(String columnLabel) {
+		int columnDisplaySize = -1;
+		int columnCount = getResultSetColumnCount();
+		for (int i = 1; i <= columnCount; i++) {
+			if (getResultSetColumnLabel(i).equals(columnLabel)) {
+				try {
+					columnDisplaySize = rsmd.getColumnDisplaySize(i);
+					break;
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return columnDisplaySize;
 	}
 
 	public Optional<Integer> getColumnType(String columnLabel) {

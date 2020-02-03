@@ -1,8 +1,9 @@
 package shaper.mapping.model.shacl;
 
 import janus.database.SQLSelectField;
-import shaper.mapping.DatatypeMap;
+import shaper.mapping.SqlXsdMap;
 import shaper.mapping.Symbols;
+import shaper.mapping.XSDs;
 import shaper.mapping.model.r2rml.*;
 
 import java.net.URI;
@@ -11,17 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class PropertyShape extends Shape {
-    private enum MappingTypes { OBJECT_MAP, REF_OBJECT_MAP, DUPLICATED_PREDICATE }
+    private enum MappingTypes { OBJECT_MAP, REF_OBJECT_MAP }
 
     private PredicateMap mappedPredicateMap;
     private Optional<ObjectMap> mappedObjectMap = Optional.empty();
     private Optional<RefObjectMap> mappedRefObjectMap = Optional.empty();
 
-    private int multiplicity = 1; // only for DUPLICATED_PREDICATE
-
     private MappingTypes mappingType;
 
-    private boolean hasQualifiedValueShape = false;
+    private boolean hasQualifiedValueShape;
 
     PropertyShape(URI id, PredicateMap mappedPredicateMap, ObjectMap mappedObjectMap, boolean hasQualifiedValueShape, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
@@ -41,14 +40,6 @@ public class PropertyShape extends Shape {
         mappingType = MappingTypes.REF_OBJECT_MAP;
     }
 
-    PropertyShape(URI id, PredicateMap mappedPredicateMap, int multiplicity, ShaclDocModel shaclDocModel) {
-        super(id, shaclDocModel);
-        this.mappedPredicateMap = mappedPredicateMap;
-        this.multiplicity = multiplicity;
-
-        mappingType = MappingTypes.DUPLICATED_PREDICATE;
-    }
-
     @Override
     public String toString() {
         String serializedPropertyShape = getSerializedShape();
@@ -58,19 +49,6 @@ public class PropertyShape extends Shape {
         }
 
         return serializedPropertyShape;
-    }
-
-    private String buildSerializedPropertyShape(int multiplicity) {
-        StringBuffer buffer = new StringBuffer();
-
-        String o; // to be used as objects of different RDF triples
-
-        // sh:maxCount
-        o = Integer.toString(multiplicity);
-        buffer.append(getPO("sh:maxCount", o));
-        buffer.append(getSNT());
-
-        return buffer.toString();
     }
 
     private String buildSerializedPropertyShape(RefObjectMap mappedRefObjectMap) {
@@ -88,19 +66,61 @@ public class PropertyShape extends Shape {
         return buffer.toString();
     }
 
+    private Optional<NodeKinds> getNodeKind() {
+        if (mappedObjectMap.isPresent()) {
+            Optional<TermMap.TermTypes> termType = mappedObjectMap.get().getTermType();
+            if (termType.isPresent()) {
+                switch (termType.get()) {
+                    case BLANKNODE: return Optional.of(NodeKinds.BlankNode);
+                    case IRI: return Optional.of(NodeKinds.IRI);
+                    case LITERAL: return Optional.of(NodeKinds.Literal);
+                }
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    private Optional<URI> getDatatype() {
+        if (mappedObjectMap.isPresent()) {
+            Optional<URI> datatype = mappedObjectMap.get().getDatatype();
+
+            if (datatype.isPresent()) return Optional.of(datatype.get());
+
+            boolean isBlankNodeOrIRI = false;
+            Optional<NodeKinds> nodeKind = getNodeKind();
+            if (nodeKind.isPresent()) {
+                switch (nodeKind.get()) {
+                    case BlankNode:
+                    case IRI:
+                        isBlankNodeOrIRI = true;
+                }
+            }
+
+            // only if it's a Literal
+            if (!isBlankNodeOrIRI) {
+                // Natural Mapping of SQL Values
+                Optional<SQLSelectField> sqlSelectField = mappedObjectMap.get().getColumn();
+                if (sqlSelectField.isPresent())
+                    return Optional.of(SqlXsdMap.getMappedXSD(sqlSelectField.get().getSqlType()).getURI());
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private String buildSerializedPropertyShape(ObjectMap mappedObjectMap, boolean hasQualifiedValueShape) {
         StringBuffer buffer = new StringBuffer();
 
         String o; // to be used as objects of different RDF triples
 
         // sh:nodeKind
-        Optional<TermMap.TermTypes> termType = mappedObjectMap.getTermType();
-        if (termType.isPresent()) {
-
-            switch (termType.get()) {
-                case BLANKNODE: o = "sh:BlankNode"; break;
+        Optional<NodeKinds> nodeKind = getNodeKind();
+        if (nodeKind.isPresent()) {
+            switch (nodeKind.get()) {
+                case BlankNode: o = "sh:BlankNode"; break;
                 case IRI: o = "sh:IRI"; break;
-                case LITERAL: o = "sh:Literal"; break;
+                case Literal: o = "sh:Literal"; break;
                 default: o = null;
             }
 
@@ -115,10 +135,10 @@ public class PropertyShape extends Shape {
         if (constant.isPresent()) {
             o = constant.get();
 
-            if (termType.isPresent()) {
-                switch (termType.get()) {
+            if (nodeKind.isPresent()) {
+                switch (nodeKind.get()) {
                     case IRI: o = getShaclDocModel().getRelativeIRIOr(o); break;
-                    case LITERAL: o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK; break;
+                    case Literal: o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK; break;
                 }
             }
 
@@ -143,31 +163,28 @@ public class PropertyShape extends Shape {
         // sh:datatype
         o = null;
 
-        Optional<URI> datatype = mappedObjectMap.getDatatype();
-        if (datatype.isPresent()) {
+        Optional<URI> datatype = getDatatype();
+        if (language.isEmpty() && datatype.isPresent()) {
             o = getShaclDocModel().getRelativeIRIOr(datatype.get());
-        } else {
 
-            boolean isBlankNodeOrIRI = false;
-            if (termType.isPresent()) {
-                switch (termType.get()) {
-                    case BLANKNODE:
-                    case IRI:
-                        isBlankNodeOrIRI = true;
-                }
-            }
-
-            if (!isBlankNodeOrIRI) {
-                // Natural Mapping of SQL Values
-                Optional<SQLSelectField> sqlSelectField = mappedObjectMap.getColumn();
-                if (sqlSelectField.isPresent())
-                    o = DatatypeMap.getMappedXSD(sqlSelectField.get().getSqlType());
+            if (o != null) {
+                buffer.append(getPO("sh:datatype", o));
+                buffer.append(getSNT());
             }
         }
 
-        if (o != null) {
-            buffer.append(getPO("sh:datatype", o));
-            buffer.append(getSNT());
+        // sh:maxLength
+        Optional<SQLSelectField> sqlSelectField = mappedObjectMap.getColumn();
+        if (sqlSelectField.isPresent()) {
+            if (nodeKind.isPresent() && nodeKind.get().equals(NodeKinds.Literal)) {
+                if (language.isPresent() ||
+                        (datatype.isPresent() && datatype.get().equals(XSDs.XSD_STRING.getURI()))) {
+                    o = Integer.toString(sqlSelectField.get().getDisplaySize());
+
+                    buffer.append(getPO("sh:maxLength", o));
+                    buffer.append(getSNT());
+                }
+            }
         }
 
         // sh:pattern
@@ -183,16 +200,9 @@ public class PropertyShape extends Shape {
             buffer.append(getSNT());
         }
 
-        // sh:qualifiedValueShapesDisjoint
-        if (hasQualifiedValueShape) {
-            buffer.append(getPO("sh:qualifiedValueShapesDisjoint", "true"));
-            buffer.append(getSNT());
-        }
-
         // cardinality
         o = "1";
         // cardinality: rr:column
-        Optional<SQLSelectField> sqlSelectField = mappedObjectMap.getColumn();
         if (sqlSelectField.isPresent()) {
             switch (sqlSelectField.get().getNullable()) {
                 case ResultSetMetaData.columnNoNulls:
@@ -240,6 +250,12 @@ public class PropertyShape extends Shape {
             buffer.append(getSNT());
         }
 
+        // sh:qualifiedValueShapesDisjoint
+        if (hasQualifiedValueShape) {
+            buffer.append(getPO("sh:qualifiedValueShapesDisjoint", "true"));
+            buffer.append(getSNT());
+        }
+
         return buffer.toString();
     }
 
@@ -268,10 +284,6 @@ public class PropertyShape extends Shape {
         // if ObjectMap
         if (mappingType.equals(MappingTypes.OBJECT_MAP))
             buffer.append(buildSerializedPropertyShape(mappedObjectMap.get(), hasQualifiedValueShape));
-
-        // if DUPLICATED_PREDICATE
-        if (mappingType.equals(MappingTypes.DUPLICATED_PREDICATE))
-            buffer.append(buildSerializedPropertyShape(multiplicity));
 
         buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
         buffer.append(getDNT());

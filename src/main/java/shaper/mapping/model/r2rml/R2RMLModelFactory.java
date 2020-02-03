@@ -2,6 +2,7 @@ package shaper.mapping.model.r2rml;
 
 import janus.database.SQLResultSet;
 import janus.database.SQLSelectField;
+import org.apache.jena.base.Sys;
 import shaper.Shaper;
 import shaper.mapping.r2rml.R2RMLParser;
 
@@ -236,6 +237,9 @@ public class R2RMLModelFactory {
         Optional<Integer> columnType = sqlResultSet.getColumnType(selectField);
         if (columnType.isPresent())
             sqlSelectField.setSqlType(columnType.get());
+
+        // display size
+        sqlSelectField.setDisplaySize(sqlResultSet.getColumnDisplaySize(selectField));
 
         return sqlSelectField;
     }

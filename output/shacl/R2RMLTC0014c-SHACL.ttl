@@ -9,6 +9,40 @@
 @prefix rr: <http://www.w3.org/ns/r2rml#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
+cse:TriplesMap1Shape-dept-COMPANY
+    a sh:PropertyShape ;
+    sh:path dept:COMPANY ;
+    sh:nodeKind sh:Literal ;
+    sh:in ( "EXAMPLE Corporation" ) ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:TriplesMap1Shape-dept-deptno
+    a sh:PropertyShape ;
+    sh:path dept:deptno ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:positiveInteger  .
+    
+cse:TriplesMap1Shape-dept-location
+    a sh:PropertyShape ;
+    sh:path dept:location ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:TriplesMap1Shape-dept-name
+    a sh:PropertyShape ;
+    sh:path dept:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:TriplesMap1Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:BlankNode ;
+    sh:property cse:TriplesMap1Shape-dept-COMPANY ;
+    sh:property cse:TriplesMap1Shape-dept-deptno ;
+    sh:property cse:TriplesMap1Shape-dept-location ;
+    sh:property cse:TriplesMap1Shape-dept-name  .
+    
 cse:TriplesMap2Shape-emp-c_ref_deptno
     a sh:PropertyShape ;
     sh:path emp:c_ref_deptno ;
@@ -61,14 +95,14 @@ cse:TriplesMap2Shape-rdf-type-q1
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
-    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/etype/(.*)$" ] ;
+    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/job/(.*)$" ] ;
     sh:qualifiedValueShapesDisjoint true  .
     
 cse:TriplesMap2Shape-rdf-type-q2
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
-    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/job/(.*)$" ] ;
+    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/etype/(.*)$" ] ;
     sh:qualifiedValueShapesDisjoint true  .
     
 cse:TriplesMap2Shape
@@ -85,38 +119,4 @@ cse:TriplesMap2Shape
     sh:property cse:TriplesMap2Shape-emp-name ;
     sh:property cse:TriplesMap2Shape-rdf-type-q1 ;
     sh:property cse:TriplesMap2Shape-rdf-type-q2  .
-    
-cse:TriplesMap1Shape-dept-COMPANY
-    a sh:PropertyShape ;
-    sh:path dept:COMPANY ;
-    sh:nodeKind sh:Literal ;
-    sh:in ( "EXAMPLE Corporation" ) ;
-    sh:minCount 1 ;
-    sh:maxCount 1  .
-    
-cse:TriplesMap1Shape-dept-deptno
-    a sh:PropertyShape ;
-    sh:path dept:deptno ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:positiveInteger  .
-    
-cse:TriplesMap1Shape-dept-location
-    a sh:PropertyShape ;
-    sh:path dept:location ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
-cse:TriplesMap1Shape-dept-name
-    a sh:PropertyShape ;
-    sh:path dept:name ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
-cse:TriplesMap1Shape
-    a sh:NodeShape ;
-    sh:nodeKind sh:BlankNode ;
-    sh:property cse:TriplesMap1Shape-dept-COMPANY ;
-    sh:property cse:TriplesMap1Shape-dept-deptno ;
-    sh:property cse:TriplesMap1Shape-dept-location ;
-    sh:property cse:TriplesMap1Shape-dept-name  .
     

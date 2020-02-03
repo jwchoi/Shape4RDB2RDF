@@ -7,32 +7,31 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-cse:TriplesMap1Shape-ex-lname
+cse:TriplesMap1Shape-ex-amount
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/IOUs#lname> ;
+    sh:path <http://example.com/base/IOUs#amount> ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxCount 1  .
+    sh:datatype xsd:double  .
     
 cse:TriplesMap1Shape-ex-fname
     a sh:PropertyShape ;
     sh:path <http://example.com/base/IOUs#fname> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:maxCount 1  .
+    sh:maxLength 20  .
     
-cse:TriplesMap1Shape-ex-amount
+cse:TriplesMap1Shape-ex-lname
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/IOUs#amount> ;
+    sh:path <http://example.com/base/IOUs#lname> ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:double ;
-    sh:maxCount 1  .
+    sh:datatype xsd:string ;
+    sh:maxLength 20  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:BlankNode ;
     sh:class <http://example.com/base/IOUs> ;
-    sh:property cse:TriplesMap1Shape-ex-lname ;
+    sh:property cse:TriplesMap1Shape-ex-amount ;
     sh:property cse:TriplesMap1Shape-ex-fname ;
-    sh:property cse:TriplesMap1Shape-ex-amount  .
+    sh:property cse:TriplesMap1Shape-ex-lname  .
     

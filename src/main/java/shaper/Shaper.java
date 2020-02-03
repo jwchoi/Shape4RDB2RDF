@@ -40,6 +40,7 @@ public class Shaper {
 	public static ShaclMapper shaclMapper;
 
 	public static void main (String[] args) {
+
 		if (!readPropertiesFile(SHAPER_PROPERTIES_FILE))
 			return;
 

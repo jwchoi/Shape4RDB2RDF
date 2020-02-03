@@ -2,8 +2,9 @@ package shaper.mapping.model.shex;
 
 import shaper.Shaper;
 import janus.database.SQLSelectField;
-import shaper.mapping.DatatypeMap;
+import shaper.mapping.SqlXsdMap;
 import shaper.mapping.Symbols;
+import shaper.mapping.XSDs;
 import shaper.mapping.model.r2rml.ObjectMap;
 import shaper.mapping.model.r2rml.Template;
 import shaper.mapping.model.r2rml.TermMap;
@@ -89,9 +90,10 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
         if (valueSet.isPresent())
             return;
 
-        datatype = Optional.of(DatatypeMap.getMappedXSD(Shaper.dbSchema.getJDBCDataType(table, column)));
+        XSDs xsdType = SqlXsdMap.getMappedXSD(Shaper.dbSchema.getJDBCDataType(table, column));
+        datatype = Optional.of(xsdType.getRelativeIRI());
 
-        xsFacet = buildFacet(table, column, datatype.get());
+        xsFacet = buildFacet(table, column, xsdType);
     }
 
     private Optional<String> buildValueSet(String table, String column) {
@@ -111,41 +113,41 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
             return Optional.empty();
     }
 
-    private Optional<String> buildFacet(String table, String column, String xsd) {
+    private Optional<String> buildFacet(String table, String column, XSDs xsd) {
         String facet = null;
         switch (xsd) {
-            case DatatypeMap.XSD_BOOLEAN:
+            case XSD_BOOLEAN:
                 facet = "/true|false/";
                 break;
-            case DatatypeMap.XSD_DATE:
+            case XSD_DATE:
                 facet = Shaper.dbSchema.getRegexForXSDDate();
                 break;
-            case DatatypeMap.XSD_DATE_TIME:
+            case XSD_DATE_TIME:
                 facet = Shaper.dbSchema.getRegexForXSDDateTime(table, column).get();
                 break;
-            case DatatypeMap.XSD_DECIMAL:
+            case XSD_DECIMAL:
                 Integer numericPrecision = Shaper.dbSchema.getNumericPrecision(table, column).get();
                 Integer numericScale = Shaper.dbSchema.getNumericScale(table, column).get();
                 facet = XSFacets.TOTAL_DIGITS + Symbols.SPACE + numericPrecision + Symbols.SPACE + XSFacets.FRACTION_DIGITS + Symbols.SPACE + numericScale;
                 break;
-            case DatatypeMap.XSD_DOUBLE:
+            case XSD_DOUBLE:
                 boolean isUnsigned = Shaper.dbSchema.isUnsigned(table, column);
                 facet = isUnsigned ? XSFacets.MIN_INCLUSIVE + Symbols.SPACE + Symbols.ZERO : null;
                 break;
-            case DatatypeMap.XSD_HEX_BINARY:
+            case XSD_HEX_BINARY:
                 Integer maximumOctetLength = Shaper.dbSchema.getMaximumOctetLength(table, column).get();
                 facet = XSFacets.MAX_LENGTH + Symbols.SPACE + (maximumOctetLength*2);
                 break;
-            case DatatypeMap.XSD_INTEGER:
+            case XSD_INTEGER:
                 String minimumIntegerValue = Shaper.dbSchema.getMinimumIntegerValue(table, column).get();
                 String maximumIntegerValue = Shaper.dbSchema.getMaximumIntegerValue(table, column).get();
                 facet = XSFacets.MIN_INCLUSIVE + Symbols.SPACE + minimumIntegerValue + Symbols.SPACE + XSFacets.MAX_INCLUSIVE + Symbols.SPACE + maximumIntegerValue;
                 break;
-            case DatatypeMap.XSD_STRING:
+            case XSD_STRING:
                 Integer characterMaximumLength = Shaper.dbSchema.getCharacterMaximumLength(table, column).get();
                 facet = XSFacets.MAX_LENGTH + Symbols.SPACE + characterMaximumLength;
                 break;
-            case DatatypeMap.XSD_TIME:
+            case XSD_TIME:
                 facet = Shaper.dbSchema.getRegexForXSDTime(table, column).get();
                 break;
         }
@@ -222,7 +224,7 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
         } else { // Natural Mapping of SQL Values
             Optional<SQLSelectField> sqlSelectField = objectMap.getColumn();
             if (sqlSelectField.isPresent())
-                this.datatype = Optional.of(DatatypeMap.getMappedXSD(sqlSelectField.get().getSqlType()));
+                this.datatype = Optional.of(SqlXsdMap.getMappedXSD(sqlSelectField.get().getSqlType()).getRelativeIRI());
         }
 
         // xsFacet, only REGEXP

@@ -1,7 +1,9 @@
 package shaper.mapping.model.rdf;
 
 import shaper.Shaper;
-import shaper.mapping.DatatypeMap;
+import shaper.mapping.SqlXsdMap;
+import shaper.mapping.Symbols;
+import shaper.mapping.XSDs;
 
 class Literal {
 
@@ -10,17 +12,17 @@ class Literal {
         String literal;
 
 	    int sqlDataType = Shaper.dbSchema.getJDBCDataType(table, column);
-        String xmlSchemaDataType = DatatypeMap.getMappedXSD(sqlDataType);
+        XSDs xmlSchemaDataType = SqlXsdMap.getMappedXSD(sqlDataType);
 
         switch (xmlSchemaDataType) {
-            case DatatypeMap.XSD_STRING:
+            case XSD_STRING:
                 literal = getStringLiteral(value);
                 break;
-            case DatatypeMap.XSD_DATE_TIME:
-                value = value.replace(' ', 'T');
+            case XSD_DATE_TIME:
+                value = value.replace(Symbols.SPACE, "T");
                 literal = buildTypedLiteral(value, xmlSchemaDataType);
                 break;
-            case DatatypeMap.XSD_BOOLEAN:
+            case XSD_BOOLEAN:
                 value = value.toLowerCase();
                 if (value.equals("0")) value = "false";
                 if (value.equals("1")) value = "true";
@@ -33,17 +35,17 @@ class Literal {
         return literal;
     }
 
-    private static String buildTypedLiteral(String lexicalValue, String anXsd) {
-        return "\"" + lexicalValue + "\""  + "^^" + anXsd;
+    private static String buildTypedLiteral(String lexicalValue, XSDs anXsd) {
+        return Symbols.DOUBLE_QUOTATION_MARK + lexicalValue + Symbols.DOUBLE_QUOTATION_MARK  + Symbols.CARET + Symbols.CARET + anXsd.getRelativeIRI();
     }
 
     // https://www.w3.org/TR/turtle/#literals
     private static String getStringLiteral(String value) {
-	    String qMark = "\"";
-	    if (value.contains("\""))
-	        qMark = "'";
+	    String qMark = Symbols.DOUBLE_QUOTATION_MARK;
+	    if (value.contains(qMark))
+	        qMark = Symbols.SINGLE_QUOTATION_MARK;
 
-	    if (value.contains("\n"))
+	    if (value.contains(Symbols.NEWLINE))
 	        return qMark + qMark + qMark + value + qMark + qMark + qMark;
 	    else
 	        return qMark + value + qMark;

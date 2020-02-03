@@ -18,6 +18,6 @@ cse:TriplesMap1Shape-rdf-type
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/Student/(.+)/(.+)$" ;
+    sh:pattern "^http://example.com/Student/(.*)/(.*)$" ;
     sh:property cse:TriplesMap1Shape-rdf-type  .
     

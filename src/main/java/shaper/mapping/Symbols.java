@@ -34,6 +34,7 @@ public class Symbols {
     public static final String QUESTION_MARK = "?";
     public static final String REF = "ref";
     public static final String SEMICOLON = ";";
+    public static final String SINGLE_QUOTATION_MARK = "'";
     public static final String SLASH = "/";
     public static final String SPACE = " ";
     public static final String TAB = "    ";

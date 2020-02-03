@@ -180,7 +180,7 @@ public class NodeShape extends Shape {
         // column names
         List<SQLSelectField> columnNames = template.get().getColumnNames();
         for (SQLSelectField columnName: columnNames)
-            regex = regex.replace("{" + columnName.getColumnNameOrAlias() + "}", "(.+)");
+            regex = regex.replace("{" + columnName.getColumnNameOrAlias() + "}", "(.*)");
 
         return Optional.of(Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + regex + Symbols.DOLLAR + Symbols.DOUBLE_QUOTATION_MARK);
     }

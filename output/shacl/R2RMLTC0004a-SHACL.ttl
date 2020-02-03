@@ -7,31 +7,42 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-cse:TriplesMap2Shape-foaf-name
-    a sh:PropertyShape ;
-    sh:path foaf:name ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxCount 1  .
-    
-cse:TriplesMap2Shape
-    a sh:NodeShape ;
-    sh:nodeKind sh:IRI ;
-    sh:class ex:Sport ;
-    sh:pattern "^http://example.com/(.+)$" ;
-    sh:property cse:TriplesMap2Shape-foaf-name  .
-    
 cse:TriplesMap1Shape-foaf-name
     a sh:PropertyShape ;
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:maxCount 1  .
+    sh:maxLength 50  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:class ex:Student ;
-    sh:pattern "^http://example.com/(.+)$" ;
+    sh:pattern "^http://example.com/(.*)$" ;
     sh:property cse:TriplesMap1Shape-foaf-name  .
+    
+cse:TriplesMap1_TriplesMap2_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:TriplesMap1Shape
+        ]
+        [
+                sh:qualifiedValueShape cse:TriplesMap2Shape
+        ]
+    ) .
+
+cse:TriplesMap2Shape-foaf-name
+    a sh:PropertyShape ;
+    sh:path foaf:name ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
+    
+cse:TriplesMap2Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class ex:Sport ;
+    sh:pattern "^http://example.com/(.*)$" ;
+    sh:property cse:TriplesMap2Shape-foaf-name  .
     
