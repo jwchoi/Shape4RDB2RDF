@@ -3,21 +3,21 @@ package shaper.mapping.model.shacl;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.Template;
 
-import java.util.List;
+import java.net.URI;
 import java.util.Optional;
 
 public abstract class Shape implements Comparable<Shape> {
-    private IRI id;
+    private URI id;
     private ShaclDocModel shaclDocModel;
 
     private String serializedShape;
 
-    Shape(IRI id, ShaclDocModel shaclDocModel) {
+    Shape(URI id, ShaclDocModel shaclDocModel) {
         this.id = id;
         this.shaclDocModel = shaclDocModel;
     }
 
-    protected IRI getID() { return id; }
+    protected URI getID() { return id; }
     protected ShaclDocModel getShaclDocModel() { return shaclDocModel; }
 
     protected String getSerializedShape() { return serializedShape; }
@@ -25,7 +25,7 @@ public abstract class Shape implements Comparable<Shape> {
 
     @Override
     public int compareTo(Shape o) {
-        return id.getValue().compareTo(o.id.getValue());
+        return id.compareTo(o.id);
     }
 
     protected boolean isPossibleToHavePattern(Optional<Template> template) {

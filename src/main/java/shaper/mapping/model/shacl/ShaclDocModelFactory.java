@@ -5,8 +5,6 @@ import shaper.Shaper;
 import shaper.mapping.PrefixMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.*;
-import shaper.mapping.model.shex.Shape;
-import shaper.mapping.model.shex.TripleConstraint;
 
 import java.net.URI;
 import java.nio.file.Path;
@@ -42,7 +40,7 @@ public class ShaclDocModelFactory {
                     String predicate = predicateMap.getConstant().get();
                     int multiplicity = getMultiplicity(triplesMap, URI.create(predicate));
                     boolean hasQualifiedValueShape = multiplicity > 1 ? true : false;
-                    IRI propertyShapeID = createPropertyShapeID(nodeShape, predicate, hasQualifiedValueShape);
+                    URI propertyShapeID = createPropertyShapeID(nodeShape, predicate, hasQualifiedValueShape);
 
                     PropertyShape propertyShape;
 
@@ -65,6 +63,7 @@ public class ShaclDocModelFactory {
             shaclDocModel.addShape(nodeShape);
         }
 
+        Set<NodeShape> derivedNodeShapes = new TreeSet<>();
         Set<URI> checkedTriplesMaps = new HashSet<>();
         for (TriplesMap triplesMap : triplesMaps) {
             URI uriOfTriplesMap = triplesMap.getUri();
@@ -79,16 +78,18 @@ public class ShaclDocModelFactory {
                 Set<Set<NodeShape>> setsForDerivedNodeShapes = shaclDocModel.getSubsetOfPowerSetOf(baseNodeShapes);
                 for (Set<NodeShape> set: setsForDerivedNodeShapes) {
 
-                    Set<IRI> nodeShapeIRIs = new TreeSet<>();
+                    Set<URI> nodeShapeIRIs = new TreeSet<>();
                     for (NodeShape nodeShape: set)
                         nodeShapeIRIs.add(nodeShape.getID());
 
                     NodeShape derivedShape = new NodeShape(createNodeShapeID(set), nodeShapeIRIs, shaclDocModel);
 
-                    shaclDocModel.addShape(derivedShape);
+                    derivedNodeShapes.add(derivedShape);
                 }
             }
         }
+        for (NodeShape derivedNodeShape: derivedNodeShapes)
+            shaclDocModel.addShape(derivedNodeShape);
 
         return shaclDocModel;
     }
@@ -103,7 +104,7 @@ public class ShaclDocModelFactory {
         return postfix;
     }
 
-    private static IRI createNodeShapeID(Set<NodeShape> nodeShapes) {
+    private static URI createNodeShapeID(Set<NodeShape> nodeShapes) {
         StringBuffer postfix = new StringBuffer();
         for (NodeShape nodeShape: nodeShapes) {
             if (nodeShape.getMappedTriplesMap().isPresent()) {
@@ -113,12 +114,12 @@ public class ShaclDocModelFactory {
         }
         postfix.append("Shape");
 
-        return IRI.create(shaclDocModel.getBaseIRI() + Symbols.HASH + postfix);
+        return URI.create(shaclDocModel.getBaseIRI() + Symbols.HASH + postfix);
     }
 
-    private static IRI createNodeShapeID(TriplesMap triplesMap) {
+    private static URI createNodeShapeID(TriplesMap triplesMap) {
         String postfix = obtainFragmentOrLastPathSegmentOf(triplesMap.getUri());
-        return IRI.create(shaclDocModel.getBaseIRI() + Symbols.HASH + postfix + "Shape");
+        return URI.create(shaclDocModel.getBaseIRI() + Symbols.HASH + postfix + "Shape");
     }
 
     private static int getMultiplicity(TriplesMap triplesMap, URI predicate) {
@@ -139,7 +140,7 @@ public class ShaclDocModelFactory {
         return multiplicity;
     }
 
-    private static IRI createPropertyShapeID(NodeShape nodeShape, String predicateURIString, boolean hasQualifiedValueShape) {
+    private static URI createPropertyShapeID(NodeShape nodeShape, String predicateURIString, boolean hasQualifiedValueShape) {
         URI predicateURI = URI.create(predicateURIString);
         String prefixOfPredicateURI = shaclDocModel.getPrefixOf(predicateURI);
 
@@ -148,15 +149,15 @@ public class ShaclDocModelFactory {
         if (prefixOfPredicateURI != null)
             postfix = prefixOfPredicateURI + Symbols.DASH + postfix;
 
-        IRI propertyShapeID = IRI.create(nodeShape.getID() + Symbols.DASH + postfix);
+        URI propertyShapeID = URI.create(nodeShape.getID() + Symbols.DASH + postfix);
 
         if (hasQualifiedValueShape) {
-            IRI tempPropertyShapeID;
-            Set<IRI> propertyShapeIDs = nodeShape.getPropertyShapeIDs();
+            URI tempPropertyShapeID;
+            Set<URI> propertyShapeIDs = nodeShape.getPropertyShapeIDs();
             int index = 0;
             do {
                 index++;
-                tempPropertyShapeID = IRI.create(propertyShapeID + Symbols.DASH + "q" + index);
+                tempPropertyShapeID = URI.create(propertyShapeID + Symbols.DASH + "q" + index);
             } while (propertyShapeIDs.contains(tempPropertyShapeID));
             propertyShapeID = tempPropertyShapeID;
         }

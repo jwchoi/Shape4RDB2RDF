@@ -1,0 +1,256 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix map: <file:///C:/Users/jwchoi/IdeaProjects/shaper/#> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix conf: <http://ufc.br/rdb2rdfmb/conf/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard: <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+cse:ConceptShape-skos-broader
+    a sh:PropertyShape ;
+    sh:path skos:broader ;
+    sh:node cse:ConceptShape  .
+    
+cse:ConceptShape-skos-prefLabel
+    a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:ConceptShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class skos:Concept ;
+    sh:pattern "^http://data.example.com/concept/(.+)$" ;
+    sh:property cse:ConceptShape-skos-broader ;
+    sh:property cse:ConceptShape-skos-prefLabel  .
+    
+cse:DocumentShape-conf-conference
+    a sh:PropertyShape ;
+    sh:path conf:conference ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:DocumentShape-dc-date
+    a sh:PropertyShape ;
+    sh:path dc:date ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer  .
+    
+cse:DocumentShape-dc-title
+    a sh:PropertyShape ;
+    sh:path dc:title ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:DocumentShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class foaf:Document ;
+    sh:pattern "^http://data.example.com/document/(.+)$" ;
+    sh:property cse:DocumentShape-conf-conference ;
+    sh:property cse:DocumentShape-dc-date ;
+    sh:property cse:DocumentShape-dc-title  .
+    
+cse:Document_CreatorShape-dc-creator
+    a sh:PropertyShape ;
+    sh:path dc:creator ;
+    sh:node cse:PersonShape  .
+    
+cse:Document_CreatorShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class foaf:Document ;
+    sh:pattern "^http://data.example.com/document/(.+)$" ;
+    sh:property cse:Document_CreatorShape-dc-creator  .
+    
+cse:Document_Creator_Document_subject_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:Document_CreatorShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Document_subjectShape
+        ]
+    ) .
+
+cse:Document_Document_Creator_Document_subject_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:DocumentShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Document_CreatorShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Document_subjectShape
+        ]
+    ) .
+
+cse:Document_Document_Creator_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:DocumentShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Document_CreatorShape
+        ]
+    ) .
+
+cse:Document_Document_subject_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:DocumentShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Document_subjectShape
+        ]
+    ) .
+
+cse:Document_subjectShape-skos-subject
+    a sh:PropertyShape ;
+    sh:path skos:subject ;
+    sh:node cse:ConceptShape  .
+    
+cse:Document_subjectShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class foaf:Document ;
+    sh:pattern "^http://data.example.com/document/(.+)$" ;
+    sh:property cse:Document_subjectShape-skos-subject  .
+    
+cse:OrganizationShape-rdfs-label
+    a sh:PropertyShape ;
+    sh:path rdfs:label ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:OrganizationShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class conf:Organization ;
+    sh:pattern "^http://data.example.com/organization/(.+)$" ;
+    sh:property cse:OrganizationShape-rdfs-label  .
+    
+cse:PersonShape-foaf-name
+    a sh:PropertyShape ;
+    sh:path foaf:name ;
+    sh:nodeKind sh:Literal ;
+    sh:pattern "^(.*) (.*)$"  .
+    
+cse:PersonShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class foaf:Person ;
+    sh:pattern "^http://data.example.com/person/(.+)$" ;
+    sh:property cse:PersonShape-foaf-name  .
+    
+cse:Person_Person_has_affiliation_Person_research_interests_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:PersonShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Person_has_affiliationShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Person_research_interestsShape
+        ]
+    ) .
+
+cse:Person_Person_has_affiliation_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:PersonShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Person_has_affiliationShape
+        ]
+    ) .
+
+cse:Person_Person_research_interests_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:PersonShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Person_research_interestsShape
+        ]
+    ) .
+
+cse:Person_has_affiliationShape-conf-has_affiliation
+    a sh:PropertyShape ;
+    sh:path conf:has_affiliation ;
+    sh:node cse:OrganizationShape  .
+    
+cse:Person_has_affiliationShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class foaf:Person ;
+    sh:pattern "^http://data.example.com/person/(.+)$" ;
+    sh:property cse:Person_has_affiliationShape-conf-has_affiliation  .
+    
+cse:Person_has_affiliation_Person_research_interests_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [
+                sh:qualifiedValueShape cse:Person_has_affiliationShape
+        ]
+        [
+                sh:qualifiedValueShape cse:Person_research_interestsShape
+        ]
+    ) .
+
+cse:Person_research_interestsShape-conf-research_interests
+    a sh:PropertyShape ;
+    sh:path conf:research_interests ;
+    sh:node cse:ConceptShape  .
+    
+cse:Person_research_interestsShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class foaf:Person ;
+    sh:pattern "^http://data.example.com/person/(.+)$" ;
+    sh:property cse:Person_research_interestsShape-conf-research_interests  .
+    
+cse:PostalAddressShape-vcard-country
+    a sh:PropertyShape ;
+    sh:path vcard:country ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:PostalAddressShape-vcard-pcode
+    a sh:PropertyShape ;
+    sh:path vcard:pcode ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:PostalAddressShape-vcard-street
+    a sh:PropertyShape ;
+    sh:path vcard:street ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string  .
+    
+cse:PostalAddressShape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class conf:PostalAddress ;
+    sh:pattern "^http://data.example.com/postalAddress/(.+)$" ;
+    sh:property cse:PostalAddressShape-vcard-country ;
+    sh:property cse:PostalAddressShape-vcard-pcode ;
+    sh:property cse:PostalAddressShape-vcard-street  .
+    

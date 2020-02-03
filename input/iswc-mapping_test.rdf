@@ -12,13 +12,13 @@
 
 map:Person
 	rr:logicalTable [ rr:sqlQuery """
-		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2, Address
+		SELECT PerID AS ID, Email AS foaf_mbox, FirstName AS foaf_name, LastName AS foaf_name2
 		FROM persons
 	""" ];
 
 	rr:subjectMap [
 		rr:template 'http://data.example.com/person/{"ID"}';
-		rr:class dc:Person;
+		rr:class foaf:Person; 
 	];
 	rr:predicateObjectMap [ 
 		rr:predicate foaf:name; 
@@ -27,6 +27,8 @@ map:Person
 			rr:termType rr:Literal; 
 		]
 	].
+
+
 
 map:Concept
 	rr:logicalTable [ rr:sqlQuery """
@@ -40,7 +42,7 @@ map:Concept
 	];
 	rr:predicateObjectMap [
 		rr:predicate skos:prefLabel;
-		rr:objectMap [ rr:column 'skos_prefLabel' ;] 
+		rr:objectMap [ rr:column 'skos_prefLabel' ; ] 
 	];
 	rr:predicateObjectMap [ 
 		rr:predicate skos:broader; 
@@ -82,7 +84,7 @@ map:Person_research_interests
 
 map:PostalAddress
 	rr:logicalTable [ rr:sqlQuery """
-		SELECT Address || ' ' || Postcode || ' ' || Country AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode
+		SELECT CONCAT(Address , ' ' , Postcode , ' ' , Country) AS ID,Country AS vcard_country, Address AS vcard_street, Location AS vcard_locality, Postcode AS vcard_pcode
 		FROM organizations
 	""" ];
  
@@ -92,7 +94,7 @@ map:PostalAddress
 	];
 	rr:predicateObjectMap [
 		rr:predicate vcard:country;
-		rr:objectMap [ rr:column 'vcard_country' ;]
+		rr:objectMap [ rr:column 'vcard_country' ; ] 
 	];
 	rr:predicateObjectMap [
 		rr:predicate vcard:pcode;
@@ -123,7 +125,7 @@ map:Organization
 map:Document
 	rr:logicalTable [ rr:sqlQuery """
 		SELECT PaperID AS ID, Title AS dc_title, Year AS dc_date, 
-		(SELECT Name || ', ' || location from conferences where conferences.ConfID=papers.conference) AS conf_conference
+		(SELECT CONCAT(Name , ', ' , location) from conferences where conferences.ConfID=papers.conference) AS conf_conference
 		FROM papers
 		WHERE papers.Year > 2002
 	""" ];

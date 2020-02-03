@@ -32,7 +32,7 @@ cse:PersonShape_Obj1 LITERAL /^(.*) (.*)$/
 
 cse:PersonShape IRI
  /^http:\/\/data\.example\.com\/person\/(.+)$/ {
-  a [ dc:Person ]  ;
+  a [ foaf:Person ]  ;
   foaf:name @cse:PersonShape_Obj1 ? 
 }
 
@@ -48,9 +48,9 @@ cse:ConceptShape IRI
 cse:DocumentShape IRI
  /^http:\/\/data\.example\.com\/document\/(.+)$/ {
   a [ foaf:Document ]  ;
-  conf:conference xsd:integer ? ;
+  dc:date xsd:integer ? ;
   dc:title xsd:string ? ;
-  dc:date xsd:integer ? 
+  conf:conference xsd:string ? 
 }
 
 
@@ -93,7 +93,7 @@ cse:Person_research_interestsPersonShape IRI
  /^http:\/\/data\.example\.com\/person\/(.+)$/ {
   conf:research_interests @cse:ConceptShape * ;
   foaf:name @cse:PersonShape_Obj1 ? ;
-  a [ dc:Person foaf:Person ] {2} 
+  a [ foaf:Person ]  
 }
 
 cse:Person_research_interestsPerson_has_affiliationShape IRI
@@ -107,7 +107,7 @@ cse:PersonPerson_has_affiliationShape IRI
  /^http:\/\/data\.example\.com\/person\/(.+)$/ {
   foaf:name @cse:PersonShape_Obj1 ? ;
   conf:has_affiliation @cse:OrganizationShape * ;
-  a [ dc:Person foaf:Person ] {2} 
+  a [ foaf:Person ]  
 }
 
 cse:Person_research_interestsPersonPerson_has_affiliationShape IRI
@@ -115,23 +115,23 @@ cse:Person_research_interestsPersonPerson_has_affiliationShape IRI
   conf:research_interests @cse:ConceptShape * ;
   foaf:name @cse:PersonShape_Obj1 ? ;
   conf:has_affiliation @cse:OrganizationShape * ;
-  a [ dc:Person foaf:Person ] {2} 
+  a [ foaf:Person ]  
 }
 
 cse:DocumentDocument_subjectShape IRI
  /^http:\/\/data\.example\.com\/document\/(.+)$/ {
-  conf:conference xsd:integer ? ;
-  dc:title xsd:string ? ;
   dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:string ? ;
   skos:subject @cse:ConceptShape * ;
   a [ foaf:Document ]  
 }
 
 cse:DocumentDocument_CreatorShape IRI
  /^http:\/\/data\.example\.com\/document\/(.+)$/ {
-  conf:conference xsd:integer ? ;
-  dc:title xsd:string ? ;
   dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:string ? ;
   (
      dc:creator @cse:PersonShape *
     |
@@ -161,9 +161,9 @@ cse:Document_subjectDocument_CreatorShape IRI
 
 cse:DocumentDocument_subjectDocument_CreatorShape IRI
  /^http:\/\/data\.example\.com\/document\/(.+)$/ {
-  conf:conference xsd:integer ? ;
-  dc:title xsd:string ? ;
   dc:date xsd:integer ? ;
+  dc:title xsd:string ? ;
+  conf:conference xsd:string ? ;
   skos:subject @cse:ConceptShape * ;
   (
      dc:creator @cse:PersonShape *

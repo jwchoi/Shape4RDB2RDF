@@ -5,7 +5,6 @@ import shaper.mapping.Symbols;
 
 import java.net.URI;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 public class ShaclDocModel {
     private URI baseIRI;
@@ -59,7 +58,7 @@ public class ShaclDocModel {
         return true;
     }
 
-    public String getSerializedPropertyShape(IRI propertyShapeID) {
+    public String getSerializedPropertyShape(URI propertyShapeID) {
         for (Shape shape : shapes)
             if (shape instanceof PropertyShape) {
                 PropertyShape propertyShape = (PropertyShape) shape;

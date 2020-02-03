@@ -23,7 +23,7 @@ public class PropertyShape extends Shape {
 
     private boolean hasQualifiedValueShape = false;
 
-    PropertyShape(IRI id, PredicateMap mappedPredicateMap, ObjectMap mappedObjectMap, boolean hasQualifiedValueShape, ShaclDocModel shaclDocModel) {
+    PropertyShape(URI id, PredicateMap mappedPredicateMap, ObjectMap mappedObjectMap, boolean hasQualifiedValueShape, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedPredicateMap = mappedPredicateMap;
         this.mappedObjectMap = Optional.of(mappedObjectMap);
@@ -32,7 +32,7 @@ public class PropertyShape extends Shape {
         mappingType = MappingTypes.OBJECT_MAP;
     }
 
-    PropertyShape(IRI id, PredicateMap mappedPredicateMap, RefObjectMap mappedRefObjectMap, boolean hasQualifiedValueShape, ShaclDocModel shaclDocModel) {
+    PropertyShape(URI id, PredicateMap mappedPredicateMap, RefObjectMap mappedRefObjectMap, boolean hasQualifiedValueShape, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedPredicateMap = mappedPredicateMap;
         this.mappedRefObjectMap = Optional.of(mappedRefObjectMap);
@@ -41,7 +41,7 @@ public class PropertyShape extends Shape {
         mappingType = MappingTypes.REF_OBJECT_MAP;
     }
 
-    PropertyShape(IRI id, PredicateMap mappedPredicateMap, int multiplicity, ShaclDocModel shaclDocModel) {
+    PropertyShape(URI id, PredicateMap mappedPredicateMap, int multiplicity, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
         this.mappedPredicateMap = mappedPredicateMap;
         this.multiplicity = multiplicity;

@@ -1,7 +1,5 @@
 package shaper.mapping;
 
-import shaper.Shaper;
-
 import java.net.URI;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -21,23 +19,23 @@ public final class PrefixMap {
 		map.put(URI.create("http://www.w3.org/ns/shacl#"), "sh");
 		map.put(URI.create("http://www.w3.org/ns/r2rml#"), "rr");
 	}
-	
+
 	public static String getPrefix(URI uri) {
 		return map.get(uri);
 	}
-	
+
 	public static URI getURI(String prefix) {
 		Set<Map.Entry<URI, String>> entrySet = map.entrySet();
-		
+
 		Iterator<Map.Entry<URI, String>> iterator = entrySet.iterator();
-		
+
 		while (iterator.hasNext()) {
 			Map.Entry<URI, String> entry = iterator.next();
-			
+
 			if (entry.getValue().equals(prefix))
 				return entry.getKey();
 		}
-		
+
 		return null;
 	}
 }

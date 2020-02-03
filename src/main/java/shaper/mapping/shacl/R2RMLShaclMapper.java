@@ -3,8 +3,6 @@ package shaper.mapping.shacl;
 import shaper.Shaper;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.r2rml.R2RMLModelFactory;
-import shaper.mapping.model.r2rml.TriplesMap;
-import shaper.mapping.model.shacl.IRI;
 import shaper.mapping.model.shacl.NodeShape;
 import shaper.mapping.model.shacl.ShaclDocModelFactory;
 import shaper.mapping.model.shacl.Shape;
@@ -34,32 +32,19 @@ public class R2RMLShaclMapper extends ShaclMapper {
     }
 
     private void writeShacl() {
-//        Set<TriplesMap> triplesMaps = r2rmlModel.getTriplesMaps();
-//
-//        for (TriplesMap triplesMap : triplesMaps) {
-//            NodeShape nodeShape = shaclDocModel.getMappedNodeShape(triplesMap.getUri());
-//
-//            Set<IRI> propertyShapeIDs = nodeShape.getPropertyShapeIDs();
-//            for (IRI propertyShapeID: propertyShapeIDs)
-//                writer.println(shaclDocModel.getSerializedPropertyShape(propertyShapeID));
-//
-//            writer.println(nodeShape);
-//        }
-
         Set<Shape> shapes = shaclDocModel.getShapes();
 
         for (Shape shape: shapes) {
             if (shape instanceof NodeShape) {
                 NodeShape nodeShape = (NodeShape) shape;
 
-                Set<IRI> propertyShapeIDs = nodeShape.getPropertyShapeIDs();
-                for (IRI propertyShapeID: propertyShapeIDs)
+                Set<URI> propertyShapeIDs = nodeShape.getPropertyShapeIDs();
+                for (URI propertyShapeID: propertyShapeIDs)
                     writer.println(shaclDocModel.getSerializedPropertyShape(propertyShapeID));
 
                 writer.println(nodeShape);
             }
         }
-
 
     }
 
