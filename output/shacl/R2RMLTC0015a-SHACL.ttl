@@ -24,12 +24,8 @@ cse:TriplesMap1Shape
 cse:TriplesMap1_TriplesMap2_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:TriplesMap1Shape
-        ]
-        [
-                sh:qualifiedValueShape cse:TriplesMap2Shape
-        ]
+        [ sh:qualifiedValueShape cse:TriplesMap1Shape ]
+        [ sh:qualifiedValueShape cse:TriplesMap2Shape ]
     ) .
 
 cse:TriplesMap2Shape-rdfs-label

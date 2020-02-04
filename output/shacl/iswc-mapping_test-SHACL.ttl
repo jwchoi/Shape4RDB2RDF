@@ -77,48 +77,30 @@ cse:Document_CreatorShape
 cse:Document_Creator_Document_subject_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:Document_CreatorShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_subjectShape
-        ]
+        [ sh:qualifiedValueShape cse:Document_CreatorShape ]
+        [ sh:qualifiedValueShape cse:Document_subjectShape ]
     ) .
 
 cse:Document_Document_Creator_Document_subject_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:DocumentShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_CreatorShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_subjectShape
-        ]
+        [ sh:qualifiedValueShape cse:DocumentShape ]
+        [ sh:qualifiedValueShape cse:Document_CreatorShape ]
+        [ sh:qualifiedValueShape cse:Document_subjectShape ]
     ) .
 
 cse:Document_Document_Creator_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:DocumentShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_CreatorShape
-        ]
+        [ sh:qualifiedValueShape cse:DocumentShape ]
+        [ sh:qualifiedValueShape cse:Document_CreatorShape ]
     ) .
 
 cse:Document_Document_subject_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:DocumentShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Document_subjectShape
-        ]
+        [ sh:qualifiedValueShape cse:DocumentShape ]
+        [ sh:qualifiedValueShape cse:Document_subjectShape ]
     ) .
 
 cse:Document_subjectShape-skos-subject
@@ -163,37 +145,23 @@ cse:PersonShape
 cse:Person_Person_has_affiliation_Person_research_interests_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:PersonShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_has_affiliationShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_research_interestsShape
-        ]
+        [ sh:qualifiedValueShape cse:PersonShape ]
+        [ sh:qualifiedValueShape cse:Person_has_affiliationShape ]
+        [ sh:qualifiedValueShape cse:Person_research_interestsShape ]
     ) .
 
 cse:Person_Person_has_affiliation_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:PersonShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_has_affiliationShape
-        ]
+        [ sh:qualifiedValueShape cse:PersonShape ]
+        [ sh:qualifiedValueShape cse:Person_has_affiliationShape ]
     ) .
 
 cse:Person_Person_research_interests_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:PersonShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_research_interestsShape
-        ]
+        [ sh:qualifiedValueShape cse:PersonShape ]
+        [ sh:qualifiedValueShape cse:Person_research_interestsShape ]
     ) .
 
 cse:Person_has_affiliationShape-conf-has_affiliation
@@ -211,12 +179,8 @@ cse:Person_has_affiliationShape
 cse:Person_has_affiliation_Person_research_interests_Shape
     a sh:NodeShape ;
     sh:and (
-        [
-                sh:qualifiedValueShape cse:Person_has_affiliationShape
-        ]
-        [
-                sh:qualifiedValueShape cse:Person_research_interestsShape
-        ]
+        [ sh:qualifiedValueShape cse:Person_has_affiliationShape ]
+        [ sh:qualifiedValueShape cse:Person_research_interestsShape ]
     ) .
 
 cse:Person_research_interestsShape-conf-research_interests

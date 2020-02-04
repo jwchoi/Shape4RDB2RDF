@@ -81,12 +81,8 @@ cse:Document_Creator_Document_subject_Shape
     a sh:NodeShape ;
     sh:targetClass foaf:Document ;
     sh:and (
-               [
-                   sh:qualifiedValueShape cse:Document_CreatorShape
-               ]
-               [
-                   sh:qualifiedValueShape cse:Document_subjectShape
-               ]
+               [ sh:qualifiedValueShape cse:Document_CreatorShape ]
+               [ sh:qualifiedValueShape cse:Document_subjectShape ]
            ) .
 
 cse:Document_Document_Creator_Document_subject_Shape

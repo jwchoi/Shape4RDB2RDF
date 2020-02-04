@@ -48,19 +48,4 @@ public abstract class Shape implements Comparable<Shape> {
 
     // Unlabeled Blank Node
     protected String getUBN(String p, String o) { return Symbols.OPEN_BRACKET + Symbols.SPACE + p + Symbols.SPACE + o + Symbols.SPACE + Symbols.CLOSE_BRACKET; }
-
-    // Multiple Lines Unlabeled Blank Node
-    protected String getMultipleLineUBN(String p, String o, int indentSize) {
-        StringBuffer buffer = new StringBuffer();
-
-        StringBuffer indent = new StringBuffer();
-        for (int i = 0; i < indentSize; i++)
-            indent.append(Symbols.SPACE);
-
-        buffer.append(indent + Symbols.OPEN_BRACKET + Symbols.NEWLINE);
-        buffer.append(indent.toString() + indent + p + Symbols.SPACE + o + Symbols.NEWLINE);
-        buffer.append(indent + Symbols.CLOSE_BRACKET + Symbols.NEWLINE);
-
-        return buffer.toString();
-    }
 }

@@ -53,7 +53,7 @@ public class NodeShape extends Shape {
         return null;
     }
 
-    String buildSerializedNodeShape(SubjectMap subjectMap) {
+    private String buildSerializedNodeShape(SubjectMap subjectMap) {
         StringBuffer buffer = new StringBuffer();
 
         String o; // to be used as objects of different RDF triples
@@ -102,20 +102,20 @@ public class NodeShape extends Shape {
         return buffer.toString();
     }
 
-    String buildSerializedNodeShape(Set<URI> nodeShapesOfSameSubject) {
+    private String buildSerializedNodeShape(Set<URI> nodeShapesOfSameSubject) {
         StringBuffer buffer = new StringBuffer();
 
         List<String> qualifiedValueShapes = new ArrayList<>();
 
         for (URI nodeShapeOfSameSubject: nodeShapesOfSameSubject) {
             String o = getShaclDocModel().getRelativeIRIOr(nodeShapeOfSameSubject.toString());
-            qualifiedValueShapes.add(getMultipleLineUBN("sh:qualifiedValueShape", o, 8));
+            qualifiedValueShapes.add(getUBN("sh:qualifiedValueShape", o));
         }
 
         if (qualifiedValueShapes.size() > 0) {
             buffer.append("sh:and" + Symbols.SPACE + Symbols.OPEN_PARENTHESIS + Symbols.NEWLINE);
             for (String qualifiedValueShape: qualifiedValueShapes)
-                buffer.append(qualifiedValueShape);
+                buffer.append(Symbols.TAB + Symbols.TAB + qualifiedValueShape + Symbols.NEWLINE);
             buffer.append(Symbols.TAB + Symbols.CLOSE_PARENTHESIS + Symbols.SPACE + Symbols.DOT + Symbols.NEWLINE);
         }
 
