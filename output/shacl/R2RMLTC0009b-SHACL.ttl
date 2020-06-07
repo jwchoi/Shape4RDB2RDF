@@ -8,20 +8,6 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-cse:TriplesMap2Shape-rdfs-label
-    a sh:PropertyShape ;
-    sh:path rdfs:label ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxCount 1  .
-    
-cse:TriplesMap2Shape
-    a sh:NodeShape ;
-    sh:nodeKind sh:IRI ;
-    sh:class <http://example.com/ontology/Sport> ;
-    sh:pattern "^http://example.com/resource/sport_(.+)$" ;
-    sh:property cse:TriplesMap2Shape-rdfs-label  .
-    
 cse:TriplesMap1Shape-ex-practises
     a sh:PropertyShape ;
     sh:path <http://example.com/ontology/practises> ;
@@ -32,13 +18,27 @@ cse:TriplesMap1Shape-foaf-name
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:maxCount 1  .
+    sh:maxLength 50  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:class <http://example.com/ontology/Student> ;
-    sh:pattern "^http://example.com/resource/student_(.+)$" ;
+    sh:pattern "^http://example.com/resource/student_(.*)$" ;
     sh:property cse:TriplesMap1Shape-ex-practises ;
     sh:property cse:TriplesMap1Shape-foaf-name  .
+    
+cse:TriplesMap2Shape-rdfs-label
+    a sh:PropertyShape ;
+    sh:path rdfs:label ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
+    
+cse:TriplesMap2Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class <http://example.com/ontology/Sport> ;
+    sh:pattern "^http://example.com/resource/sport_(.*)$" ;
+    sh:property cse:TriplesMap2Shape-rdfs-label  .
     

@@ -100,14 +100,14 @@ cse:TriplesMap2Shape-rdf-type-q1
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
-    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/etype/(.*)$" ] ;
+    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/job/(.*)$" ] ;
     sh:qualifiedValueShapesDisjoint true  .
     
 cse:TriplesMap2Shape-rdf-type-q2
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
-    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/job/(.*)$" ] ;
+    sh:qualifiedValueShape [ sh:pattern "^http://example.com/emp/etype/(.*)$" ] ;
     sh:qualifiedValueShapesDisjoint true  .
     
 cse:TriplesMap2Shape

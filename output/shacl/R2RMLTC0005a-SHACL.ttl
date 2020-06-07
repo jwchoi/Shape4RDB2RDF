@@ -11,13 +11,12 @@ cse:TriplesMap1Shape-ex-owes
     a sh:PropertyShape ;
     sh:path ex:owes ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:double ;
-    sh:maxCount 1  .
+    sh:datatype xsd:double  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:class foaf:Person ;
-    sh:pattern "^http://example.com/(.+);(.+)$" ;
+    sh:pattern "^http://example.com/(.*);(.*)$" ;
     sh:property cse:TriplesMap1Shape-ex-owes  .
     

@@ -17,6 +17,6 @@ cse:TriplesMap4Shape-ex-role
 cse:TriplesMap4Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://data.example.com/employee/(.+)$" ;
+    sh:pattern "^http://data.example.com/employee/(.*)$" ;
     sh:property cse:TriplesMap4Shape-ex-role  .
     

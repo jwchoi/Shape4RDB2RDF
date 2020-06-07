@@ -18,7 +18,7 @@ cse:TriplesMap1Shape-ex-id
     a sh:PropertyShape ;
     sh:path ex:id ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:anyinteger ;
+    sh:datatype xsd:integer ;
     sh:minCount 1  .
     
 cse:TriplesMap1Shape-ex-lastName
@@ -54,7 +54,7 @@ cse:TriplesMap2Shape-ex-id
     a sh:PropertyShape ;
     sh:path ex:id ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:anyinteger ;
+    sh:datatype xsd:integer ;
     sh:minCount 1  .
     
 cse:TriplesMap2Shape

@@ -12,7 +12,7 @@ cse:TriplesMap1Shape-foaf-name
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
-    sh:maxCount 1  .
+    sh:maxLength 15  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;

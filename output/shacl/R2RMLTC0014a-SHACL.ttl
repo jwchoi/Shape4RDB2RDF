@@ -10,7 +10,8 @@ cse:TriplesMap1Shape-dept-location
     a sh:PropertyShape ;
     sh:path dept:location ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 100  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;

@@ -11,12 +11,11 @@ cse:TriplesMap1Shape-foaf-name
     a sh:PropertyShape ;
     sh:path foaf:name ;
     sh:nodeKind sh:Literal ;
-    sh:pattern "^(.*) (.*)$" ;
-    sh:maxCount 1  .
+    sh:pattern "^(.{0,50}) (.{0,50})$"  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/Student(.+)$" ;
+    sh:pattern "^http://example.com/Student(.*)$" ;
     sh:property cse:TriplesMap1Shape-foaf-name  .
     

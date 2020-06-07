@@ -25,7 +25,7 @@ cse:TriplesMap1Shape-rdf-type-q1
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
-    sh:qualifiedValueShape [ sh:in ( ex:Student ) ] ;
+    sh:qualifiedValueShape [ sh:in ( foaf:Person ) ] ;
     sh:qualifiedMinCount 1 ;
     sh:qualifiedMaxCount 1 ;
     sh:qualifiedValueShapesDisjoint true  .
@@ -34,7 +34,7 @@ cse:TriplesMap1Shape-rdf-type-q2
     a sh:PropertyShape ;
     sh:path rdf:type ;
     sh:nodeKind sh:IRI ;
-    sh:qualifiedValueShape [ sh:in ( foaf:Person ) ] ;
+    sh:qualifiedValueShape [ sh:in ( ex:Student ) ] ;
     sh:qualifiedMinCount 1 ;
     sh:qualifiedMaxCount 1 ;
     sh:qualifiedValueShapesDisjoint true  .

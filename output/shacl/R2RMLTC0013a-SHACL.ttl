@@ -11,11 +11,12 @@ cse:TriplesMap1Shape-ex-BirthDay
     a sh:PropertyShape ;
     sh:path ex:BirthDay ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
     
 cse:TriplesMap1Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/Person/(.+)/(.+)/(.+)$" ;
+    sh:pattern "^http://example.com/Person/(.*)/(.*)/(.*)$" ;
     sh:property cse:TriplesMap1Shape-ex-BirthDay  .
     

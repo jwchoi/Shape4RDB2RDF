@@ -17,14 +17,43 @@ cse:LinkMap_1_2Shape-ex-plays
 cse:LinkMap_1_2Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/student/(.+)$" ;
+    sh:pattern "^http://example.com/student/(.*)$" ;
     sh:property cse:LinkMap_1_2Shape-ex-plays  .
+    
+cse:LinkMap_1_2_TriplesMap1_Shape
+    a sh:NodeShape ;
+    sh:and (
+        [ sh:qualifiedValueShape cse:LinkMap_1_2Shape ]
+        [ sh:qualifiedValueShape cse:TriplesMap1Shape ]
+    ) .
+
+cse:TriplesMap1Shape-ex-firstName
+    a sh:PropertyShape ;
+    sh:path ex:firstName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
+    
+cse:TriplesMap1Shape-ex-lastName
+    a sh:PropertyShape ;
+    sh:path ex:lastName ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
+    
+cse:TriplesMap1Shape
+    a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://example.com/student/(.*)$" ;
+    sh:property cse:TriplesMap1Shape-ex-firstName ;
+    sh:property cse:TriplesMap1Shape-ex-lastName  .
     
 cse:TriplesMap2Shape-ex-description
     a sh:PropertyShape ;
     sh:path ex:description ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
+    sh:datatype xsd:string ;
+    sh:maxLength 50  .
     
 cse:TriplesMap2Shape-ex-id
     a sh:PropertyShape ;
@@ -36,26 +65,7 @@ cse:TriplesMap2Shape-ex-id
 cse:TriplesMap2Shape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/sport/(.+)$" ;
+    sh:pattern "^http://example.com/sport/(.*)$" ;
     sh:property cse:TriplesMap2Shape-ex-description ;
     sh:property cse:TriplesMap2Shape-ex-id  .
-    
-cse:TriplesMap1Shape-ex-firstName
-    a sh:PropertyShape ;
-    sh:path ex:firstName ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
-cse:TriplesMap1Shape-ex-lastName
-    a sh:PropertyShape ;
-    sh:path ex:lastName ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string  .
-    
-cse:TriplesMap1Shape
-    a sh:NodeShape ;
-    sh:nodeKind sh:IRI ;
-    sh:pattern "^http://example.com/student/(.+)$" ;
-    sh:property cse:TriplesMap1Shape-ex-firstName ;
-    sh:property cse:TriplesMap1Shape-ex-lastName  .
     
