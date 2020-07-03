@@ -1,6 +1,7 @@
 package shaper.mapping.model.rdf;
 
 import shaper.Shaper;
+import shaper.mapping.Symbols;
 
 import java.net.URI;
 import java.util.List;

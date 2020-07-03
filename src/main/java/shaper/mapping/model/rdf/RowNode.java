@@ -3,7 +3,6 @@ package shaper.mapping.model.rdf;
 import shaper.Shaper;
 import janus.database.DBField;
 import shaper.mapping.Symbols;
-import org.apache.jena.ext.com.google.common.net.UrlEscapers;
 
 import java.net.URI;
 import java.util.List;
@@ -12,16 +11,16 @@ public class RowNode {
 	
 	// generates a row node with ordered column names.
 	static String getMappedRowNodeAfterBase(String table, List<DBField> pkFields) {
-		StringBuffer rowNode = new StringBuffer(table);
+		StringBuffer rowNode = new StringBuffer(Utils.encode(table));
 		rowNode.append(Symbols.SLASH);
 		
 		for (DBField pkField: pkFields) {
 			String column = pkField.getColumnName();
 			String value = pkField.getValue();
 			
-			rowNode.append(column);
+			rowNode.append(Utils.encode(column));
 			rowNode.append(Symbols.EQUAL);
-			rowNode.append(getEncodedColumnValue(value));
+			rowNode.append(Utils.encode(value));
 			rowNode.append(Symbols.SEMICOLON);
 		}
 		rowNode.deleteCharAt(rowNode.lastIndexOf(Symbols.SEMICOLON));
@@ -35,9 +34,5 @@ public class RowNode {
 	
 	private static String getRowNodeIncludingBase(String rowNodeAfterBase) {
 		return Shaper.rdfMapper.rdfMappingModel.getBaseIRI() + rowNodeAfterBase;
-	}
-
-	private static String getEncodedColumnValue(String columnValue) {
-        return UrlEscapers.urlPathSegmentEscaper().escape(columnValue);
 	}
 }

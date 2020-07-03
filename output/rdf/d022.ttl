@@ -1,0 +1,20 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<source/ID=1100>
+    a <source> ;
+    <source#ID> "1100"^^xsd:integer ;
+    <source#attrA> "K2A2" ;
+    <source#attrB> "K2A1" .
+
+_:target2133547941
+    a <target> ;
+    <target#litattr1> "1010"^^xsd:integer ;
+    <target#key1attr1> "K1A1" ;
+    <target#key1attr2> "K1A2" ;
+    <target#key2attr1> "K2A1" ;
+    <target#key2attr2> "K2A2" .
+
+<source/ID=1100> <source#ref-attrA;attrB> _:target2133547941 .

@@ -1,0 +1,11 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<student/ID=10;Name=Venus%20Williams>
+    a <student> ;
+    <student#ID> "10"^^xsd:integer ;
+    <student#Name> "Venus Williams" ;
+    <student#Sport> "Tennis" .
+

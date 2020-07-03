@@ -1,0 +1,16 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<person/ID=1>
+    a <person> ;
+    <person#ID> "1"^^xsd:integer ;
+    <person#Name> "Alice" .
+
+<person/ID=2>
+    a <person> ;
+    <person#ID> "2"^^xsd:integer ;
+    <person#Name> "Bob" ;
+    <person#DateOfBirth> "September, 2010" .
+

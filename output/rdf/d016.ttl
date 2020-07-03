@@ -1,0 +1,44 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<patient/ID=10>
+    a <patient> ;
+    <patient#ID> "10"^^xsd:integer ;
+    <patient#FirstName> "Monica" ;
+    <patient#LastName> "Geller" ;
+    <patient#Sex> "female" ;
+    <patient#Weight> "80.25"^^xsd:double ;
+    <patient#Height> "1.65"^^xsd:double ;
+    <patient#BirthDate> "1981-10-10"^^xsd:date ;
+    <patient#EntranceDate> "2009-10-10T12:12:22.0"^^xsd:dateTime ;
+    <patient#PaidInAdvance> "false"^^xsd:boolean ;
+    <patient#Photo> "89504E470D0A1A0A0000000D49484452000000050000000508060000008D6F26E50000001C4944415408D763F9FFFEBFC37F062005C3201284D031F18258CD04000EF535CBD18E0E1F0000000049454E44AE426082"^^xsd:hexBinary .
+
+<patient/ID=11>
+    a <patient> ;
+    <patient#ID> "11"^^xsd:integer ;
+    <patient#FirstName> "Rachel" ;
+    <patient#LastName> "Green" ;
+    <patient#Sex> "female" ;
+    <patient#Weight> "70.22"^^xsd:double ;
+    <patient#Height> "1.7"^^xsd:double ;
+    <patient#BirthDate> "1982-11-12"^^xsd:date ;
+    <patient#EntranceDate> "2008-11-12T09:45:44.0"^^xsd:dateTime ;
+    <patient#PaidInAdvance> "true"^^xsd:boolean ;
+    <patient#Photo> "89504E470D0A1A0A0000000D49484452000000050000000508060000008D6F26E50000001C4944415408D763F9FFFF3FC37F062005C3201284D031F18258CD04000EF535CBD18E0E1F0000000049454E44AE426082"^^xsd:hexBinary .
+
+<patient/ID=12>
+    a <patient> ;
+    <patient#ID> "12"^^xsd:integer ;
+    <patient#FirstName> "Chandler" ;
+    <patient#LastName> "Bing" ;
+    <patient#Sex> "male" ;
+    <patient#Weight> "90.31"^^xsd:double ;
+    <patient#Height> "1.76"^^xsd:double ;
+    <patient#BirthDate> "1978-04-06"^^xsd:date ;
+    <patient#EntranceDate> "2007-03-12T02:13:14.0"^^xsd:dateTime ;
+    <patient#PaidInAdvance> "true"^^xsd:boolean ;
+    <patient#Photo> "89504E470D0A1A0A0000000D49484452000000050000000508060000008D6F26E50000001C4944415408D763F9FFFEBFC37F062005C3201284D031F18258CD04000EF535CBD18E0E1F0000000049454E44AE426082"^^xsd:hexBinary .
+

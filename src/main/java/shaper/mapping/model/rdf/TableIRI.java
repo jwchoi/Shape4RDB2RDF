@@ -21,7 +21,5 @@ class TableIRI implements Comparable<TableIRI> {
 		return tableIRIFragment.compareTo(o.getTableIRIFragment());
 	}
 
-	private String buildTableIRIFragment() {
-	    return mappedTable;
-    }
+	private String buildTableIRIFragment() { return Utils.encode(mappedTable); }
 }

@@ -29,7 +29,7 @@ class LiteralProperty implements Comparable<LiteralProperty> {
 	}
 
 	private String buildLiteralPropertyFragment(String table, String column) {
-		return table + Symbols.HASH + column;
+		return Utils.encode(table) + Symbols.HASH + Utils.encode(column);
 	}
 
 	@Override

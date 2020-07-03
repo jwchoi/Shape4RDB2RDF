@@ -1,0 +1,32 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+_:dept426231988
+    a <dept> ;
+    <dept#deptno> "10"^^xsd:integer ;
+    <dept#dname> "APPSERVER" ;
+    <dept#loc> "NEW YORK" .
+
+<emp/empno=7369>
+    a <emp> ;
+    <emp#empno> "7369"^^xsd:integer ;
+    <emp#ename> "SMITH" ;
+    <emp#job> "CLERK" ;
+    <emp#deptno> "10"^^xsd:integer ;
+    <emp#etype> "PART_TIME" .
+
+_:likes-484325591
+    a <likes> ;
+    <likes#id> "7369"^^xsd:integer ;
+    <likes#likeType> "Playing" ;
+    <likes#likedObj> "Soccer" .
+
+_:likes-39997368
+    a <likes> ;
+    <likes#id> "7369"^^xsd:integer ;
+    <likes#likeType> "Watching" ;
+    <likes#likedObj> "Basketball" .
+
+<emp/empno=7369> <emp#ref-deptno> _:dept426231988 .

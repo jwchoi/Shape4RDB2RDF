@@ -1,5 +1,6 @@
 package shaper.mapping.rdf;
 
+import janus.database.DBMSTypes;
 import shaper.Shaper;
 import janus.database.DBField;
 import janus.database.SQLResultSet;
@@ -62,7 +63,7 @@ public class DirectMappingRDFMapper extends RDFMapper {
 		for (String tableName : tableNames) {
 			String tableIRI = rdfMappingModel.getMappedTableIRI(tableName);
 			
-			String query = "SELECT * FROM " + tableName;
+			String query = getQueryFor(tableName, Shaper.DBMSType);
 			SQLResultSet resultSet = Shaper.dbBridge.executeQuery(query);
 			
 			int columnCount = resultSet.getResultSetColumnCount();
@@ -223,6 +224,19 @@ public class DirectMappingRDFMapper extends RDFMapper {
 		System.out.println("The Direct Mapping has finished.");
 		
 		return output;
+	}
+
+	private String getQueryFor(String tableName, DBMSTypes dbmsType) {
+		if (tableName.contains(Symbols.SPACE)) {
+			switch (dbmsType) {
+				case MARIADB:
+				case MYSQL:
+					tableName = Symbols.GRAVE_ACCENT + tableName + Symbols.GRAVE_ACCENT;
+					break;
+			}
+		}
+
+		return "SELECT * FROM " + tableName;
 	}
 
 	private NaturalJoinQuery getNaturalJoinQueryFor(String tableName, String refConstraint) {

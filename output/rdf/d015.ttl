@@ -1,0 +1,29 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<country/Code=BO;Lan=EN>
+    a <country> ;
+    <country#Code> "BO" ;
+    <country#Name> "Bolivia, Plurinational State of" ;
+    <country#Lan> "EN" .
+
+<country/Code=BO;Lan=ES>
+    a <country> ;
+    <country#Code> "BO" ;
+    <country#Name> "Estado Plurinacional de Bolivia" ;
+    <country#Lan> "ES" .
+
+<country/Code=IE;Lan=EN>
+    a <country> ;
+    <country#Code> "IE" ;
+    <country#Name> "Ireland" ;
+    <country#Lan> "EN" .
+
+<country/Code=IE;Lan=ES>
+    a <country> ;
+    <country#Code> "IE" ;
+    <country#Name> "Irlanda" ;
+    <country#Lan> "ES" .
+

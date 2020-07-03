@@ -1,8 +1,11 @@
 package shaper.mapping.model.rdf;
 
 import janus.database.DBField;
+import shaper.mapping.Symbols;
 
 import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -43,7 +46,7 @@ public class RDFMappingModel {
 	}
 
     public String getMappedRowNode(String table, List<DBField> pkFields) {
-        return RowNode.getMappedRowNodeAfterBase(table, pkFields);
+		return RowNode.getMappedRowNodeAfterBase(table, pkFields);
     }
 
     public String getMappedBlankNode(String table, List<DBField> dbFields) {

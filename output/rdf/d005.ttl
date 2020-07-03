@@ -1,0 +1,23 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+_:ious-719267630
+    a <ious> ;
+    <ious#fname> "Bob" ;
+    <ious#lname> "Smith" ;
+    <ious#amount> "30"^^xsd:double .
+
+_:ious299883983
+    a <ious> ;
+    <ious#fname> "Sue" ;
+    <ious#lname> "Jones" ;
+    <ious#amount> "20"^^xsd:double .
+
+_:ious-719267630
+    a <ious> ;
+    <ious#fname> "Bob" ;
+    <ious#lname> "Smith" ;
+    <ious#amount> "30"^^xsd:double .
+

@@ -1,0 +1,66 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<sport/ID=110>
+    a <sport> ;
+    <sport#ID> "110"^^xsd:integer ;
+    <sport#Description> "Tennis" .
+
+<sport/ID=111>
+    a <sport> ;
+    <sport#ID> "111"^^xsd:integer ;
+    <sport#Description> "Football" .
+
+<sport/ID=112>
+    a <sport> ;
+    <sport#ID> "112"^^xsd:integer ;
+    <sport#Description> "Formula1" .
+
+<student/ID=10>
+    a <student> ;
+    <student#ID> "10"^^xsd:integer ;
+    <student#FirstName> "Venus" ;
+    <student#LastName> "Williams" .
+
+<student/ID=11>
+    a <student> ;
+    <student#ID> "11"^^xsd:integer ;
+    <student#FirstName> "Fernando" ;
+    <student#LastName> "Alonso" .
+
+<student/ID=12>
+    a <student> ;
+    <student#ID> "12"^^xsd:integer ;
+    <student#FirstName> "David" ;
+    <student#LastName> "Villa" .
+
+<student_sport/ID_Student=10;ID_Sport=110>
+    a <student_sport> ;
+    <student_sport#ID_Student> "10"^^xsd:integer ;
+    <student_sport#ID_Sport> "110"^^xsd:integer .
+
+<student_sport/ID_Student=11;ID_Sport=111>
+    a <student_sport> ;
+    <student_sport#ID_Student> "11"^^xsd:integer ;
+    <student_sport#ID_Sport> "111"^^xsd:integer .
+
+<student_sport/ID_Student=11;ID_Sport=112>
+    a <student_sport> ;
+    <student_sport#ID_Student> "11"^^xsd:integer ;
+    <student_sport#ID_Sport> "112"^^xsd:integer .
+
+<student_sport/ID_Student=12;ID_Sport=111>
+    a <student_sport> ;
+    <student_sport#ID_Student> "12"^^xsd:integer ;
+    <student_sport#ID_Sport> "111"^^xsd:integer .
+
+<student_sport/ID_Student=10;ID_Sport=110> <student_sport#ref-ID_Student> <student/ID=10> .
+<student_sport/ID_Student=11;ID_Sport=111> <student_sport#ref-ID_Student> <student/ID=11> .
+<student_sport/ID_Student=11;ID_Sport=112> <student_sport#ref-ID_Student> <student/ID=11> .
+<student_sport/ID_Student=12;ID_Sport=111> <student_sport#ref-ID_Student> <student/ID=12> .
+<student_sport/ID_Student=10;ID_Sport=110> <student_sport#ref-ID_Sport> <sport/ID=110> .
+<student_sport/ID_Student=11;ID_Sport=111> <student_sport#ref-ID_Sport> <sport/ID=111> .
+<student_sport/ID_Student=12;ID_Sport=111> <student_sport#ref-ID_Sport> <sport/ID=111> .
+<student_sport/ID_Student=11;ID_Sport=112> <student_sport#ref-ID_Sport> <sport/ID=112> .

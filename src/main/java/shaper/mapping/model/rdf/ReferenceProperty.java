@@ -37,14 +37,14 @@ public class ReferenceProperty implements Comparable<ReferenceProperty> {
     }
 
     private String buildReferencePropertyFragment(String tableName, String refConstraintName) {
-        StringBuffer referenceProperty = new StringBuffer(tableName);
+        StringBuffer referenceProperty = new StringBuffer(Utils.encode(tableName));
         referenceProperty.append(Symbols.HASH);
         referenceProperty.append(Symbols.REF);
         referenceProperty.append(Symbols.DASH);
 
         List<String> referencingColumns = Shaper.dbSchema.getReferencingColumnsByOrdinalPosition(tableName, refConstraintName);
         for (int i = 0; i < referencingColumns.size(); i++) {
-            referenceProperty.append(referencingColumns.get(i));
+            referenceProperty.append(Utils.encode(referencingColumns.get(i)));
             referenceProperty.append(Symbols.SEMICOLON);
         }
         referenceProperty.deleteCharAt(referenceProperty.lastIndexOf(Symbols.SEMICOLON));

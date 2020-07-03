@@ -1,0 +1,23 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+_:employee1865488868
+    a <employee> ;
+    <employee#ID> "10"^^xsd:integer ;
+    <employee#FirstName> "http://example.com/ns#Jhon" ;
+    <employee#LastName> "Smith" .
+
+_:employee2105702284
+    a <employee> ;
+    <employee#ID> "20"^^xsd:integer ;
+    <employee#FirstName> "Carlos" ;
+    <employee#LastName> "Mendoza" .
+
+_:employee-1047663439
+    a <employee> ;
+    <employee#ID> "30"^^xsd:integer ;
+    <employee#FirstName> "Juan Daniel" ;
+    <employee#LastName> "Crespo" .
+

@@ -1,0 +1,62 @@
+@base <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<addresses/ID=18>
+    a <addresses> ;
+    <addresses#ID> "18"^^xsd:integer ;
+    <addresses#city> "Cambridge" ;
+    <addresses#state> "MA" .
+
+<department/ID=23>
+    a <department> ;
+    <department#ID> "23"^^xsd:integer ;
+    <department#name> "accounting" ;
+    <department#city> "Cambridge" ;
+    <department#manager> "8"^^xsd:integer .
+
+<people/ID=7>
+    a <people> ;
+    <people#ID> "7"^^xsd:integer ;
+    <people#fname> "Bob" ;
+    <people#addr> "18"^^xsd:integer ;
+    <people#deptName> "accounting" ;
+    <people#deptCity> "Cambridge" .
+
+<people/ID=8>
+    a <people> ;
+    <people#ID> "8"^^xsd:integer ;
+    <people#fname> "Sue" .
+
+_:projects967679365
+    a <projects> ;
+    <projects#lead> "8"^^xsd:integer ;
+    <projects#name> "pencil survey" ;
+    <projects#deptName> "accounting" ;
+    <projects#deptCity> "Cambridge" .
+
+_:projects1832791206
+    a <projects> ;
+    <projects#lead> "8"^^xsd:integer ;
+    <projects#name> "eraser survey" ;
+    <projects#deptName> "accounting" ;
+    <projects#deptCity> "Cambridge" .
+
+<taskassignments/worker=7;project=pencil%20survey>
+    a <taskassignments> ;
+    <taskassignments#worker> "7"^^xsd:integer ;
+    <taskassignments#project> "pencil survey" ;
+    <taskassignments#deptName> "accounting" ;
+    <taskassignments#deptCity> "Cambridge" .
+
+<department/ID=23> <department#ref-manager> <people/ID=8> .
+<people/ID=7> <people#ref-addr> <addresses/ID=18> .
+<people/ID=7> <people#ref-deptName;deptCity> <department/ID=23> .
+_:projects967679365 <projects#ref-deptName;deptCity> <department/ID=23> .
+_:projects1832791206 <projects#ref-deptName;deptCity> <department/ID=23> .
+_:projects967679365 <projects#ref-lead> <people/ID=8> .
+_:projects1832791206 <projects#ref-lead> <people/ID=8> .
+<taskassignments/worker=7;project=pencil%20survey> <taskassignments#ref-project;deptName;deptCity> _:projects967679365 .
+<taskassignments/worker=7;project=pencil%20survey> <taskassignments#ref-deptName;deptCity> <department/ID=23> .
+<taskassignments/worker=7;project=pencil%20survey> <taskassignments#ref-worker> <people/ID=7> .
