@@ -3,6 +3,7 @@ package shaper.mapping.model.rdf;
 import shaper.Shaper;
 import janus.database.DBField;
 import shaper.mapping.Symbols;
+import shaper.mapping.model.Utils;
 
 import java.net.URI;
 import java.util.List;

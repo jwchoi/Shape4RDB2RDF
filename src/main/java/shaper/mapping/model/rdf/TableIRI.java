@@ -1,5 +1,7 @@
 package shaper.mapping.model.rdf;
 
+import shaper.mapping.model.Utils;
+
 class TableIRI implements Comparable<TableIRI> {
 	private String tableIRIFragment;
 

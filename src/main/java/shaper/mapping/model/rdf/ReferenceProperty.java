@@ -2,6 +2,7 @@ package shaper.mapping.model.rdf;
 
 import shaper.Shaper;
 import shaper.mapping.Symbols;
+import shaper.mapping.model.Utils;
 
 import java.util.List;
 

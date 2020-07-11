@@ -43,10 +43,6 @@ public class TripleConstraint implements Comparable<TripleConstraint> {
         this.isInverse = Optional.of(isInverse);
     }
 
-    String getMappedTable() {
-        return mappedTable;
-    }
-
     Optional<Boolean> isInverse() {
         return isInverse;
     }

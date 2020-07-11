@@ -1,5 +1,6 @@
 package shaper.mapping.model.shacl;
 
+import janus.database.DBRefConstraint;
 import janus.database.SQLSelectField;
 import shaper.mapping.SqlXsdMap;
 import shaper.mapping.Symbols;
@@ -12,6 +13,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class PropertyShape extends Shape {
+
+    PropertyShape(URI id, String mappedTable, String mappedColumn, ShaclDocModel shaclDocModel) {
+        super(id, shaclDocModel);
+    }
+
+    PropertyShape(URI id, DBRefConstraint mappedRefConstraint, boolean isInverse, ShaclDocModel shaclDocModel) {
+        super(id, shaclDocModel);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private enum MappingTypes { OBJECT_MAP, REF_OBJECT_MAP }
 
     private PredicateMap mappedPredicateMap;

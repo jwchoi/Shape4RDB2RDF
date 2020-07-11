@@ -1,6 +1,7 @@
 package shaper.mapping.model.rdf;
 
 import shaper.mapping.Symbols;
+import shaper.mapping.model.Utils;
 
 class LiteralProperty implements Comparable<LiteralProperty> {
 	

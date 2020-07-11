@@ -104,6 +104,19 @@ public class ShaclDocModel {
 
     public Map<URI, String> getPrefixMap() { return prefixMap; }
 
+    Optional<URI> getNamespaceIRI(String namespacePrefix) {
+        Optional<URI> namespaceIRI = Optional.empty();
+        Set<URI> keySet = prefixMap.keySet();
+        for(URI key: keySet) {
+            if (prefixMap.get(key).equals(namespacePrefix)) {
+                namespaceIRI = Optional.of(key);
+                return namespaceIRI;
+            }
+        }
+
+        return namespaceIRI;
+    }
+
     public URI getBaseIRI() {
         return baseIRI;
     }
@@ -147,5 +160,22 @@ public class ShaclDocModel {
         }
 
         return setsForDerivedNodeShapes;
+    }
+
+    Optional<NodeShape> getMappedNodeShape(String table) {
+        Optional<NodeShape> mappedNodeShape = Optional.empty();
+        for (Shape shape: shapes) {
+            if (shape instanceof NodeShape) {
+                NodeShape nodeShape = (NodeShape) shape;
+                if (nodeShape.getMappedTableName().isPresent()) {
+                    if (nodeShape.getMappedTableName().get().equals(table)) {
+                        mappedNodeShape = Optional.of(nodeShape);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return mappedNodeShape;
     }
 }

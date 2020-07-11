@@ -1,9 +1,9 @@
-package shaper.mapping.model.rdf;
+package shaper.mapping.model;
 
 import shaper.mapping.Symbols;
 
 public class Utils {
-    static String encode(String value) {
+    public static String encode(String value) {
         return value.replace(Symbols.SPACE, "%20");
     }
 }

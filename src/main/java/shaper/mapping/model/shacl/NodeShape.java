@@ -10,7 +10,18 @@ import java.net.URI;
 import java.util.*;
 
 public class NodeShape extends Shape {
+    private Optional<String> mappedTable = Optional.empty();
 
+    NodeShape(URI id, String mappedTable, ShaclDocModel shaclDocModel) {
+        super(id, shaclDocModel);
+
+        this.mappedTable = Optional.of(mappedTable);
+    }
+
+    Optional<String> getMappedTableName() {
+        return mappedTable;
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private enum MappingTypes { TRIPLES_MAP, NODE_SHAPES_OF_SAME_SUBJECTS }
 
     private MappingTypes mappingType;
