@@ -1,0 +1,19 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:addressesShape
+    a sh:NodeShape ;
+    
+cse:departmentShape
+    a sh:NodeShape ;
+    
+cse:peopleShape
+    a sh:NodeShape ;
+    
+cse:projectsShape
+    a sh:NodeShape ;
+    
+cse:taskassignmentsShape
+    a sh:NodeShape ;
+    

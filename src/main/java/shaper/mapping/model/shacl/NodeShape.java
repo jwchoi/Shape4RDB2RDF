@@ -16,13 +16,23 @@ public class NodeShape extends Shape {
         super(id, shaclDocModel);
 
         this.mappedTable = Optional.of(mappedTable);
+
+        mappingType = MappingTypes.TABLE;
     }
 
     Optional<String> getMappedTableName() {
         return mappedTable;
     }
+
+    private String buildSerializedNodeShape(String mappedTable) {
+        StringBuffer buffer = new StringBuffer();
+
+        String o; // to be used as objects of different RDF triples
+
+        return buffer.toString();
+    }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private enum MappingTypes { TRIPLES_MAP, NODE_SHAPES_OF_SAME_SUBJECTS }
+    private enum MappingTypes { TRIPLES_MAP, NODE_SHAPES_OF_SAME_SUBJECTS, TABLE }
 
     private MappingTypes mappingType;
 
@@ -172,6 +182,10 @@ public class NodeShape extends Shape {
             case NODE_SHAPES_OF_SAME_SUBJECTS:
                 if (nodeShapesOfSameSubject.isPresent())
                     buffer.append(buildSerializedNodeShape(nodeShapesOfSameSubject.get()));
+
+            case TABLE:
+                if (mappedTable.isPresent())
+                    buffer.append(buildSerializedNodeShape(mappedTable.get()));
         }
         
         serializedNodeShape = buffer.toString();

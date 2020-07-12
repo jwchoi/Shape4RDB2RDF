@@ -178,7 +178,7 @@ public class ShaclDocModelFactory {
 
     //Direct Mapping
     public static ShaclDocModel getSHACLDocModel(DBSchema dbSchema) {
-        ShaclDocModel shaclDocModel = new ShaclDocModel(URI.create(Shaper.shapeBaseURI), Shaper.prefixForShapeBaseURI);
+        shaclDocModel = new ShaclDocModel(URI.create(Shaper.shapeBaseURI), Shaper.prefixForShapeBaseURI);
 
         Set<String> tables = dbSchema.getTableNames();
 
@@ -192,18 +192,18 @@ public class ShaclDocModelFactory {
             //-> property shape
             //-> BEGIN Column
             List<String> columns = dbSchema.getColumns(table);
-            for(String column: columns) {
-                URI propertyShapeID = createPropertyShapeID(table, column);
-                PropertyShape propertyShape = new PropertyShape(propertyShapeID, table, column, shaclDocModel);
+            for(int i = 0; i < columns.size(); i++) {
+                URI propertyShapeID = URI.create(nodeShapeID + Symbols.DASH + "col" + (i + 1));
+                PropertyShape propertyShape = new PropertyShape(propertyShapeID, table, columns.get(i), shaclDocModel);
                 shaclDocModel.addShape(propertyShape);
             }
             //<- END Column
 
             //-> BEGIN Referential Constraint
-            Set<String> refConstraints = dbSchema.getRefConstraints(table);
-            for(String refConstraint: refConstraints) {
-                DBRefConstraint refConstraintObject = new DBRefConstraint(table, refConstraint);
-                URI propertyShapeID = createPropertyShapeID(refConstraintObject, false);
+            List<String> refConstraints = Arrays.asList(dbSchema.getRefConstraints(table).toArray(new String[0]));
+            for(int i = 0; i < refConstraints.size(); i++) {
+                URI propertyShapeID = URI.create(nodeShapeID + Symbols.DASH + "ref" + (i + 1));
+                DBRefConstraint refConstraintObject = new DBRefConstraint(table, refConstraints.get(i));
                 PropertyShape propertyShape = new PropertyShape(propertyShapeID, refConstraintObject, false, shaclDocModel);
 
                 shaclDocModel.addShape(propertyShape);
@@ -211,10 +211,10 @@ public class ShaclDocModelFactory {
             //<- END Referential Constraint
 
             // Begin Inverse Referential Constraint
-            Set<DBRefConstraint> refConstraintsPointingTo = dbSchema.getRefConstraintsPointingTo(table);
-            for(DBRefConstraint refConstraint: refConstraintsPointingTo) {
-                URI propertyShapeID = createPropertyShapeID(refConstraint, true);
-                PropertyShape propertyShape = new PropertyShape(propertyShapeID, refConstraint, true, shaclDocModel);
+            List<DBRefConstraint> refConstraintsPointingTo = Arrays.asList(dbSchema.getRefConstraintsPointingTo(table).toArray(new DBRefConstraint[0]));
+            for(int i = 0; i < refConstraintsPointingTo.size(); i++) {
+                URI propertyShapeID = URI.create(nodeShapeID + Symbols.DASH + "inverse" + (i + 1));
+                PropertyShape propertyShape = new PropertyShape(propertyShapeID, refConstraintsPointingTo.get(i), true, shaclDocModel);
 
                 shaclDocModel.addShape(propertyShape);
             } // END Inverse Referential Constraint
@@ -227,54 +227,5 @@ public class ShaclDocModelFactory {
     private static URI createNodeShapeID(String table) {
         URI namespaceIRI = shaclDocModel.getNamespaceIRI(shaclDocModel.getPrefix()).get();
         return URI.create(namespaceIRI + Utils.encode(table) + "Shape");
-    }
-
-    private static URI createPropertyShapeID(String table, String column) {
-        URI id = null;
-        Optional<NodeShape> nodeShape = shaclDocModel.getMappedNodeShape(table);
-        if (nodeShape.isPresent()) {
-            URI nodeShapeIRI = nodeShape.get().getID();
-            id = URI.create(nodeShapeIRI + Symbols.DASH + Utils.encode(column));
-        }
-
-        return id;
-    }
-
-    private static URI createPropertyShapeID(DBRefConstraint mappedRefConstraint, boolean isInverse) {
-        StringBuffer id = new StringBuffer();
-
-        if (isInverse == false) {
-            String table = mappedRefConstraint.getTableName();
-            Optional<NodeShape> nodeShape = shaclDocModel.getMappedNodeShape(table);
-            if (nodeShape.isPresent()) {
-                URI nodeShapeIRI = nodeShape.get().getID();
-                id.append(nodeShapeIRI + Symbols.DASH + "ref" + Symbols.DASH);
-            }
-
-            String refConstraint = mappedRefConstraint.getRefConstraintName();
-            List<String> columns = Shaper.dbSchema.getReferencingColumnsByOrdinalPosition(table, refConstraint);
-            for (String column : columns) {
-                id.append(Utils.encode(column) + Symbols.SEMICOLON);
-            }
-            id.deleteCharAt(id.lastIndexOf(Symbols.SEMICOLON));
-        } else {
-            String table = mappedRefConstraint.getTableName();
-            String refConstraint = mappedRefConstraint.getRefConstraintName();
-            String referencedTable = Shaper.dbSchema.getReferencedTableBy(table, refConstraint);
-            Optional<NodeShape> nodeShape = shaclDocModel.getMappedNodeShape(referencedTable);
-            if (nodeShape.isPresent()) {
-                URI nodeShapeIRI = nodeShape.get().getID();
-                id.append(nodeShapeIRI + Symbols.DASH + "inverse" + Symbols.DASH);
-            }
-
-            List<String> columns = Shaper.dbSchema.getReferencingColumnsByOrdinalPosition(table, refConstraint);
-            for (String column : columns) {
-                String referencedColumn = Shaper.dbSchema.getReferencedColumnBy(table, refConstraint, column);
-                id.append(Utils.encode(referencedColumn) + Symbols.SEMICOLON);
-            }
-            id.deleteCharAt(id.lastIndexOf(Symbols.SEMICOLON));
-        }
-
-        return URI.create(id.toString());
     }
 }
