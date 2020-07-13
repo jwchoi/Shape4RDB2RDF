@@ -1,38 +1,76 @@
 package shaper.mapping.model.shacl;
 
 import janus.database.SQLSelectField;
+import shaper.Shaper;
 import shaper.mapping.Symbols;
+import shaper.mapping.model.Utils;
 import shaper.mapping.model.r2rml.SubjectMap;
 import shaper.mapping.model.r2rml.Template;
 import shaper.mapping.model.r2rml.TermMap;
+import shaper.mapping.model.rdf.TableIRI;
 
 import java.net.URI;
 import java.util.*;
 
 public class NodeShape extends Shape {
-    private Optional<String> mappedTable = Optional.empty();
+    private Optional<TableIRI> mappedTableIRI = Optional.empty();
 
-    NodeShape(URI id, String mappedTable, ShaclDocModel shaclDocModel) {
+    NodeShape(URI id, TableIRI mappedTableIRI, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
 
-        this.mappedTable = Optional.of(mappedTable);
+        this.mappedTableIRI = Optional.of(mappedTableIRI);
 
-        mappingType = MappingTypes.TABLE;
+        mappingType = MappingTypes.TABLE_IRI;
     }
 
-    Optional<String> getMappedTableName() {
-        return mappedTable;
-    }
-
-    private String buildSerializedNodeShape(String mappedTable) {
+    private String buildSerializedNodeShape(TableIRI mappedTableIRI) {
         StringBuffer buffer = new StringBuffer();
 
         String o; // to be used as objects of different RDF triples
 
+        // sh:nodeKind
+        String mappedTable = mappedTableIRI.getMappedTableName();
+        List<String> pk = Shaper.dbSchema.getPrimaryKey(mappedTable);
+        NodeKinds nodeKind = pk.isEmpty() ? NodeKinds.BlankNode : NodeKinds.IRI;
+        if (nodeKind != null) {
+            o = nodeKind.equals(NodeKinds.BlankNode) ? "sh:BlankNode" : "sh:IRI";
+
+            buffer.append(getPO("sh:nodeKind", o));
+            buffer.append(getSNT());
+        }
+
+        // sh:class
+        URI classIRI = mappedTableIRI.getTableIRI();
+        o = getShaclDocModel().getRelativeIRIOr(classIRI.toString());
+        buffer.append(getPO("sh:class", o));
+        buffer.append(getSNT());
+
+        // sh:pattern
+        // only if rr:termType is rr:IRI
+        if (nodeKind.equals(NodeKinds.IRI)) {
+            o = getRegex(classIRI, pk);
+            buffer.append(getPO("sh:pattern", o));
+            buffer.append(getSNT());
+        }
+
+        return buffer.toString();
+    }
+
+    private String getRegex(URI classIRI, List<String> pk) {
+        StringBuffer buffer = new StringBuffer(Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + classIRI + Symbols.SLASH);
+
+        String placeholder = "(.*)";
+        for(String pkColumn: pk) {
+            buffer.append(Utils.encode(pkColumn) + Symbols.EQUAL + placeholder + Symbols.SEMICOLON);
+        }
+        buffer.deleteCharAt(buffer.lastIndexOf(Symbols.SEMICOLON));
+
+        buffer.append(Symbols.DOLLAR + Symbols.DOUBLE_QUOTATION_MARK);
+
         return buffer.toString();
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private enum MappingTypes { TRIPLES_MAP, NODE_SHAPES_OF_SAME_SUBJECTS, TABLE }
+    private enum MappingTypes { TRIPLES_MAP, NODE_SHAPES_OF_SAME_SUBJECTS, TABLE_IRI }
 
     private MappingTypes mappingType;
 
@@ -183,9 +221,9 @@ public class NodeShape extends Shape {
                 if (nodeShapesOfSameSubject.isPresent())
                     buffer.append(buildSerializedNodeShape(nodeShapesOfSameSubject.get()));
 
-            case TABLE:
-                if (mappedTable.isPresent())
-                    buffer.append(buildSerializedNodeShape(mappedTable.get()));
+            case TABLE_IRI:
+                if (mappedTableIRI.isPresent())
+                    buffer.append(buildSerializedNodeShape(mappedTableIRI.get()));
         }
         
         serializedNodeShape = buffer.toString();

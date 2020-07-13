@@ -161,21 +161,4 @@ public class ShaclDocModel {
 
         return setsForDerivedNodeShapes;
     }
-
-    Optional<NodeShape> getMappedNodeShape(String table) {
-        Optional<NodeShape> mappedNodeShape = Optional.empty();
-        for (Shape shape: shapes) {
-            if (shape instanceof NodeShape) {
-                NodeShape nodeShape = (NodeShape) shape;
-                if (nodeShape.getMappedTableName().isPresent()) {
-                    if (nodeShape.getMappedTableName().get().equals(table)) {
-                        mappedNodeShape = Optional.of(nodeShape);
-                        break;
-                    }
-                }
-            }
-        }
-
-        return mappedNodeShape;
-    }
 }

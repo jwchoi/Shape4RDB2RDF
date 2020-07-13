@@ -2,6 +2,7 @@ package shaper.mapping.shacl;
 
 import shaper.Shaper;
 import shaper.mapping.Symbols;
+import shaper.mapping.model.r2rml.R2RMLModel;
 import shaper.mapping.model.r2rml.R2RMLModelFactory;
 import shaper.mapping.model.shacl.NodeShape;
 import shaper.mapping.model.shacl.ShaclDocModelFactory;
@@ -70,7 +71,7 @@ public class R2RMLShaclMapper extends ShaclMapper {
 
     @Override
     public File generateShaclFile() {
-        r2rmlModel = R2RMLModelFactory.getR2RMLModel(getR2RMLParser());
+        R2RMLModel r2rmlModel = R2RMLModelFactory.getR2RMLModel(getR2RMLParser());
         shaclDocModel = ShaclDocModelFactory.getSHACLDocModel(r2rmlModel);
 
         preProcess();

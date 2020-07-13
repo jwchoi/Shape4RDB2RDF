@@ -6,6 +6,8 @@ import shaper.mapping.SqlXsdMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.XSDs;
 import shaper.mapping.model.r2rml.*;
+import shaper.mapping.model.rdf.LiteralProperty;
+import shaper.mapping.model.rdf.ReferenceProperty;
 
 import java.net.URI;
 import java.sql.ResultSetMetaData;
@@ -14,11 +16,11 @@ import java.util.Optional;
 
 public class PropertyShape extends Shape {
 
-    PropertyShape(URI id, String mappedTable, String mappedColumn, ShaclDocModel shaclDocModel) {
+    PropertyShape(URI id, LiteralProperty mappedLiteralProperty, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
     }
 
-    PropertyShape(URI id, DBRefConstraint mappedRefConstraint, boolean isInverse, ShaclDocModel shaclDocModel) {
+    PropertyShape(URI id, ReferenceProperty mappedReferenceProperty, boolean isInverse, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -66,7 +66,7 @@ public class DirectMappingShExMapper extends ShExMapper {
 
     @Override
     public File generateShExFile() {
-        rdfMappingModel = RDFMappingModelFactory.generateMappingModel();
+        rdfMappingModel = RDFMappingModelFactory.generateMappingModel(Shaper.dbSchema);
         shExSchema = ShExSchemaFactory.getShExSchemaModel(Shaper.dbSchema);
 
         preProcess();

@@ -214,7 +214,7 @@ public class DirectMappingRDFMapper extends RDFMapper {
 	}
 	
 	public File generateRDFFile() {
-		rdfMappingModel = RDFMappingModelFactory.generateMappingModel();
+		rdfMappingModel = RDFMappingModelFactory.generateMappingModel(Shaper.dbSchema);
 
 		preProcess(Extension.Turtle);
 		writeDirectives(Extension.Turtle);

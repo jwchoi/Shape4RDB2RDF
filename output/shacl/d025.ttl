@@ -1,19 +1,35 @@
 @base <http://cse.ssu.ac.kr/> .
 @prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d025: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 cse:addressesShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:addresses ;
+    sh:pattern "^http://example.com/base/addresses/ID=(.*)$" ;
     
 cse:departmentShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:department ;
+    sh:pattern "^http://example.com/base/department/ID=(.*)$" ;
     
 cse:peopleShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:people ;
+    sh:pattern "^http://example.com/base/people/ID=(.*)$" ;
     
 cse:projectsShape
     a sh:NodeShape ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d025:projects ;
     
 cse:taskassignmentsShape
     a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:taskassignments ;
+    sh:pattern "^http://example.com/base/taskassignments/worker=(.*);project=(.*)$" ;
     

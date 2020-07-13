@@ -2,6 +2,7 @@ package shaper.mapping.shacl;
 
 import shaper.Shaper;
 import shaper.mapping.Symbols;
+import shaper.mapping.model.rdf.RDFMappingModel;
 import shaper.mapping.model.rdf.RDFMappingModelFactory;
 import shaper.mapping.model.shacl.NodeShape;
 import shaper.mapping.model.shacl.ShaclDocModelFactory;
@@ -65,8 +66,8 @@ public class DirectMappingShaclMapper extends ShaclMapper {
 
     @Override
     public File generateShaclFile() {
-        rdfMappingModel = RDFMappingModelFactory.generateMappingModel();
-        shaclDocModel = ShaclDocModelFactory.getSHACLDocModel(Shaper.dbSchema);
+        RDFMappingModel rdfMappingModel = RDFMappingModelFactory.generateMappingModel(Shaper.dbSchema);
+        shaclDocModel = ShaclDocModelFactory.getSHACLDocModel(rdfMappingModel);
 
         preProcess();
         writeDirectives();
