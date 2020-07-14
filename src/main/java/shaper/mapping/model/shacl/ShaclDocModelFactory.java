@@ -197,7 +197,9 @@ public class ShaclDocModelFactory {
             for(int i = 0; i < literalProperties.size(); i++) {
                 URI propertyShapeID = URI.create(nodeShapeID + Symbols.DASH + "col" + (i + 1));
                 PropertyShape propertyShape = new PropertyShape(propertyShapeID, literalProperties.get(i), shaclDocModel);
+
                 shaclDocModel.addShape(propertyShape);
+                nodeShape.addPropertyShape(propertyShapeID);
             }
             //<- END Literal Property
 
@@ -208,6 +210,7 @@ public class ShaclDocModelFactory {
                 PropertyShape propertyShape = new PropertyShape(propertyShapeID, referenceProperties.get(i), false, shaclDocModel);
 
                 shaclDocModel.addShape(propertyShape);
+                nodeShape.addPropertyShape(propertyShapeID);
             }
             //<- END Reference Property
 
@@ -218,6 +221,7 @@ public class ShaclDocModelFactory {
                 PropertyShape propertyShape = new PropertyShape(propertyShapeID, inverseReferenceProperties.get(i), true, shaclDocModel);
 
                 shaclDocModel.addShape(propertyShape);
+                nodeShape.addPropertyShape(propertyShapeID);
             } // END Inverse Referential Constraint
             //<- property shape
         } // END TABLE

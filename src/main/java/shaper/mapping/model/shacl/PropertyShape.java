@@ -1,6 +1,5 @@
 package shaper.mapping.model.shacl;
 
-import janus.database.DBRefConstraint;
 import janus.database.SQLSelectField;
 import shaper.mapping.SqlXsdMap;
 import shaper.mapping.Symbols;
@@ -15,16 +14,42 @@ import java.util.List;
 import java.util.Optional;
 
 public class PropertyShape extends Shape {
+    private Optional<LiteralProperty> mappedLiteralProperty = Optional.empty();
+    private Optional<ReferenceProperty> mappedReferenceProperty = Optional.empty();
+    private boolean isInverse;
 
     PropertyShape(URI id, LiteralProperty mappedLiteralProperty, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
+        this.mappedLiteralProperty = Optional.of(mappedLiteralProperty);
+
+        mappingType = MappingTypes.LITERAL_PROPERTY;
     }
 
     PropertyShape(URI id, ReferenceProperty mappedReferenceProperty, boolean isInverse, ShaclDocModel shaclDocModel) {
         super(id, shaclDocModel);
+        this.mappedReferenceProperty = Optional.of(mappedReferenceProperty);
+        this.isInverse = isInverse;
+
+        mappingType = MappingTypes.REFERENCE_PROPERTY;
+    }
+
+    private String buildSerializedPropertyShape(LiteralProperty literalProperty) {
+        StringBuffer buffer = new StringBuffer();
+
+        String o; // to be used as objects of different RDF triples
+
+        return buffer.toString();
+    }
+
+    private String buildSerializedPropertyShape(ReferenceProperty referenceProperty, boolean isInverse) {
+        StringBuffer buffer = new StringBuffer();
+
+        String o; // to be used as objects of different RDF triples
+
+        return buffer.toString();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private enum MappingTypes { OBJECT_MAP, REF_OBJECT_MAP }
+    private enum MappingTypes { OBJECT_MAP, REF_OBJECT_MAP, LITERAL_PROPERTY, REFERENCE_PROPERTY}
 
     private PredicateMap mappedPredicateMap;
     private Optional<ObjectMap> mappedObjectMap = Optional.empty();
@@ -285,9 +310,25 @@ public class PropertyShape extends Shape {
         buffer.append(getSNT());
 
         // sh:path
-        o = getShaclDocModel().getRelativeIRIOr(mappedPredicateMap.getConstant().get());
-        buffer.append(getPO("sh:path", o));
-        buffer.append(getSNT());
+        switch (mappingType) {
+            case OBJECT_MAP:
+            case REF_OBJECT_MAP:
+                o = getShaclDocModel().getRelativeIRIOr(mappedPredicateMap.getConstant().get());
+                buffer.append(getPO("sh:path", o));
+                buffer.append(getSNT());
+                break;
+            case LITERAL_PROPERTY:
+                o = getShaclDocModel().getRelativeIRIOr(mappedLiteralProperty.get().getLiteralPropertyIRI());
+                buffer.append(getPO("sh:path", o));
+                buffer.append(getSNT());
+                break;
+            case REFERENCE_PROPERTY:
+                o = getShaclDocModel().getRelativeIRIOr(mappedReferenceProperty.get().getReferencePropertyIRI());
+                if (isInverse)
+                    o = Symbols.OPEN_BRACKET + "sh:inversePath" + Symbols.SPACE + o + Symbols.SPACE + Symbols.CLOSE_BRACKET;
+                buffer.append(getPO("sh:path", o));
+                buffer.append(getSNT());
+        }
 
         // if RefObjectMap
         if (mappingType.equals(MappingTypes.REF_OBJECT_MAP))
@@ -296,6 +337,14 @@ public class PropertyShape extends Shape {
         // if ObjectMap
         if (mappingType.equals(MappingTypes.OBJECT_MAP))
             buffer.append(buildSerializedPropertyShape(mappedObjectMap.get(), hasQualifiedValueShape));
+
+        // if LiteralProperty
+        if (mappingType.equals(MappingTypes.LITERAL_PROPERTY))
+            buffer.append(buildSerializedPropertyShape(mappedLiteralProperty.get()));
+
+        // if ReferenceProperty
+        if (mappingType.equals(MappingTypes.REFERENCE_PROPERTY))
+            buffer.append(buildSerializedPropertyShape(mappedReferenceProperty.get(), isInverse));
 
         buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
         buffer.append(getDNT());

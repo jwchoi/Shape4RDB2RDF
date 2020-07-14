@@ -4,32 +4,212 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
+cse:addressesShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/addresses#city>  .
+    
+cse:addressesShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/addresses#ID>  .
+    
+cse:addressesShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/addresses#state>  .
+    
+cse:addressesShape-inverse1
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/people#ref-addr> ]  .
+    
 cse:addressesShape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:class d025:addresses ;
     sh:pattern "^http://example.com/base/addresses/ID=(.*)$" ;
+    sh:property cse:addressesShape-col1 ;
+    sh:property cse:addressesShape-col2 ;
+    sh:property cse:addressesShape-col3 ;
+    sh:property cse:addressesShape-inverse1  .
+    
+cse:departmentShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/department#city>  .
+    
+cse:departmentShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/department#ID>  .
+    
+cse:departmentShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/department#name>  .
+    
+cse:departmentShape-col4
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/department#manager>  .
+    
+cse:departmentShape-inverse1
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/projects#ref-deptName;deptCity> ]  .
+    
+cse:departmentShape-inverse2
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/people#ref-deptName;deptCity> ]  .
+    
+cse:departmentShape-inverse3
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-deptName;deptCity> ]  .
+    
+cse:departmentShape-ref1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/department#ref-manager>  .
     
 cse:departmentShape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:class d025:department ;
     sh:pattern "^http://example.com/base/department/ID=(.*)$" ;
+    sh:property cse:departmentShape-col1 ;
+    sh:property cse:departmentShape-col2 ;
+    sh:property cse:departmentShape-col3 ;
+    sh:property cse:departmentShape-col4 ;
+    sh:property cse:departmentShape-inverse1 ;
+    sh:property cse:departmentShape-inverse2 ;
+    sh:property cse:departmentShape-inverse3 ;
+    sh:property cse:departmentShape-ref1  .
+    
+cse:peopleShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/people#addr>  .
+    
+cse:peopleShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/people#ID>  .
+    
+cse:peopleShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/people#fname>  .
+    
+cse:peopleShape-col4
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/people#deptCity>  .
+    
+cse:peopleShape-col5
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/people#deptName>  .
+    
+cse:peopleShape-inverse1
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/projects#ref-lead> ]  .
+    
+cse:peopleShape-inverse2
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/department#ref-manager> ]  .
+    
+cse:peopleShape-inverse3
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-worker> ]  .
+    
+cse:peopleShape-ref1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/people#ref-addr>  .
+    
+cse:peopleShape-ref2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/people#ref-deptName;deptCity>  .
     
 cse:peopleShape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:class d025:people ;
     sh:pattern "^http://example.com/base/people/ID=(.*)$" ;
+    sh:property cse:peopleShape-col1 ;
+    sh:property cse:peopleShape-col2 ;
+    sh:property cse:peopleShape-col3 ;
+    sh:property cse:peopleShape-col4 ;
+    sh:property cse:peopleShape-col5 ;
+    sh:property cse:peopleShape-inverse1 ;
+    sh:property cse:peopleShape-inverse2 ;
+    sh:property cse:peopleShape-inverse3 ;
+    sh:property cse:peopleShape-ref1 ;
+    sh:property cse:peopleShape-ref2  .
+    
+cse:projectsShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/projects#deptCity>  .
+    
+cse:projectsShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/projects#lead>  .
+    
+cse:projectsShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/projects#deptName>  .
+    
+cse:projectsShape-col4
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/projects#name>  .
+    
+cse:projectsShape-inverse1
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-project;deptName;deptCity> ]  .
+    
+cse:projectsShape-ref1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/projects#ref-deptName;deptCity>  .
+    
+cse:projectsShape-ref2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/projects#ref-lead>  .
     
 cse:projectsShape
     a sh:NodeShape ;
     sh:nodeKind sh:BlankNode ;
     sh:class d025:projects ;
+    sh:property cse:projectsShape-col1 ;
+    sh:property cse:projectsShape-col2 ;
+    sh:property cse:projectsShape-col3 ;
+    sh:property cse:projectsShape-col4 ;
+    sh:property cse:projectsShape-inverse1 ;
+    sh:property cse:projectsShape-ref1 ;
+    sh:property cse:projectsShape-ref2  .
+    
+cse:taskassignmentsShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/taskassignments#worker>  .
+    
+cse:taskassignmentsShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/taskassignments#deptCity>  .
+    
+cse:taskassignmentsShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/taskassignments#project>  .
+    
+cse:taskassignmentsShape-col4
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/taskassignments#deptName>  .
+    
+cse:taskassignmentsShape-ref1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/taskassignments#ref-deptName;deptCity>  .
+    
+cse:taskassignmentsShape-ref2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/taskassignments#ref-project;deptName;deptCity>  .
+    
+cse:taskassignmentsShape-ref3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/taskassignments#ref-worker>  .
     
 cse:taskassignmentsShape
     a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
     sh:class d025:taskassignments ;
     sh:pattern "^http://example.com/base/taskassignments/worker=(.*);project=(.*)$" ;
+    sh:property cse:taskassignmentsShape-col1 ;
+    sh:property cse:taskassignmentsShape-col2 ;
+    sh:property cse:taskassignmentsShape-col3 ;
+    sh:property cse:taskassignmentsShape-col4 ;
+    sh:property cse:taskassignmentsShape-ref1 ;
+    sh:property cse:taskassignmentsShape-ref2 ;
+    sh:property cse:taskassignmentsShape-ref3  .
     

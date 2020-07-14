@@ -3,18 +3,21 @@ package shaper.mapping.model.rdf;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.Utils;
 
+import java.net.URI;
+
 public class LiteralProperty implements Comparable<LiteralProperty> {
-	
+	private URI literalPropertyIRI;
 	private String propertyFragment;
 	
 	private String mappedTable;
 	private String mappedColumn;
 
-	LiteralProperty(String mappedTable, String mappedColumn) {
+	LiteralProperty(URI baseIRI, String mappedTable, String mappedColumn) {
 		this.mappedTable = mappedTable;
 		this.mappedColumn = mappedColumn;
 
-        this.propertyFragment = buildLiteralPropertyFragment(mappedTable, mappedColumn);
+        propertyFragment = buildLiteralPropertyFragment(mappedTable, mappedColumn);
+        literalPropertyIRI = buildLiteralProperty(baseIRI, propertyFragment);
 	}
 	
 	String getMappedTable() {
@@ -33,8 +36,19 @@ public class LiteralProperty implements Comparable<LiteralProperty> {
 		return Utils.encode(table) + Symbols.HASH + Utils.encode(column);
 	}
 
+	private URI buildLiteralProperty(URI baseIRI, String propertyFragment) {
+		return URI.create(baseIRI + propertyFragment);
+	}
+
+	public URI getLiteralPropertyIRI() { return literalPropertyIRI; }
+
 	@Override
 	public int compareTo(LiteralProperty o) {
-		return propertyFragment.compareTo(o.getPropertyFragment());
+		return literalPropertyIRI.compareTo(o.getLiteralPropertyIRI());
+	}
+
+	@Override
+	public String toString() {
+		return getLiteralPropertyIRI().toString();
 	}
 }

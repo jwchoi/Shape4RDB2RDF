@@ -12,13 +12,12 @@ public class TableIRI implements Comparable<TableIRI> {
 	
 	TableIRI(URI baseIRI, String mappedTable) {
 		this.mappedTable = mappedTable;
-		this.tableIRI = buildTableIRI(baseIRI, mappedTable);
 
 		tableIRIFragment = buildTableIRIFragment();
+		tableIRI = buildTableIRI(baseIRI, tableIRIFragment);
 	}
 
 	public URI getTableIRI() { return tableIRI; }
-
 
 	public String getTableIRIFragment() { return tableIRIFragment; }
 	
@@ -31,9 +30,14 @@ public class TableIRI implements Comparable<TableIRI> {
 		return tableIRI.compareTo(o.getTableIRI());
 	}
 
-	private URI buildTableIRI(URI baseIRI, String mappedTable) {
-		return URI.create(baseIRI + Utils.encode(mappedTable));
+	private URI buildTableIRI(URI baseIRI, String tableIRIFragment) {
+		return URI.create(baseIRI + tableIRIFragment);
 	}
 
 	private String buildTableIRIFragment() { return Utils.encode(mappedTable); }
+
+	@Override
+	public String toString() {
+		return getTableIRI().toString();
+	}
 }

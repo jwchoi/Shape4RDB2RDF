@@ -4,20 +4,22 @@ import shaper.Shaper;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.Utils;
 
+import java.net.URI;
 import java.util.List;
 
 public class ReferenceProperty implements Comparable<ReferenceProperty> {
-
+    private URI referencePropertyIRI;
     private String propertyFragment;
 
     private String mappedTable;
     private String mappedRefConstraint;
 
-    ReferenceProperty(String mappedTable, String mappedRefConstraint) {
+    ReferenceProperty(URI baseIRI, String mappedTable, String mappedRefConstraint) {
         this.mappedTable = mappedTable;
         this.mappedRefConstraint = mappedRefConstraint;
 
         propertyFragment = buildReferencePropertyFragment(mappedTable, mappedRefConstraint);
+        referencePropertyIRI = buildReferencePropertyIRI(baseIRI, propertyFragment);
     }
 
     String getMappedTable() {
@@ -32,9 +34,15 @@ public class ReferenceProperty implements Comparable<ReferenceProperty> {
         return propertyFragment;
     }
 
+    public URI getReferencePropertyIRI() { return referencePropertyIRI; }
+
     @Override
     public int compareTo(ReferenceProperty o) {
-        return propertyFragment.compareTo(o.getPropertyFragment());
+        return referencePropertyIRI.compareTo(o.getReferencePropertyIRI());
+    }
+
+    private URI buildReferencePropertyIRI(URI baseIRI, String propertyFragment) {
+        return URI.create(baseIRI + propertyFragment);
     }
 
     private String buildReferencePropertyFragment(String tableName, String refConstraintName) {
@@ -51,5 +59,10 @@ public class ReferenceProperty implements Comparable<ReferenceProperty> {
         referenceProperty.deleteCharAt(referenceProperty.lastIndexOf(Symbols.SEMICOLON));
 
         return referenceProperty.toString();
+    }
+
+    @Override
+    public String toString() {
+        return referencePropertyIRI.toString();
     }
 }

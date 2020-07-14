@@ -200,11 +200,26 @@ public class NodeShape extends Shape {
 
         switch (mappingType) {
             case TRIPLES_MAP:
-
                 // if SubjectMap
                 if (subjectMapOfMappedTriplesMap.isPresent())
                     buffer.append(buildSerializedNodeShape(subjectMapOfMappedTriplesMap.get()));
 
+                break;
+
+            case NODE_SHAPES_OF_SAME_SUBJECTS:
+                if (nodeShapesOfSameSubject.isPresent())
+                    buffer.append(buildSerializedNodeShape(nodeShapesOfSameSubject.get()));
+
+                break;
+
+            case TABLE_IRI:
+                if (mappedTableIRI.isPresent())
+                    buffer.append(buildSerializedNodeShape(mappedTableIRI.get()));
+        }
+
+        switch (mappingType) {
+            case TRIPLES_MAP:
+            case TABLE_IRI:
                 // sh:property
                 for (URI propertyShapeIRI : propertyShapes) {
                     o = getShaclDocModel().getRelativeIRIOr(propertyShapeIRI.toString());
@@ -214,16 +229,6 @@ public class NodeShape extends Shape {
 
                 buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
                 buffer.append(getDNT());
-
-                break;
-
-            case NODE_SHAPES_OF_SAME_SUBJECTS:
-                if (nodeShapesOfSameSubject.isPresent())
-                    buffer.append(buildSerializedNodeShape(nodeShapesOfSameSubject.get()));
-
-            case TABLE_IRI:
-                if (mappedTableIRI.isPresent())
-                    buffer.append(buildSerializedNodeShape(mappedTableIRI.get()));
         }
         
         serializedNodeShape = buffer.toString();
