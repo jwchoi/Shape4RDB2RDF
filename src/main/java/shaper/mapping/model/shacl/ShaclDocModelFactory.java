@@ -232,6 +232,7 @@ public class ShaclDocModelFactory {
     private static void addPrefixes(RDFMappingModel rdfMappingModel) {
         shaclDocModel.addPrefixDecl(rdfMappingModel.getPrefix(), rdfMappingModel.getBaseIRI().toString());
         shaclDocModel.addPrefixDecl("rdf", PrefixMap.getURI("rdf").toString());
+        shaclDocModel.addPrefixDecl("xsd", PrefixMap.getURI("xsd").toString());
     }
 
     private static URI createNodeShapeID(TableIRI tableIRI) {

@@ -20,11 +20,11 @@ public class LiteralProperty implements Comparable<LiteralProperty> {
         literalPropertyIRI = buildLiteralProperty(baseIRI, propertyFragment);
 	}
 	
-	String getMappedTable() {
+	public String getMappedTable() {
 		return mappedTable;
 	}
 	
-	String getMappedColumn() {
+	public String getMappedColumn() {
 		return mappedColumn;
 	}
 	

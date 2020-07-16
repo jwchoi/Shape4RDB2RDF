@@ -22,11 +22,11 @@ public class ReferenceProperty implements Comparable<ReferenceProperty> {
         referencePropertyIRI = buildReferencePropertyIRI(baseIRI, propertyFragment);
     }
 
-    String getMappedTable() {
+    public String getMappedTable() {
         return mappedTable;
     }
 
-    String getMappedRefConstraintName() {
+    public String getMappedRefConstraintName() {
         return mappedRefConstraint;
     }
 

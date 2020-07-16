@@ -1,6 +1,7 @@
 package shaper.mapping.model.shacl;
 
 import janus.database.SQLSelectField;
+import shaper.Shaper;
 import shaper.mapping.SqlXsdMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.XSDs;
@@ -36,15 +37,94 @@ public class PropertyShape extends Shape {
     private String buildSerializedPropertyShape(LiteralProperty literalProperty) {
         StringBuffer buffer = new StringBuffer();
 
-        String o; // to be used as objects of different RDF triples
+        String o = null; // to be used as objects of different RDF triples
+
+        // sh:nodeKind
+        o = "sh:Literal";
+        buffer.append(getPO("sh:nodeKind", o));
+        buffer.append(getSNT());
+
+        // sh:datatype
+        Optional<String> datatype = getDatatype(literalProperty);
+        if (datatype.isPresent()) {
+            o = datatype.get();
+            buffer.append(getPO("sh:datatype", o));
+            buffer.append(getSNT());
+        }
 
         return buffer.toString();
     }
 
-    private String buildSerializedPropertyShape(ReferenceProperty referenceProperty, boolean isInverse) {
+    private Optional<String> getDatatype(LiteralProperty literalProperty) {
+        String mappedTable = literalProperty.getMappedTable();
+        String mappedColumn = literalProperty.getMappedColumn();
+
+        int JDBCDataType = Shaper.dbSchema.getJDBCDataType(mappedTable, mappedColumn);
+
+        return Optional.of(SqlXsdMap.getMappedXSD(JDBCDataType).getRelativeIRI());
+    }
+
+    private String buildSerializedPropertyShape(ReferenceProperty referenceProperty) {
         StringBuffer buffer = new StringBuffer();
 
         String o; // to be used as objects of different RDF triples
+
+        // sh:nodeKind
+        NodeKinds nodeKind = getNodeKind(referenceProperty);
+        switch (nodeKind) {
+            case BlankNode:
+                o = "sh:BlankNode";
+                buffer.append(getPO("sh:nodeKind", o));
+                buffer.append(getSNT());
+                break;
+            case IRI:
+                o = "sh:IRI";
+                buffer.append(getPO("sh:nodeKind", o));
+                buffer.append(getSNT());
+        }
+
+        return buffer.toString();
+    }
+
+    private NodeKinds getNodeKind(ReferenceProperty referenceProperty) {
+        String mappedTable = referenceProperty.getMappedTable();
+        String mappedRefConstraint = referenceProperty.getMappedRefConstraintName();
+
+        String referencedTable = Shaper.dbSchema.getReferencedTableBy(mappedTable, mappedRefConstraint);
+
+        return (Shaper.dbSchema.getPrimaryKey(referencedTable).size() > 0) ? NodeKinds.IRI : NodeKinds.BlankNode;
+    }
+
+    private String buildSerializedPropertyShapeForDirectMapping() {
+        StringBuffer buffer = new StringBuffer();
+
+        String o; // to be used as objects of different RDF triples
+
+        // sh:path
+        switch (mappingType) {
+            case LITERAL_PROPERTY:
+                o = getShaclDocModel().getRelativeIRIOr(mappedLiteralProperty.get().getLiteralPropertyIRI());
+                buffer.append(getPO("sh:path", o));
+                buffer.append(getSNT());
+                break;
+            case REFERENCE_PROPERTY:
+                o = getShaclDocModel().getRelativeIRIOr(mappedReferenceProperty.get().getReferencePropertyIRI());
+                if (isInverse)
+                    o = Symbols.OPEN_BRACKET + "sh:inversePath" + Symbols.SPACE + o + Symbols.SPACE + Symbols.CLOSE_BRACKET;
+                buffer.append(getPO("sh:path", o));
+                buffer.append(getSNT());
+        }
+
+        // if LiteralProperty
+        if (mappingType.equals(MappingTypes.LITERAL_PROPERTY))
+            buffer.append(buildSerializedPropertyShape(mappedLiteralProperty.get()));
+
+        // if ReferenceProperty
+        if (mappingType.equals(MappingTypes.REFERENCE_PROPERTY) && isInverse == false)
+            buffer.append(buildSerializedPropertyShape(mappedReferenceProperty.get()));
+
+        buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
+        buffer.append(getDNT());
 
         return buffer.toString();
     }
@@ -309,26 +389,28 @@ public class PropertyShape extends Shape {
         buffer.append(getPO(Symbols.A, "sh:PropertyShape"));
         buffer.append(getSNT());
 
-        // sh:path
         switch (mappingType) {
             case OBJECT_MAP:
             case REF_OBJECT_MAP:
-                o = getShaclDocModel().getRelativeIRIOr(mappedPredicateMap.getConstant().get());
-                buffer.append(getPO("sh:path", o));
-                buffer.append(getSNT());
+                buffer.append(buildSerializedPropertyShapeForR2RML());
                 break;
             case LITERAL_PROPERTY:
-                o = getShaclDocModel().getRelativeIRIOr(mappedLiteralProperty.get().getLiteralPropertyIRI());
-                buffer.append(getPO("sh:path", o));
-                buffer.append(getSNT());
-                break;
             case REFERENCE_PROPERTY:
-                o = getShaclDocModel().getRelativeIRIOr(mappedReferenceProperty.get().getReferencePropertyIRI());
-                if (isInverse)
-                    o = Symbols.OPEN_BRACKET + "sh:inversePath" + Symbols.SPACE + o + Symbols.SPACE + Symbols.CLOSE_BRACKET;
-                buffer.append(getPO("sh:path", o));
-                buffer.append(getSNT());
+                buffer.append(buildSerializedPropertyShapeForDirectMapping());
         }
+
+        return buffer.toString();
+    }
+
+    private String buildSerializedPropertyShapeForR2RML() {
+        StringBuffer buffer = new StringBuffer();
+
+        String o; // to be used as objects of different RDF triples
+
+        // sh:path
+        o = getShaclDocModel().getRelativeIRIOr(mappedPredicateMap.getConstant().get());
+        buffer.append(getPO("sh:path", o));
+        buffer.append(getSNT());
 
         // if RefObjectMap
         if (mappingType.equals(MappingTypes.REF_OBJECT_MAP))
@@ -337,14 +419,6 @@ public class PropertyShape extends Shape {
         // if ObjectMap
         if (mappingType.equals(MappingTypes.OBJECT_MAP))
             buffer.append(buildSerializedPropertyShape(mappedObjectMap.get(), hasQualifiedValueShape));
-
-        // if LiteralProperty
-        if (mappingType.equals(MappingTypes.LITERAL_PROPERTY))
-            buffer.append(buildSerializedPropertyShape(mappedLiteralProperty.get()));
-
-        // if ReferenceProperty
-        if (mappingType.equals(MappingTypes.REFERENCE_PROPERTY))
-            buffer.append(buildSerializedPropertyShape(mappedReferenceProperty.get(), isInverse));
 
         buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
         buffer.append(getDNT());

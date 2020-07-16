@@ -69,6 +69,27 @@ public class NodeShape extends Shape {
 
         return buffer.toString();
     }
+
+    private String buildSerializedNodeShapeForDirectMapping() {
+        StringBuffer buffer = new StringBuffer();
+
+        String o; // to be used as objects of different RDF triples
+
+        if (mappedTableIRI.isPresent())
+            buffer.append(buildSerializedNodeShape(mappedTableIRI.get()));
+
+        // sh:property
+        for (URI propertyShapeIRI : propertyShapes) {
+            o = getShaclDocModel().getRelativeIRIOr(propertyShapeIRI.toString());
+            buffer.append(getPO("sh:property", o));
+            buffer.append(getSNT());
+        }
+
+        buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
+        buffer.append(getDNT());
+
+        return buffer.toString();
+    }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private enum MappingTypes { TRIPLES_MAP, NODE_SHAPES_OF_SAME_SUBJECTS, TABLE_IRI }
 
@@ -200,6 +221,25 @@ public class NodeShape extends Shape {
 
         switch (mappingType) {
             case TRIPLES_MAP:
+            case NODE_SHAPES_OF_SAME_SUBJECTS:
+                buffer.append(buildSerializedNodeShapeForR2RML());
+                break;
+            case TABLE_IRI:
+                buffer.append(buildSerializedNodeShapeForDirectMapping());
+        }
+        
+        serializedNodeShape = buffer.toString();
+        setSerializedShape(serializedNodeShape);
+        return serializedNodeShape;
+    }
+
+    private String buildSerializedNodeShapeForR2RML() {
+        StringBuffer buffer = new StringBuffer();
+
+        String o; // to be used as objects of different RDF triples
+
+        switch (mappingType) {
+            case TRIPLES_MAP:
                 // if SubjectMap
                 if (subjectMapOfMappedTriplesMap.isPresent())
                     buffer.append(buildSerializedNodeShape(subjectMapOfMappedTriplesMap.get()));
@@ -209,31 +249,21 @@ public class NodeShape extends Shape {
             case NODE_SHAPES_OF_SAME_SUBJECTS:
                 if (nodeShapesOfSameSubject.isPresent())
                     buffer.append(buildSerializedNodeShape(nodeShapesOfSameSubject.get()));
-
-                break;
-
-            case TABLE_IRI:
-                if (mappedTableIRI.isPresent())
-                    buffer.append(buildSerializedNodeShape(mappedTableIRI.get()));
         }
 
-        switch (mappingType) {
-            case TRIPLES_MAP:
-            case TABLE_IRI:
-                // sh:property
-                for (URI propertyShapeIRI : propertyShapes) {
-                    o = getShaclDocModel().getRelativeIRIOr(propertyShapeIRI.toString());
-                    buffer.append(getPO("sh:property", o));
-                    buffer.append(getSNT());
-                }
+        if (mappingType.equals(MappingTypes.TRIPLES_MAP)) {
+            // sh:property
+            for (URI propertyShapeIRI : propertyShapes) {
+                o = getShaclDocModel().getRelativeIRIOr(propertyShapeIRI.toString());
+                buffer.append(getPO("sh:property", o));
+                buffer.append(getSNT());
+            }
 
-                buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
-                buffer.append(getDNT());
+            buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));
+            buffer.append(getDNT());
         }
-        
-        serializedNodeShape = buffer.toString();
-        setSerializedShape(serializedNodeShape);
-        return serializedNodeShape;
+
+        return buffer.toString();
     }
 
     Optional<String> getRegex() {
