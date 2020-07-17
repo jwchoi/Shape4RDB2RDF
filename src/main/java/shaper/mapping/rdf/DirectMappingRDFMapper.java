@@ -10,7 +10,6 @@ import shaper.mapping.model.rdf.RDFMappingModelFactory;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.net.URI;
 import java.util.*;
 
 public class DirectMappingRDFMapper extends RDFMapper {
@@ -61,7 +60,7 @@ public class DirectMappingRDFMapper extends RDFMapper {
 		Set<String> tableNames = Shaper.dbSchema.getTableNames();
 		
 		for (String tableName : tableNames) {
-			String tableIRI = rdfMappingModel.getMappedTableIRI(tableName);
+			String tableIRI = rdfMappingModel.getMappedTableIRILocalPart(tableName);
 			
 			String query = getQueryFor(tableName, Shaper.DBMSType);
 			SQLResultSet resultSet = Shaper.dbBridge.executeQuery(query);

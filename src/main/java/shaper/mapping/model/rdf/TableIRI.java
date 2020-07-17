@@ -6,20 +6,20 @@ import java.net.URI;
 
 public class TableIRI implements Comparable<TableIRI> {
 	private URI tableIRI;
-	private String tableIRIFragment;
+	private String tableIRILocalPart;
 
 	private String mappedTable;
 	
 	TableIRI(URI baseIRI, String mappedTable) {
 		this.mappedTable = mappedTable;
 
-		tableIRIFragment = buildTableIRIFragment();
-		tableIRI = buildTableIRI(baseIRI, tableIRIFragment);
+		tableIRILocalPart = buildTableIRILocalPart();
+		tableIRI = buildTableIRI(baseIRI, tableIRILocalPart);
 	}
 
 	public URI getTableIRI() { return tableIRI; }
 
-	public String getTableIRIFragment() { return tableIRIFragment; }
+	public String getTableIRILocalPart() { return tableIRILocalPart; }
 	
 	public String getMappedTableName() {
 		return mappedTable;
@@ -34,7 +34,7 @@ public class TableIRI implements Comparable<TableIRI> {
 		return URI.create(baseIRI + tableIRIFragment);
 	}
 
-	private String buildTableIRIFragment() { return Utils.encode(mappedTable); }
+	private String buildTableIRILocalPart() { return Utils.encode(mappedTable); }
 
 	@Override
 	public String toString() {

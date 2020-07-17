@@ -28,6 +28,12 @@ public class NodeShape extends Shape {
 
         String o; // to be used as objects of different RDF triples
 
+        // sh:targetClass
+        URI tableIRI = mappedTableIRI.getTableIRI();
+        o = getShaclDocModel().getRelativeIRIOr(tableIRI.toString());
+        buffer.append(getPO("sh:targetClass", o));
+        buffer.append(getSNT());
+
         // sh:nodeKind
         String mappedTable = mappedTableIRI.getMappedTableName();
         List<String> pk = Shaper.dbSchema.getPrimaryKey(mappedTable);

@@ -8,6 +8,7 @@ import shaper.mapping.XSDs;
 import shaper.mapping.model.r2rml.*;
 import shaper.mapping.model.rdf.LiteralProperty;
 import shaper.mapping.model.rdf.ReferenceProperty;
+import shaper.mapping.model.shex.NodeConstraint;
 
 import java.net.URI;
 import java.sql.ResultSetMetaData;
@@ -44,24 +45,104 @@ public class PropertyShape extends Shape {
         buffer.append(getPO("sh:nodeKind", o));
         buffer.append(getSNT());
 
-        // sh:datatype
-        Optional<String> datatype = getDatatype(literalProperty);
-        if (datatype.isPresent()) {
-            o = datatype.get();
-            buffer.append(getPO("sh:datatype", o));
-            buffer.append(getSNT());
-        }
+        buffer.append(buildConstraints(literalProperty));
 
         return buffer.toString();
     }
 
-    private Optional<String> getDatatype(LiteralProperty literalProperty) {
+    private String buildConstraints(LiteralProperty literalProperty) {
+        StringBuffer buffer = new StringBuffer();
+
+        String o = null; // to be used as objects of different RDF triples
+
         String mappedTable = literalProperty.getMappedTable();
         String mappedColumn = literalProperty.getMappedColumn();
 
         int JDBCDataType = Shaper.dbSchema.getJDBCDataType(mappedTable, mappedColumn);
+        XSDs xsd = SqlXsdMap.getMappedXSD(JDBCDataType);
 
-        return Optional.of(SqlXsdMap.getMappedXSD(JDBCDataType).getRelativeIRI());
+        // sh:datatype
+        String datatype = xsd.getRelativeIRI();
+        o = datatype;
+        buffer.append(getPO("sh:datatype", o));
+        buffer.append(getSNT());
+
+        switch (xsd) {
+            case XSD_BOOLEAN:
+                // sh:in
+                o =  "\"true\"^^xsd:boolean" + Symbols.SPACE + "\"false\"^^xsd:boolean";
+                o = Symbols.OPEN_PARENTHESIS + Symbols.SPACE + o + Symbols.SPACE + Symbols.CLOSE_PARENTHESIS;
+                buffer.append(getPO("sh:in", o));
+                buffer.append(getSNT());
+                break;
+            case XSD_DATE:
+                o = Symbols.DOUBLE_QUOTATION_MARK + Shaper.dbSchema.getRegexForXSDDate() + Symbols.DOUBLE_QUOTATION_MARK;
+                buffer.append(getPO("sh:pattern", o));
+                buffer.append(getSNT());
+                break;
+            case XSD_DATE_TIME:
+                o = Symbols.DOUBLE_QUOTATION_MARK + Shaper.dbSchema.getRegexForXSDDateTime(mappedTable, mappedColumn).get() + Symbols.DOUBLE_QUOTATION_MARK;
+                buffer.append(getPO("sh:pattern", o));
+                buffer.append(getSNT());
+                break;
+            case XSD_DECIMAL:
+                break;
+            case XSD_DOUBLE:
+                // sh:minInclusive
+                boolean isUnsigned = Shaper.dbSchema.isUnsigned(mappedTable, mappedColumn);
+                if (isUnsigned) {
+                    o = "\"0.0E0\"^^xsd:double";
+                    buffer.append(getPO("sh:minInclusive", o));
+                    buffer.append(getSNT());
+                }
+                break;
+            case XSD_HEX_BINARY:
+                // sh:maxLength
+                Integer maximumOctetLength = Shaper.dbSchema.getMaximumOctetLength(mappedTable, mappedColumn).get();
+                o = Integer.toString(maximumOctetLength * 2);
+                buffer.append(getPO("sh:maxLength", o));
+                buffer.append(getSNT());
+                break;
+            case XSD_INTEGER:
+                // sh:minInclusive & sh:maxInclusive
+                String minimumIntegerValue = Shaper.dbSchema.getMinimumIntegerValue(mappedTable, mappedColumn).get();
+                String maximumIntegerValue = Shaper.dbSchema.getMaximumIntegerValue(mappedTable, mappedColumn).get();
+
+                o = minimumIntegerValue;
+                buffer.append(getPO("sh:minInclusive", o));
+                buffer.append(getSNT());
+
+                o = maximumIntegerValue;
+                buffer.append(getPO("sh:maxInclusive", o));
+                buffer.append(getSNT());
+
+                break;
+            case XSD_STRING:
+                // sh:maxLength
+                Integer characterMaximumLength = Shaper.dbSchema.getCharacterMaximumLength(mappedTable, mappedColumn).get();
+                o = characterMaximumLength.toString();
+                buffer.append(getPO("sh:maxLength", o));
+                buffer.append(getSNT());
+                break;
+            case XSD_TIME:
+                o = Symbols.DOUBLE_QUOTATION_MARK + Shaper.dbSchema.getRegexForXSDTime(mappedTable, mappedColumn).get() + Symbols.DOUBLE_QUOTATION_MARK;
+                buffer.append(getPO("sh:pattern", o));
+                buffer.append(getSNT());
+                break;
+        }
+
+        // sh:minCount & sh:maxCount
+        boolean isNotNull = Shaper.dbSchema.isNotNull(mappedTable, mappedColumn);
+        if (isNotNull) {
+            o = Integer.toString(1);
+            buffer.append(getPO("sh:minCount", o));
+            buffer.append(getSNT());
+        }
+        o = Integer.toString(1);
+        buffer.append(getPO("sh:maxCount", o));
+        buffer.append(getSNT());
+
+        return buffer.toString();
     }
 
     private String buildSerializedPropertyShape(ReferenceProperty referenceProperty) {
@@ -70,7 +151,10 @@ public class PropertyShape extends Shape {
         String o; // to be used as objects of different RDF triples
 
         // sh:nodeKind
-        NodeKinds nodeKind = getNodeKind(referenceProperty);
+        String mappedTable = referenceProperty.getMappedTable();
+        String mappedRefConstraint = referenceProperty.getMappedRefConstraintName();
+        String referencedTable = Shaper.dbSchema.getReferencedTableBy(mappedTable, mappedRefConstraint);
+        NodeKinds nodeKind = (Shaper.dbSchema.getPrimaryKey(referencedTable).size() > 0) ? NodeKinds.IRI : NodeKinds.BlankNode;
         switch (nodeKind) {
             case BlankNode:
                 o = "sh:BlankNode";
@@ -83,16 +167,13 @@ public class PropertyShape extends Shape {
                 buffer.append(getSNT());
         }
 
+        // sh:class
+//        URI classIRI = mappedTableIRI.getTableIRI();
+//        o = getShaclDocModel().getRelativeIRIOr(classIRI.toString());
+//        buffer.append(getPO("sh:class", o));
+//        buffer.append(getSNT());
+
         return buffer.toString();
-    }
-
-    private NodeKinds getNodeKind(ReferenceProperty referenceProperty) {
-        String mappedTable = referenceProperty.getMappedTable();
-        String mappedRefConstraint = referenceProperty.getMappedRefConstraintName();
-
-        String referencedTable = Shaper.dbSchema.getReferencedTableBy(mappedTable, mappedRefConstraint);
-
-        return (Shaper.dbSchema.getPrimaryKey(referencedTable).size() > 0) ? NodeKinds.IRI : NodeKinds.BlankNode;
     }
 
     private String buildSerializedPropertyShapeForDirectMapping() {

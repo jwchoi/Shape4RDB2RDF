@@ -113,17 +113,19 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
             return Optional.empty();
     }
 
+    private String getWrappedRegExWithSlash(String regEx) { return Symbols.SLASH + regEx + Symbols.SLASH; }
+
     private Optional<String> buildFacet(String table, String column, XSDs xsd) {
         String facet = null;
         switch (xsd) {
             case XSD_BOOLEAN:
-                facet = "/true|false/";
+                facet = getWrappedRegExWithSlash("true|false");
                 break;
             case XSD_DATE:
-                facet = Shaper.dbSchema.getRegexForXSDDate();
+                facet = getWrappedRegExWithSlash(Shaper.dbSchema.getRegexForXSDDate());
                 break;
             case XSD_DATE_TIME:
-                facet = Shaper.dbSchema.getRegexForXSDDateTime(table, column).get();
+                facet = getWrappedRegExWithSlash(Shaper.dbSchema.getRegexForXSDDateTime(table, column).get());
                 break;
             case XSD_DECIMAL:
                 Integer numericPrecision = Shaper.dbSchema.getNumericPrecision(table, column).get();
@@ -148,7 +150,7 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
                 facet = XSFacets.MAX_LENGTH + Symbols.SPACE + characterMaximumLength;
                 break;
             case XSD_TIME:
-                facet = Shaper.dbSchema.getRegexForXSDTime(table, column).get();
+                facet = getWrappedRegExWithSlash(Shaper.dbSchema.getRegexForXSDTime(table, column).get());
                 break;
         }
 

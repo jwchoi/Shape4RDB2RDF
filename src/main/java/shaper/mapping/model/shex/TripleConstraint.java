@@ -135,7 +135,7 @@ public class TripleConstraint implements Comparable<TripleConstraint> {
     private String buildTripleConstraintFromTable() {
         String rdfType = Symbols.A;
 
-        String tableIRI = Symbols.LT + Shaper.shexMapper.rdfMappingModel.getMappedTableIRI(mappedTable) + Symbols.GT;
+        String tableIRI = Symbols.LT + Shaper.shexMapper.rdfMappingModel.getMappedTableIRILocalPart(mappedTable) + Symbols.GT;
 
         cardinality = "";
 

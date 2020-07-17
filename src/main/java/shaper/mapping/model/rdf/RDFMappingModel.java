@@ -2,11 +2,8 @@ package shaper.mapping.model.rdf;
 
 import janus.database.DBField;
 import shaper.Shaper;
-import shaper.mapping.Symbols;
 
 import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,24 +26,24 @@ public class RDFMappingModel {
         referenceProperties = new CopyOnWriteArraySet<>();
 	}
 	
-	void addTableIRIMetaData(TableIRI classMetaData) {
+	void addTableIRI(TableIRI classMetaData) {
 		tableIRIs.add(classMetaData);
 	}
 	
-	void addLiteralPropertyMetaData(LiteralProperty propertyMetaData) {
+	void addLiteralProperty(LiteralProperty propertyMetaData) {
 		literalProperties.add(propertyMetaData);
 	}
 
-    void addReferencePropertyMetaData(ReferenceProperty referenceProperty) {
+    void addReferenceProperty(ReferenceProperty referenceProperty) {
         referenceProperties.add(referenceProperty);
     }
 
     public Set<TableIRI> getTableIRIs() { return tableIRIs; }
 
-	public String getMappedTableIRI(String table) {
+	public String getMappedTableIRILocalPart(String table) {
 		for (TableIRI tableIRI: tableIRIs)
 			if (tableIRI.getMappedTableName().equals(table))
-				return tableIRI.getTableIRIFragment();
+				return tableIRI.getTableIRILocalPart();
 
 		return null;
 	}

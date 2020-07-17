@@ -2,7 +2,6 @@ package shaper.mapping.model.rdf;
 
 import janus.database.DBSchema;
 import shaper.Shaper;
-import shaper.mapping.Symbols;
 
 import java.net.URI;
 import java.util.List;
@@ -22,17 +21,17 @@ public class RDFMappingModelFactory {
 			for(String column: columns) {
 				LiteralProperty lpMD = new LiteralProperty(baseIRI, table, column);
 				
-				mappingMD.addLiteralPropertyMetaData(lpMD);
+				mappingMD.addLiteralProperty(lpMD);
 			} // END COLUMN
 
             Set<String> refConstraints = dbSchema.getRefConstraints(table);
 			for(String refConstraint: refConstraints) {
                 ReferenceProperty rpMD = new ReferenceProperty(baseIRI, table, refConstraint);
 
-                mappingMD.addReferencePropertyMetaData(rpMD);
+                mappingMD.addReferenceProperty(rpMD);
             } // END REFERENTIAL CONSTRAINT
 
-			mappingMD.addTableIRIMetaData(tableIRIMD);
+			mappingMD.addTableIRI(tableIRIMD);
 		} // END TABLE
 		
 		return mappingMD;
