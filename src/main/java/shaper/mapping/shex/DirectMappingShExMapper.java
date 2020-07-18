@@ -3,12 +3,11 @@ package shaper.mapping.shex;
 import shaper.Shaper;
 import shaper.mapping.PrefixMap;
 import shaper.mapping.Symbols;
-import shaper.mapping.model.rdf.RDFMappingModelFactory;
+import shaper.mapping.model.dm.DirectMappingModelFactory;
 import shaper.mapping.model.shex.ShExSchemaFactory;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
@@ -66,7 +65,7 @@ public class DirectMappingShExMapper extends ShExMapper {
 
     @Override
     public File generateShExFile() {
-        rdfMappingModel = RDFMappingModelFactory.generateMappingModel(Shaper.dbSchema);
+        directMappingModel = DirectMappingModelFactory.generateMappingModel(Shaper.dbSchema);
         shExSchema = ShExSchemaFactory.getShExSchemaModel(Shaper.dbSchema);
 
         preProcess();

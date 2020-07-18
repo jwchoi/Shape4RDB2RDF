@@ -5,10 +5,10 @@ import shaper.Shaper;
 import shaper.mapping.SqlXsdMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.XSDs;
+import shaper.mapping.model.dm.TableIRI;
 import shaper.mapping.model.r2rml.*;
-import shaper.mapping.model.rdf.LiteralProperty;
-import shaper.mapping.model.rdf.ReferenceProperty;
-import shaper.mapping.model.shex.NodeConstraint;
+import shaper.mapping.model.dm.LiteralProperty;
+import shaper.mapping.model.dm.ReferenceProperty;
 
 import java.net.URI;
 import java.sql.ResultSetMetaData;
@@ -154,7 +154,11 @@ public class PropertyShape extends Shape {
         String mappedTable = referenceProperty.getMappedTable();
         String mappedRefConstraint = referenceProperty.getMappedRefConstraintName();
         String referencedTable = Shaper.dbSchema.getReferencedTableBy(mappedTable, mappedRefConstraint);
-        NodeKinds nodeKind = (Shaper.dbSchema.getPrimaryKey(referencedTable).size() > 0) ? NodeKinds.IRI : NodeKinds.BlankNode;
+        NodeKinds nodeKind;
+        if (isInverse)
+            nodeKind = (Shaper.dbSchema.getPrimaryKey(mappedTable).size() > 0) ? NodeKinds.IRI : NodeKinds.BlankNode;
+        else
+            nodeKind = (Shaper.dbSchema.getPrimaryKey(referencedTable).size() > 0) ? NodeKinds.IRI : NodeKinds.BlankNode;
         switch (nodeKind) {
             case BlankNode:
                 o = "sh:BlankNode";
@@ -168,10 +172,40 @@ public class PropertyShape extends Shape {
         }
 
         // sh:class
-//        URI classIRI = mappedTableIRI.getTableIRI();
-//        o = getShaclDocModel().getRelativeIRIOr(classIRI.toString());
-//        buffer.append(getPO("sh:class", o));
-//        buffer.append(getSNT());
+        Optional<NodeShape> nodeShape = Optional.empty();
+        if (isInverse)
+            nodeShape = getShaclDocModel().getMappedNodeShape(mappedTable);
+        else
+            nodeShape = getShaclDocModel().getMappedNodeShape(referencedTable);
+        if (nodeShape.isPresent()) {
+            Optional<TableIRI> tableIRI = nodeShape.get().getMappedTableIRI();
+            if (tableIRI.isPresent()) {
+                URI classIRI = tableIRI.get().getTableIRI();
+                o = getShaclDocModel().getRelativeIRIOr(classIRI.toString());
+                buffer.append(getPO("sh:class", o));
+                buffer.append(getSNT());
+            }
+        }
+
+        // sh:minCount & sh:maxCount
+        if (isInverse == false) {
+            List<String> columns = Shaper.dbSchema.getReferencingColumnsByOrdinalPosition(mappedTable, mappedRefConstraint);
+            boolean nullable = false;
+            for (String column : columns) {
+                if (!Shaper.dbSchema.isNotNull(mappedTable, column)) {
+                    nullable = true;
+                    break;
+                }
+            }
+            if (!nullable) {
+                o = Integer.toString(1);
+                buffer.append(getPO("sh:minCount", o));
+                buffer.append(getSNT());
+            }
+            o = Integer.toString(1);
+            buffer.append(getPO("sh:maxCount", o));
+            buffer.append(getSNT());
+        }
 
         return buffer.toString();
     }
@@ -201,7 +235,7 @@ public class PropertyShape extends Shape {
             buffer.append(buildSerializedPropertyShape(mappedLiteralProperty.get()));
 
         // if ReferenceProperty
-        if (mappingType.equals(MappingTypes.REFERENCE_PROPERTY) && isInverse == false)
+        if (mappingType.equals(MappingTypes.REFERENCE_PROPERTY))
             buffer.append(buildSerializedPropertyShape(mappedReferenceProperty.get()));
 
         buffer.setLength(buffer.lastIndexOf(Symbols.SEMICOLON));

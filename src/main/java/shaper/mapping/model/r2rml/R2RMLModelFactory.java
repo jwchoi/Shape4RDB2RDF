@@ -2,7 +2,6 @@ package shaper.mapping.model.r2rml;
 
 import janus.database.SQLResultSet;
 import janus.database.SQLSelectField;
-import org.apache.jena.base.Sys;
 import shaper.Shaper;
 import shaper.mapping.r2rml.R2RMLParser;
 

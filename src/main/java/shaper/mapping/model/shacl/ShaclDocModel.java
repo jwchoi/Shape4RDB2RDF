@@ -2,6 +2,7 @@ package shaper.mapping.model.shacl;
 
 import shaper.mapping.PrefixMap;
 import shaper.mapping.Symbols;
+import shaper.mapping.model.dm.TableIRI;
 
 import java.net.URI;
 import java.util.*;
@@ -67,6 +68,25 @@ public class ShaclDocModel {
             }
 
         return null;
+    }
+
+    Optional<NodeShape> getMappedNodeShape(String mappedTableName) {
+        Optional<NodeShape> mappedNodeShape = Optional.empty();
+
+        for (Shape shape: shapes) {
+            if (shape instanceof NodeShape) {
+                NodeShape nodeShape = (NodeShape) shape;
+                Optional<TableIRI> mappedTableIRI = nodeShape.getMappedTableIRI();
+                if (mappedTableIRI.isPresent()) {
+                    if (mappedTableIRI.get().getMappedTableName().equals(mappedTableName)) {
+                        mappedNodeShape = Optional.of(nodeShape);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return mappedNodeShape;
     }
 
     public NodeShape getMappedNodeShape(URI triplesMap) {

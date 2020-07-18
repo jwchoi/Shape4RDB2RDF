@@ -1,4 +1,4 @@
-package shaper.mapping.model.rdf;
+package shaper.mapping.model.dm;
 
 import janus.database.DBField;
 import shaper.mapping.Symbols;

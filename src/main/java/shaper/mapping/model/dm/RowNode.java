@@ -1,4 +1,4 @@
-package shaper.mapping.model.rdf;
+package shaper.mapping.model.dm;
 
 import shaper.Shaper;
 import janus.database.DBField;
@@ -34,6 +34,6 @@ public class RowNode {
 	}
 	
 	private static String getRowNodeIncludingBase(String rowNodeAfterBase) {
-		return Shaper.rdfMapper.rdfMappingModel.getBaseIRI() + rowNodeAfterBase;
+		return Shaper.rdfMapper.directMappingModel.getBaseIRI() + rowNodeAfterBase;
 	}
 }

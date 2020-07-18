@@ -1,4 +1,4 @@
-package shaper.mapping.model.rdf;
+package shaper.mapping.model.dm;
 
 import janus.database.DBSchema;
 import shaper.Shaper;
@@ -7,9 +7,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
-public class RDFMappingModelFactory {
-	public static RDFMappingModel generateMappingModel(DBSchema dbSchema) {
-		RDFMappingModel mappingMD = new RDFMappingModel(URI.create(Shaper.rdfBaseURI), dbSchema.getCatalog());
+public class DirectMappingModelFactory {
+	public static DirectMappingModel generateMappingModel(DBSchema dbSchema) {
+		DirectMappingModel mappingMD = new DirectMappingModel(URI.create(Shaper.rdfBaseURI), dbSchema.getCatalog());
 		URI baseIRI = mappingMD.getBaseIRI();
 		
 		Set<String> tables = dbSchema.getTableNames();

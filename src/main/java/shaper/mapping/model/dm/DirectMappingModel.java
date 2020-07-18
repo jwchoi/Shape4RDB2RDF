@@ -1,4 +1,4 @@
-package shaper.mapping.model.rdf;
+package shaper.mapping.model.dm;
 
 import janus.database.DBField;
 import shaper.Shaper;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-public class RDFMappingModel {
+public class DirectMappingModel {
 	private URI baseIRI;
 	private String prefix;
 
@@ -17,7 +17,7 @@ public class RDFMappingModel {
 	private Set<LiteralProperty> literalProperties;
 	private Set<ReferenceProperty> referenceProperties;
 	
-	RDFMappingModel(URI baseIRI, String prefix) {
+	DirectMappingModel(URI baseIRI, String prefix) {
 		this.baseIRI = baseIRI;
 		this.prefix = prefix;
 		
@@ -73,7 +73,7 @@ public class RDFMappingModel {
 		for (ReferenceProperty property : referenceProperties)
 			if (property.getMappedTable().equals(table)
 					&& property.getMappedRefConstraintName().equals(refConstraint))
-				return property.getPropertyFragment();
+				return property.getPropertyLocalPart();
 
 		return null;
 	}

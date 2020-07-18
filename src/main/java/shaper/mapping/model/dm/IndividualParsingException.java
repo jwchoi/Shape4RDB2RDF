@@ -1,4 +1,4 @@
-package shaper.mapping.model.rdf;
+package shaper.mapping.model.dm;
 
 @SuppressWarnings("serial")
 class IndividualParsingException extends Exception {

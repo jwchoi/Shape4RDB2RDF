@@ -1,4 +1,4 @@
-package shaper.mapping.model.rdf;
+package shaper.mapping.model.dm;
 
 import shaper.mapping.Symbols;
 import shaper.mapping.model.Utils;

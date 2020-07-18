@@ -7,14 +7,6 @@
 
 cse:addressesShape-col1
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/addresses#city> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxLength 10 ;
-    sh:maxCount 1  .
-    
-cse:addressesShape-col2
-    a sh:PropertyShape ;
     sh:path <http://example.com/base/addresses#ID> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer ;
@@ -23,7 +15,7 @@ cse:addressesShape-col2
     sh:minCount 1 ;
     sh:maxCount 1  .
     
-cse:addressesShape-col3
+cse:addressesShape-col2
     a sh:PropertyShape ;
     sh:path <http://example.com/base/addresses#state> ;
     sh:nodeKind sh:Literal ;
@@ -31,9 +23,19 @@ cse:addressesShape-col3
     sh:maxLength 2 ;
     sh:maxCount 1  .
     
+cse:addressesShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/addresses#city> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 10 ;
+    sh:maxCount 1  .
+    
 cse:addressesShape-inverse1
     a sh:PropertyShape ;
-    sh:path [sh:inversePath <http://example.com/base/people#ref-addr> ]  .
+    sh:path [sh:inversePath <http://example.com/base/people#ref-addr> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:people  .
     
 cse:addressesShape
     a sh:NodeShape ;
@@ -48,6 +50,23 @@ cse:addressesShape
     
 cse:departmentShape-col1
     a sh:PropertyShape ;
+    sh:path <http://example.com/base/department#manager> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:maxCount 1  .
+    
+cse:departmentShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/department#name> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:departmentShape-col3
+    a sh:PropertyShape ;
     sh:path <http://example.com/base/department#ID> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer ;
@@ -56,7 +75,7 @@ cse:departmentShape-col1
     sh:minCount 1 ;
     sh:maxCount 1  .
     
-cse:departmentShape-col2
+cse:departmentShape-col4
     a sh:PropertyShape ;
     sh:path <http://example.com/base/department#city> ;
     sh:nodeKind sh:Literal ;
@@ -64,39 +83,30 @@ cse:departmentShape-col2
     sh:maxLength 50 ;
     sh:maxCount 1  .
     
-cse:departmentShape-col3
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/department#manager> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:integer ;
-    sh:minInclusive -2147483648 ;
-    sh:maxInclusive 2147483647 ;
-    sh:maxCount 1  .
-    
-cse:departmentShape-col4
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/department#name> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxLength 50 ;
-    sh:maxCount 1  .
-    
 cse:departmentShape-inverse1
     a sh:PropertyShape ;
-    sh:path [sh:inversePath <http://example.com/base/projects#ref-deptName;deptCity> ]  .
+    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-deptName;deptCity> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:taskassignments  .
     
 cse:departmentShape-inverse2
     a sh:PropertyShape ;
-    sh:path [sh:inversePath <http://example.com/base/people#ref-deptName;deptCity> ]  .
+    sh:path [sh:inversePath <http://example.com/base/people#ref-deptName;deptCity> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:people  .
     
 cse:departmentShape-inverse3
     a sh:PropertyShape ;
-    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-deptName;deptCity> ]  .
+    sh:path [sh:inversePath <http://example.com/base/projects#ref-deptName;deptCity> ] ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d025:projects  .
     
 cse:departmentShape-ref1
     a sh:PropertyShape ;
     sh:path <http://example.com/base/department#ref-manager> ;
-    sh:nodeKind sh:IRI  .
+    sh:nodeKind sh:IRI ;
+    sh:class d025:people ;
+    sh:maxCount 1  .
     
 cse:departmentShape
     a sh:NodeShape ;
@@ -115,20 +125,18 @@ cse:departmentShape
     
 cse:peopleShape-col1
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/people#ID> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:integer ;
-    sh:minInclusive -2147483648 ;
-    sh:maxInclusive 2147483647 ;
-    sh:minCount 1 ;
-    sh:maxCount 1  .
-    
-cse:peopleShape-col2
-    a sh:PropertyShape ;
     sh:path <http://example.com/base/people#fname> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:maxLength 10 ;
+    sh:maxCount 1  .
+    
+cse:peopleShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/people#deptName> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
     sh:maxCount 1  .
     
 cse:peopleShape-col3
@@ -141,10 +149,12 @@ cse:peopleShape-col3
     
 cse:peopleShape-col4
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/people#deptName> ;
+    sh:path <http://example.com/base/people#ID> ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxLength 50 ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
     sh:maxCount 1  .
     
 cse:peopleShape-col5
@@ -158,25 +168,35 @@ cse:peopleShape-col5
     
 cse:peopleShape-inverse1
     a sh:PropertyShape ;
-    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-worker> ]  .
+    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-worker> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:taskassignments  .
     
 cse:peopleShape-inverse2
     a sh:PropertyShape ;
-    sh:path [sh:inversePath <http://example.com/base/department#ref-manager> ]  .
+    sh:path [sh:inversePath <http://example.com/base/department#ref-manager> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:department  .
     
 cse:peopleShape-inverse3
     a sh:PropertyShape ;
-    sh:path [sh:inversePath <http://example.com/base/projects#ref-lead> ]  .
+    sh:path [sh:inversePath <http://example.com/base/projects#ref-lead> ] ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d025:projects  .
     
 cse:peopleShape-ref1
     a sh:PropertyShape ;
     sh:path <http://example.com/base/people#ref-deptName;deptCity> ;
-    sh:nodeKind sh:IRI  .
+    sh:nodeKind sh:IRI ;
+    sh:class d025:department ;
+    sh:maxCount 1  .
     
 cse:peopleShape-ref2
     a sh:PropertyShape ;
     sh:path <http://example.com/base/people#ref-addr> ;
-    sh:nodeKind sh:IRI  .
+    sh:nodeKind sh:IRI ;
+    sh:class d025:addresses ;
+    sh:maxCount 1  .
     
 cse:peopleShape
     a sh:NodeShape ;
@@ -197,6 +217,14 @@ cse:peopleShape
     
 cse:projectsShape-col1
     a sh:PropertyShape ;
+    sh:path <http://example.com/base/projects#deptName> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:projectsShape-col2
+    a sh:PropertyShape ;
     sh:path <http://example.com/base/projects#lead> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer ;
@@ -204,7 +232,7 @@ cse:projectsShape-col1
     sh:maxInclusive 2147483647 ;
     sh:maxCount 1  .
     
-cse:projectsShape-col2
+cse:projectsShape-col3
     a sh:PropertyShape ;
     sh:path <http://example.com/base/projects#deptCity> ;
     sh:nodeKind sh:Literal ;
@@ -212,7 +240,7 @@ cse:projectsShape-col2
     sh:maxLength 50 ;
     sh:maxCount 1  .
     
-cse:projectsShape-col3
+cse:projectsShape-col4
     a sh:PropertyShape ;
     sh:path <http://example.com/base/projects#name> ;
     sh:nodeKind sh:Literal ;
@@ -220,27 +248,25 @@ cse:projectsShape-col3
     sh:maxLength 50 ;
     sh:maxCount 1  .
     
-cse:projectsShape-col4
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/projects#deptName> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxLength 50 ;
-    sh:maxCount 1  .
-    
 cse:projectsShape-inverse1
     a sh:PropertyShape ;
-    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-project;deptName;deptCity> ]  .
+    sh:path [sh:inversePath <http://example.com/base/taskassignments#ref-project;deptName;deptCity> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:taskassignments  .
     
 cse:projectsShape-ref1
     a sh:PropertyShape ;
     sh:path <http://example.com/base/projects#ref-deptName;deptCity> ;
-    sh:nodeKind sh:IRI  .
+    sh:nodeKind sh:IRI ;
+    sh:class d025:department ;
+    sh:maxCount 1  .
     
 cse:projectsShape-ref2
     a sh:PropertyShape ;
     sh:path <http://example.com/base/projects#ref-lead> ;
-    sh:nodeKind sh:IRI  .
+    sh:nodeKind sh:IRI ;
+    sh:class d025:people ;
+    sh:maxCount 1  .
     
 cse:projectsShape
     a sh:NodeShape ;
@@ -274,14 +300,6 @@ cse:taskassignmentsShape-col2
     
 cse:taskassignmentsShape-col3
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/taskassignments#deptName> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxLength 50 ;
-    sh:maxCount 1  .
-    
-cse:taskassignmentsShape-col4
-    a sh:PropertyShape ;
     sh:path <http://example.com/base/taskassignments#worker> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer ;
@@ -290,20 +308,35 @@ cse:taskassignmentsShape-col4
     sh:minCount 1 ;
     sh:maxCount 1  .
     
+cse:taskassignmentsShape-col4
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/taskassignments#deptName> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
 cse:taskassignmentsShape-ref1
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/taskassignments#ref-worker> ;
-    sh:nodeKind sh:IRI  .
+    sh:path <http://example.com/base/taskassignments#ref-deptName;deptCity> ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:department ;
+    sh:maxCount 1  .
     
 cse:taskassignmentsShape-ref2
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/taskassignments#ref-deptName;deptCity> ;
-    sh:nodeKind sh:IRI  .
+    sh:path <http://example.com/base/taskassignments#ref-worker> ;
+    sh:nodeKind sh:IRI ;
+    sh:class d025:people ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
     
 cse:taskassignmentsShape-ref3
     a sh:PropertyShape ;
     sh:path <http://example.com/base/taskassignments#ref-project;deptName;deptCity> ;
-    sh:nodeKind sh:BlankNode  .
+    sh:nodeKind sh:BlankNode ;
+    sh:class d025:projects ;
+    sh:maxCount 1  .
     
 cse:taskassignmentsShape
     a sh:NodeShape ;

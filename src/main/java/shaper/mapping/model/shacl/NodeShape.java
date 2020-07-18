@@ -7,7 +7,7 @@ import shaper.mapping.model.Utils;
 import shaper.mapping.model.r2rml.SubjectMap;
 import shaper.mapping.model.r2rml.Template;
 import shaper.mapping.model.r2rml.TermMap;
-import shaper.mapping.model.rdf.TableIRI;
+import shaper.mapping.model.dm.TableIRI;
 
 import java.net.URI;
 import java.util.*;
@@ -22,6 +22,8 @@ public class NodeShape extends Shape {
 
         mappingType = MappingTypes.TABLE_IRI;
     }
+
+    Optional<TableIRI> getMappedTableIRI() { return mappedTableIRI; }
 
     private String buildSerializedNodeShape(TableIRI mappedTableIRI) {
         StringBuffer buffer = new StringBuffer();

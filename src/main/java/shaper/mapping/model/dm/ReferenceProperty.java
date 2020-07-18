@@ -1,4 +1,4 @@
-package shaper.mapping.model.rdf;
+package shaper.mapping.model.dm;
 
 import shaper.Shaper;
 import shaper.mapping.Symbols;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ReferenceProperty implements Comparable<ReferenceProperty> {
     private URI referencePropertyIRI;
-    private String propertyFragment;
+    private String propertyLocalPart;
 
     private String mappedTable;
     private String mappedRefConstraint;
@@ -18,8 +18,8 @@ public class ReferenceProperty implements Comparable<ReferenceProperty> {
         this.mappedTable = mappedTable;
         this.mappedRefConstraint = mappedRefConstraint;
 
-        propertyFragment = buildReferencePropertyFragment(mappedTable, mappedRefConstraint);
-        referencePropertyIRI = buildReferencePropertyIRI(baseIRI, propertyFragment);
+        propertyLocalPart = buildReferencePropertyLocalPart(mappedTable, mappedRefConstraint);
+        referencePropertyIRI = buildReferencePropertyIRI(baseIRI, propertyLocalPart);
     }
 
     public String getMappedTable() {
@@ -30,8 +30,8 @@ public class ReferenceProperty implements Comparable<ReferenceProperty> {
         return mappedRefConstraint;
     }
 
-    String getPropertyFragment() {
-        return propertyFragment;
+    String getPropertyLocalPart() {
+        return propertyLocalPart;
     }
 
     public URI getReferencePropertyIRI() { return referencePropertyIRI; }
@@ -41,11 +41,11 @@ public class ReferenceProperty implements Comparable<ReferenceProperty> {
         return referencePropertyIRI.compareTo(o.getReferencePropertyIRI());
     }
 
-    private URI buildReferencePropertyIRI(URI baseIRI, String propertyFragment) {
-        return URI.create(baseIRI + propertyFragment);
+    private URI buildReferencePropertyIRI(URI baseIRI, String propertyLocalPart) {
+        return URI.create(baseIRI + propertyLocalPart);
     }
 
-    private String buildReferencePropertyFragment(String tableName, String refConstraintName) {
+    private String buildReferencePropertyLocalPart(String tableName, String refConstraintName) {
         StringBuffer referenceProperty = new StringBuffer(Utils.encode(tableName));
         referenceProperty.append(Symbols.HASH);
         referenceProperty.append(Symbols.REF);

@@ -5,10 +5,10 @@ import shaper.mapping.PrefixMap;
 import shaper.mapping.Symbols;
 import shaper.mapping.model.Utils;
 import shaper.mapping.model.r2rml.*;
-import shaper.mapping.model.rdf.LiteralProperty;
-import shaper.mapping.model.rdf.RDFMappingModel;
-import shaper.mapping.model.rdf.ReferenceProperty;
-import shaper.mapping.model.rdf.TableIRI;
+import shaper.mapping.model.dm.LiteralProperty;
+import shaper.mapping.model.dm.DirectMappingModel;
+import shaper.mapping.model.dm.ReferenceProperty;
+import shaper.mapping.model.dm.TableIRI;
 
 import java.net.URI;
 import java.nio.file.Path;
@@ -177,12 +177,12 @@ public class ShaclDocModelFactory {
     }
 
     //Direct Mapping
-    public static ShaclDocModel getSHACLDocModel(RDFMappingModel rdfMappingModel) {
+    public static ShaclDocModel getSHACLDocModel(DirectMappingModel directMappingModel) {
         shaclDocModel = new ShaclDocModel(URI.create(Shaper.shapeBaseURI), Shaper.prefixForShapeBaseURI);
 
-        addPrefixes(rdfMappingModel);
+        addPrefixes(directMappingModel);
 
-        Set<TableIRI> tableIRIs = rdfMappingModel.getTableIRIs();
+        Set<TableIRI> tableIRIs = directMappingModel.getTableIRIs();
 
         for(TableIRI tableIRI : tableIRIs) {
             //-> node shape
@@ -193,7 +193,7 @@ public class ShaclDocModelFactory {
 
             //-> property shape
             //-> BEGIN Literal Property
-            List<LiteralProperty> literalProperties = Arrays.asList(rdfMappingModel.getLiteralProperties(tableIRI).toArray(new LiteralProperty[0]));
+            List<LiteralProperty> literalProperties = Arrays.asList(directMappingModel.getLiteralProperties(tableIRI).toArray(new LiteralProperty[0]));
             for(int i = 0; i < literalProperties.size(); i++) {
                 URI propertyShapeID = URI.create(nodeShapeID + Symbols.DASH + "col" + (i + 1));
                 PropertyShape propertyShape = new PropertyShape(propertyShapeID, literalProperties.get(i), shaclDocModel);
@@ -204,7 +204,7 @@ public class ShaclDocModelFactory {
             //<- END Literal Property
 
             //-> BEGIN Reference Property
-            List<ReferenceProperty> referenceProperties = Arrays.asList(rdfMappingModel.getReferenceProperties(tableIRI, false).toArray(new ReferenceProperty[0]));
+            List<ReferenceProperty> referenceProperties = Arrays.asList(directMappingModel.getReferenceProperties(tableIRI, false).toArray(new ReferenceProperty[0]));
             for(int i = 0; i < referenceProperties.size(); i++) {
                 URI propertyShapeID = URI.create(nodeShapeID + Symbols.DASH + "ref" + (i + 1));
                 PropertyShape propertyShape = new PropertyShape(propertyShapeID, referenceProperties.get(i), false, shaclDocModel);
@@ -215,7 +215,7 @@ public class ShaclDocModelFactory {
             //<- END Reference Property
 
             // Begin Inverse Referential Constraint
-            List<ReferenceProperty> inverseReferenceProperties = Arrays.asList(rdfMappingModel.getReferenceProperties(tableIRI, true).toArray(new ReferenceProperty[0]));
+            List<ReferenceProperty> inverseReferenceProperties = Arrays.asList(directMappingModel.getReferenceProperties(tableIRI, true).toArray(new ReferenceProperty[0]));
             for(int i = 0; i < inverseReferenceProperties.size(); i++) {
                 URI propertyShapeID = URI.create(nodeShapeID + Symbols.DASH + "inverse" + (i + 1));
                 PropertyShape propertyShape = new PropertyShape(propertyShapeID, inverseReferenceProperties.get(i), true, shaclDocModel);
@@ -229,8 +229,8 @@ public class ShaclDocModelFactory {
         return shaclDocModel;
     }
 
-    private static void addPrefixes(RDFMappingModel rdfMappingModel) {
-        shaclDocModel.addPrefixDecl(rdfMappingModel.getPrefix(), rdfMappingModel.getBaseIRI().toString());
+    private static void addPrefixes(DirectMappingModel directMappingModel) {
+        shaclDocModel.addPrefixDecl(directMappingModel.getPrefix(), directMappingModel.getBaseIRI().toString());
         shaclDocModel.addPrefixDecl("rdf", PrefixMap.getURI("rdf").toString());
         shaclDocModel.addPrefixDecl("xsd", PrefixMap.getURI("xsd").toString());
     }
