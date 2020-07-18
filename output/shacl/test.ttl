@@ -1,0 +1,39 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix test: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:enum_testShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/enum_test#numbers> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:in ( "0"^^xsd:string "1"^^xsd:string "2"^^xsd:string ) ;
+    sh:maxLength 1 ;
+    sh:maxCount 1  .
+    
+cse:enum_testShape
+    a sh:NodeShape ;
+    sh:targetClass test:enum_test ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class test:enum_test ;
+    sh:property cse:enum_testShape-col1  .
+    
+cse:set_testShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/set_test#season> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:in ( "SPRING"^^xsd:string "SUMMER"^^xsd:string "FALL"^^xsd:string "WINTER"^^xsd:string ) ;
+    sh:maxLength 25 ;
+    sh:maxCount 1  .
+    
+cse:set_testShape
+    a sh:NodeShape ;
+    sh:targetClass test:set_test ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class test:set_test ;
+    sh:property cse:set_testShape-col1  .
+    

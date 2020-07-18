@@ -103,9 +103,13 @@ public class NodeConstraint implements Comparable<NodeConstraint> {
             StringBuffer buffer = new StringBuffer(Symbols.OPEN_BRACKET + Symbols.SPACE);
 
             Set<String> set = valueSet.get();
-            for (String value: set)
+            for (String value: set) {
+                if (value.startsWith(Symbols.SINGLE_QUOTATION_MARK) && value.endsWith(Symbols.SINGLE_QUOTATION_MARK)) {
+                    value = value.substring(1, value.length()-1);
+                    value = Symbols.DOUBLE_QUOTATION_MARK + value + Symbols.DOUBLE_QUOTATION_MARK;
+                }
                 buffer.append(value + Symbols.SPACE);
-
+            }
             buffer.append(Symbols.CLOSE_BRACKET);
 
             return Optional.of(buffer.toString());

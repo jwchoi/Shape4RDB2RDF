@@ -1,6 +1,7 @@
 package shaper.mapping.model.shacl;
 
 import janus.database.SQLSelectField;
+import org.apache.jena.base.Sys;
 import shaper.Shaper;
 import shaper.mapping.SqlXsdMap;
 import shaper.mapping.Symbols;
@@ -14,6 +15,7 @@ import java.net.URI;
 import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class PropertyShape extends Shape {
     private Optional<LiteralProperty> mappedLiteralProperty = Optional.empty();
@@ -66,6 +68,22 @@ public class PropertyShape extends Shape {
         o = datatype;
         buffer.append(getPO("sh:datatype", o));
         buffer.append(getSNT());
+
+        // sh:in
+        Optional<Set<String>> valueSet = Shaper.dbSchema.getValueSet(mappedTable, mappedColumn);
+        if (valueSet.isPresent()) {
+            o = Symbols.OPEN_PARENTHESIS + Symbols.SPACE;
+            Set<String> set = valueSet.get();
+            for (String value: set) {
+                if (value.startsWith(Symbols.SINGLE_QUOTATION_MARK) && value.endsWith(Symbols.SINGLE_QUOTATION_MARK)) {
+                    value = value.substring(1, value.length()-1);
+                }
+                o += "\"" + value + "\"" + "^^" + datatype + Symbols.SPACE;
+            }
+            o += Symbols.CLOSE_PARENTHESIS;
+            buffer.append(getPO("sh:in", o));
+            buffer.append(getSNT());
+        }
 
         switch (xsd) {
             case XSD_BOOLEAN:
