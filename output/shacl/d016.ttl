@@ -1,0 +1,105 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d016: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:patientShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#FirstName> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col10
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#BirthDate> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:date ;
+    sh:pattern "^([1-9][0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$" ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#PaidInAdvance> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:in ( "true"^^xsd:boolean "false"^^xsd:boolean ) ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#EntranceDate> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:pattern "(^(19[7-9][0-9]|20([0-2][0-9]|3[0-7]))-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6}){0})$)|(^2038-01-(0[1-9]|1[0-8])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6}){0})$)|(^2038-01-19T0[0-4]:([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6}){0})$)|(^2038-01-19T05:(0[0-9]|1[0-3]):([0-5][0-9])((\\.[0-9]{1,6}){0}))|(2038-01-19T05:14:0[0-6]((\\.[0-9]{1,6}){0})$)|(^2038-01-19T05:14:07((\\.0{1,6}){0})$)" ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col4
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#Height> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col5
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#ID> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col6
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#LastName> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col7
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#Photo> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:hexBinary ;
+    sh:maxLength 400 ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col8
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#Sex> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 6 ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col9
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#Weight> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1  .
+    
+cse:patientShape
+    a sh:NodeShape ;
+    sh:targetClass d016:patient ;
+    sh:nodeKind sh:IRI ;
+    sh:class d016:patient ;
+    sh:pattern "^http://example\\.com/base/patient/ID=(.*)$" ;
+    sh:property cse:patientShape-col1 ;
+    sh:property cse:patientShape-col10 ;
+    sh:property cse:patientShape-col2 ;
+    sh:property cse:patientShape-col3 ;
+    sh:property cse:patientShape-col4 ;
+    sh:property cse:patientShape-col5 ;
+    sh:property cse:patientShape-col6 ;
+    sh:property cse:patientShape-col7 ;
+    sh:property cse:patientShape-col8 ;
+    sh:property cse:patientShape-col9  .
+    

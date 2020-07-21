@@ -1,0 +1,39 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d005: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:iousShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/ious#amount> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1  .
+    
+cse:iousShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/ious#fname> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 20 ;
+    sh:maxCount 1  .
+    
+cse:iousShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/ious#lname> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 20 ;
+    sh:maxCount 1  .
+    
+cse:iousShape
+    a sh:NodeShape ;
+    sh:targetClass d005:ious ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d005:ious ;
+    sh:property cse:iousShape-col1 ;
+    sh:property cse:iousShape-col2 ;
+    sh:property cse:iousShape-col3  .
+    

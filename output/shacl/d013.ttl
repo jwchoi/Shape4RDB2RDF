@@ -1,0 +1,43 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d013: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:personShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/person#Name> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:personShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/person#DateOfBirth> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:personShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/person#ID> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:personShape
+    a sh:NodeShape ;
+    sh:targetClass d013:person ;
+    sh:nodeKind sh:IRI ;
+    sh:class d013:person ;
+    sh:pattern "^http://example.com/base/person/ID=(.*)$" ;
+    sh:property cse:personShape-col1 ;
+    sh:property cse:personShape-col2 ;
+    sh:property cse:personShape-col3  .
+    

@@ -1,0 +1,41 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d019: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:employeeShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/employee#ID> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:maxCount 1  .
+    
+cse:employeeShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/employee#FirstName> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:employeeShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/employee#LastName> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:employeeShape
+    a sh:NodeShape ;
+    sh:targetClass d019:employee ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d019:employee ;
+    sh:property cse:employeeShape-col1 ;
+    sh:property cse:employeeShape-col2 ;
+    sh:property cse:employeeShape-col3  .
+    

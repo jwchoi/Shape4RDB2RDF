@@ -1,0 +1,145 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d014: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:deptShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/dept#dname> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 30 ;
+    sh:maxCount 1  .
+    
+cse:deptShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/dept#loc> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 100 ;
+    sh:maxCount 1  .
+    
+cse:deptShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/dept#deptno> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:maxCount 1  .
+    
+cse:deptShape-inverse1
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/emp#ref-deptno> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d014:emp  .
+    
+cse:deptShape
+    a sh:NodeShape ;
+    sh:targetClass d014:dept ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d014:dept ;
+    sh:property cse:deptShape-col1 ;
+    sh:property cse:deptShape-col2 ;
+    sh:property cse:deptShape-col3 ;
+    sh:property cse:deptShape-inverse1  .
+    
+cse:empShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/emp#job> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 30 ;
+    sh:maxCount 1  .
+    
+cse:empShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/emp#etype> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 30 ;
+    sh:maxCount 1  .
+    
+cse:empShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/emp#empno> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:empShape-col4
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/emp#deptno> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:maxCount 1  .
+    
+cse:empShape-col5
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/emp#ename> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 100 ;
+    sh:maxCount 1  .
+    
+cse:empShape-ref1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/emp#ref-deptno> ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d014:dept ;
+    sh:maxCount 1  .
+    
+cse:empShape
+    a sh:NodeShape ;
+    sh:targetClass d014:emp ;
+    sh:nodeKind sh:IRI ;
+    sh:class d014:emp ;
+    sh:pattern "^http://example.com/base/emp/empno=(.*)$" ;
+    sh:property cse:empShape-col1 ;
+    sh:property cse:empShape-col2 ;
+    sh:property cse:empShape-col3 ;
+    sh:property cse:empShape-col4 ;
+    sh:property cse:empShape-col5 ;
+    sh:property cse:empShape-ref1  .
+    
+cse:likesShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/likes#likedObj> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 100 ;
+    sh:maxCount 1  .
+    
+cse:likesShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/likes#likeType> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 30 ;
+    sh:maxCount 1  .
+    
+cse:likesShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/likes#id> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:maxCount 1  .
+    
+cse:likesShape
+    a sh:NodeShape ;
+    sh:targetClass d014:likes ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d014:likes ;
+    sh:property cse:likesShape-col1 ;
+    sh:property cse:likesShape-col2 ;
+    sh:property cse:likesShape-col3  .
+    

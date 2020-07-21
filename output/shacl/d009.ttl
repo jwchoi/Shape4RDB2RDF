@@ -1,0 +1,86 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d009: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:sportShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/sport#Name> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:sportShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/sport#ID> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:sportShape-inverse1
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/student#ref-Sport> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d009:student  .
+    
+cse:sportShape
+    a sh:NodeShape ;
+    sh:targetClass d009:sport ;
+    sh:nodeKind sh:IRI ;
+    sh:class d009:sport ;
+    sh:pattern "^http://example.com/base/sport/ID=(.*)$" ;
+    sh:property cse:sportShape-col1 ;
+    sh:property cse:sportShape-col2 ;
+    sh:property cse:sportShape-inverse1  .
+    
+cse:studentShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/student#Sport> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:maxCount 1  .
+    
+cse:studentShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/student#Name> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:studentShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/student#ID> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:studentShape-ref1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/student#ref-Sport> ;
+    sh:nodeKind sh:IRI ;
+    sh:class d009:sport ;
+    sh:maxCount 1  .
+    
+cse:studentShape
+    a sh:NodeShape ;
+    sh:targetClass d009:student ;
+    sh:nodeKind sh:IRI ;
+    sh:class d009:student ;
+    sh:pattern "^http://example.com/base/student/ID=(.*)$" ;
+    sh:property cse:studentShape-col1 ;
+    sh:property cse:studentShape-col2 ;
+    sh:property cse:studentShape-col3 ;
+    sh:property cse:studentShape-ref1  .
+    

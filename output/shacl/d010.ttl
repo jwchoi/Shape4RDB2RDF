@@ -1,0 +1,43 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d010: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:country%20infoShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/country%20info#Name> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 100 ;
+    sh:maxCount 1  .
+    
+cse:country%20infoShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/country%20info#Country%20Code> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:country%20infoShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/country%20info#ISO%203166> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 10 ;
+    sh:maxCount 1  .
+    
+cse:country%20infoShape
+    a sh:NodeShape ;
+    sh:targetClass d010:country%20info ;
+    sh:nodeKind sh:IRI ;
+    sh:class d010:country%20info ;
+    sh:pattern "^http://example.com/base/country%20info/Country%20Code=(.*)$" ;
+    sh:property cse:country%20infoShape-col1 ;
+    sh:property cse:country%20infoShape-col2 ;
+    sh:property cse:country%20infoShape-col3  .
+    

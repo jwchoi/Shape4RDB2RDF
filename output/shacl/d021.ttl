@@ -1,0 +1,112 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d021: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:sourceShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/source#ID> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:sourceShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/source#attrB> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 5 ;
+    sh:maxCount 1  .
+    
+cse:sourceShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/source#attrA> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 5 ;
+    sh:maxCount 1  .
+    
+cse:sourceShape-ref1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/source#ref-attrA;attrB> ;
+    sh:nodeKind sh:IRI ;
+    sh:class d021:target ;
+    sh:maxCount 1  .
+    
+cse:sourceShape
+    a sh:NodeShape ;
+    sh:targetClass d021:source ;
+    sh:nodeKind sh:IRI ;
+    sh:class d021:source ;
+    sh:pattern "^http://example.com/base/source/ID=(.*)$" ;
+    sh:property cse:sourceShape-col1 ;
+    sh:property cse:sourceShape-col2 ;
+    sh:property cse:sourceShape-col3 ;
+    sh:property cse:sourceShape-ref1  .
+    
+cse:targetShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/target#key2attr1> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 5 ;
+    sh:maxCount 1  .
+    
+cse:targetShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/target#key1attr1> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 5 ;
+    sh:maxCount 1  .
+    
+cse:targetShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/target#PK> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive -2147483648 ;
+    sh:maxInclusive 2147483647 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:targetShape-col4
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/target#key2attr2> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 5 ;
+    sh:maxCount 1  .
+    
+cse:targetShape-col5
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/target#key1attr2> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 5 ;
+    sh:maxCount 1  .
+    
+cse:targetShape-inverse1
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/source#ref-attrA;attrB> ] ;
+    sh:nodeKind sh:IRI ;
+    sh:class d021:source  .
+    
+cse:targetShape
+    a sh:NodeShape ;
+    sh:targetClass d021:target ;
+    sh:nodeKind sh:IRI ;
+    sh:class d021:target ;
+    sh:pattern "^http://example.com/base/target/PK=(.*)$" ;
+    sh:property cse:targetShape-col1 ;
+    sh:property cse:targetShape-col2 ;
+    sh:property cse:targetShape-col3 ;
+    sh:property cse:targetShape-col4 ;
+    sh:property cse:targetShape-col5 ;
+    sh:property cse:targetShape-inverse1  .
+    

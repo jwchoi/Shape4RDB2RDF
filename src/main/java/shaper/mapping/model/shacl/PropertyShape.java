@@ -99,7 +99,8 @@ public class PropertyShape extends Shape {
                 buffer.append(getSNT());
                 break;
             case XSD_DATE_TIME:
-                o = Symbols.DOUBLE_QUOTATION_MARK + Shaper.dbSchema.getRegexForXSDDateTime(mappedTable, mappedColumn).get() + Symbols.DOUBLE_QUOTATION_MARK;
+                o =  Shaper.dbSchema.getRegexForXSDDateTime(mappedTable, mappedColumn).get().replace("\\.", "\\\\.");
+                o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK;
                 buffer.append(getPO("sh:pattern", o));
                 buffer.append(getSNT());
                 break;
@@ -143,7 +144,8 @@ public class PropertyShape extends Shape {
                 buffer.append(getSNT());
                 break;
             case XSD_TIME:
-                o = Symbols.DOUBLE_QUOTATION_MARK + Shaper.dbSchema.getRegexForXSDTime(mappedTable, mappedColumn).get() + Symbols.DOUBLE_QUOTATION_MARK;
+                o = Shaper.dbSchema.getRegexForXSDTime(mappedTable, mappedColumn).get().replace("\\.", "\\\\.");
+                o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK;
                 buffer.append(getPO("sh:pattern", o));
                 buffer.append(getSNT());
                 break;

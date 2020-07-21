@@ -65,7 +65,8 @@ public class NodeShape extends Shape {
     }
 
     private String getRegex(URI classIRI, List<String> pk) {
-        StringBuffer buffer = new StringBuffer(Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + classIRI + Symbols.SLASH);
+        String dotReplacedClassIRI = classIRI.toString().replace(".", "\\\\.");
+        StringBuffer buffer = new StringBuffer(Symbols.DOUBLE_QUOTATION_MARK + Symbols.CARET + dotReplacedClassIRI + Symbols.SLASH);
 
         String placeholder = "(.*)";
         for(String pkColumn: pk) {

@@ -7,13 +7,14 @@ import javax.xml.bind.DatatypeConverter;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.Vector;
 
 public class SQLResultSet {
-	ResultSet rs;
-	ResultSetMetaData rsmd;
+	private ResultSet rs;
+	private ResultSetMetaData rsmd;
 	
 	SQLResultSet(ResultSet rs, ResultSetMetaData rsmd) {
 		this.rs = rs;
@@ -51,7 +52,10 @@ public class SQLResultSet {
 			for (int i = 1 ; i <= cnt; i++) {
 				if (SqlXsdMap.getMappedXSD(rsmd.getColumnType(i)).equals(XSDs.XSD_HEX_BINARY))
 					v.add(DatatypeConverter.printHexBinary(rs.getBytes(i)));
-				else v.add(rs.getString(i));
+				else if (SqlXsdMap.getMappedXSD(rsmd.getColumnType(i)).equals(XSDs.XSD_DATE_TIME)) {
+					v.add(rs.getTimestamp(i).toLocalDateTime().toString());
+				} else
+					v.add(rs.getString(i));
 			}
 		} catch(SQLException e) { e.printStackTrace(); }
 

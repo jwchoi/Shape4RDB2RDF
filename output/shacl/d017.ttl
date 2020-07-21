@@ -1,0 +1,91 @@
+@base <http://cse.ssu.ac.kr/> .
+@prefix cse: <http://cse.ssu.ac.kr/#> .
+@prefix d017: <http://example.com/base/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cse:成分Shape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/成分#使用部> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 10 ;
+    sh:maxCount 1  .
+    
+cse:成分Shape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/成分#植物名> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 10 ;
+    sh:maxCount 1  .
+    
+cse:成分Shape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/成分#皿> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 10 ;
+    sh:maxCount 1  .
+    
+cse:成分Shape-ref1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/成分#ref-植物名;使用部> ;
+    sh:nodeKind sh:IRI ;
+    sh:class d017:植物 ;
+    sh:maxCount 1  .
+    
+cse:成分Shape
+    a sh:NodeShape ;
+    sh:targetClass d017:成分 ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d017:成分 ;
+    sh:property cse:成分Shape-col1 ;
+    sh:property cse:成分Shape-col2 ;
+    sh:property cse:成分Shape-col3 ;
+    sh:property cse:成分Shape-ref1  .
+    
+cse:植物Shape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/植物#条件> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 10 ;
+    sh:maxCount 1  .
+    
+cse:植物Shape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/植物#使用部> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 10 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:植物Shape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/植物#名> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 10 ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:植物Shape-inverse1
+    a sh:PropertyShape ;
+    sh:path [sh:inversePath <http://example.com/base/成分#ref-植物名;使用部> ] ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class d017:成分  .
+    
+cse:植物Shape
+    a sh:NodeShape ;
+    sh:targetClass d017:植物 ;
+    sh:nodeKind sh:IRI ;
+    sh:class d017:植物 ;
+    sh:pattern "^http://example.com/base/植物/名=(.*);使用部=(.*)$" ;
+    sh:property cse:植物Shape-col1 ;
+    sh:property cse:植物Shape-col2 ;
+    sh:property cse:植物Shape-col3 ;
+    sh:property cse:植物Shape-inverse1  .
+    
