@@ -94,14 +94,28 @@ public class PropertyShape extends Shape {
                 buffer.append(getSNT());
                 break;
             case XSD_DATE:
+                // sh:pattern
                 o = Symbols.DOUBLE_QUOTATION_MARK + Shaper.dbSchema.getRegexForXSDDate() + Symbols.DOUBLE_QUOTATION_MARK;
                 buffer.append(getPO("sh:pattern", o));
                 buffer.append(getSNT());
                 break;
             case XSD_DATE_TIME:
+                // sh:pattern
                 o =  Shaper.dbSchema.getRegexForXSDDateTime(mappedTable, mappedColumn).get().replace("\\.", "\\\\.");
                 o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK;
                 buffer.append(getPO("sh:pattern", o));
+                buffer.append(getSNT());
+
+                // sh:minInclusive & sh:maxInclusive
+                String minimumDateTimeValue = Shaper.dbSchema.getMinimumDateTimeValue(mappedTable, mappedColumn).get();
+                String maximumDateTimeValue = Shaper.dbSchema.getMaximumDateTimeValue(mappedTable, mappedColumn).get();
+
+                o = "\"" + minimumDateTimeValue + "\"" + "^^xsd:dateTime";
+                buffer.append(getPO("sh:minInclusive", o));
+                buffer.append(getSNT());
+
+                o = "\"" + maximumDateTimeValue + "\"" + "^^xsd:dateTime";
+                buffer.append(getPO("sh:maxInclusive", o));
                 buffer.append(getSNT());
                 break;
             case XSD_DECIMAL:

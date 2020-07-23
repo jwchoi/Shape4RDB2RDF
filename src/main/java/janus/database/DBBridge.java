@@ -97,6 +97,10 @@ public abstract class DBBridge {
 
     abstract Optional<String> getMinimumIntegerValue(String catalog, String table, String column);
 
+	abstract Optional<String> getMaximumDateTimeValue(String catalog, String table, String column);
+
+	abstract Optional<String> getMinimumDateTimeValue(String catalog, String table, String column);
+
 	abstract String getRegexForXSDDate();
 
 	abstract Optional<String> getRegexForXSDDateTime(String catalog, String table, String column);

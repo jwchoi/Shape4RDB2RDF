@@ -268,6 +268,26 @@ public class DBSchema {
 		return minimumIntegerValue;
 	}
 
+	public Optional<String> getMaximumDateTimeValue(String tableName, String columnName) {
+		Optional<String> maximumDateTimeValue = Optional.empty();
+
+		for (TableMetadata table: tables)
+			if (table.getTableName().equals(tableName))
+				maximumDateTimeValue = table.getMaximumDateTimeValue(catalog, columnName);
+
+		return maximumDateTimeValue;
+	}
+
+	public Optional<String> getMinimumDateTimeValue(String tableName, String columnName) {
+		Optional<String> minimumDateTimeValue = Optional.empty();
+
+		for (TableMetadata table: tables)
+			if (table.getTableName().equals(tableName))
+				minimumDateTimeValue = table.getMinimumDateTimeValue(catalog, columnName);
+
+		return minimumDateTimeValue;
+	}
+
     public String getDefaultValue(String tableName, String columnName) {
         String defaultValue = null;
 

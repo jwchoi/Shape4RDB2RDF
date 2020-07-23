@@ -19,6 +19,9 @@ class ColumnMetadata implements Comparable<ColumnMetadata> {
 	private Optional<String> maximumIntegerValue; // if the column is mapped by xsd:integer, else null
 	private Optional<String> minimumIntegerValue; // if the column is mapped by xsd:integer, else null
 
+	private Optional<String> maximumDateTimeValue; // if the column is mapped by xsd:dateTime, else null
+	private Optional<String> minimumDateTimeValue; // if the column is mapped by xsd:dateTime, else null
+
 	private Optional<Integer> numericPrecision; // if the column is mapped by xsd:decimal, else null
 	private Optional<Integer> numericScale; // if the column is mapped by xsd:decimal, else null
 
@@ -94,6 +97,20 @@ class ColumnMetadata implements Comparable<ColumnMetadata> {
 	Optional<String> getMinimumIntegerValue(String catalog, String table) {
 		if (minimumIntegerValue == null)
 			minimumIntegerValue = Shaper.dbBridge.getMinimumIntegerValue(catalog, table, columnName);
+
+		return minimumIntegerValue;
+	}
+
+	Optional<String> getMaximumDateTimeValue(String catalog, String table) {
+		if (maximumDateTimeValue == null)
+			maximumDateTimeValue = Shaper.dbBridge.getMaximumDateTimeValue(catalog, table, columnName);
+
+		return maximumDateTimeValue;
+	}
+
+	Optional<String> getMinimumDateTimeValue(String catalog, String table) {
+		if (minimumDateTimeValue == null)
+			minimumIntegerValue = Shaper.dbBridge.getMinimumDateTimeValue(catalog, table, columnName);
 
 		return minimumIntegerValue;
 	}

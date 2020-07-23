@@ -226,6 +226,26 @@ class TableMetadata implements Comparable<TableMetadata> {
 		return minimumIntegerValue;
 	}
 
+	Optional<String> getMaximumDateTimeValue(String catalogName, String columnName) {
+		Optional<String> maximumDateTimeValue = Optional.empty();
+
+		for (ColumnMetadata columnMetaData: columnMetaDataSet)
+			if (columnMetaData.getColumnName().equals(columnName))
+				maximumDateTimeValue = columnMetaData.getMaximumDateTimeValue(catalogName, tableName);
+
+		return maximumDateTimeValue;
+	}
+
+	Optional<String> getMinimumDateTimeValue(String catalogName, String columnName) {
+		Optional<String> minimumDateTimeValue = Optional.empty();
+
+		for (ColumnMetadata columnMetaData: columnMetaDataSet)
+			if (columnMetaData.getColumnName().equals(columnName))
+				minimumDateTimeValue = columnMetaData.getMinimumDateTimeValue(catalogName, tableName);
+
+		return minimumDateTimeValue;
+	}
+
     String getDefaultValue(String columnName) {
         String defaultValue = null;
 

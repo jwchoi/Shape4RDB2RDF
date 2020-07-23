@@ -13,7 +13,7 @@ final class MySQLBridge extends DBBridge {
 
     private final String defaultRegexForXSDDateTimeFromDateTime = "^([1-9][0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$";
 
-    private final String defaultRegexForXSDDateTimeFromTimeStamp = "(^(19[7-9][0-9]|20([0-2][0-9]|3[0-7]))-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-(0[1-9]|1[0-8])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-19T0[0-4]:([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-19T05:(0[0-9]|1[0-3]):([0-5][0-9])((\\.[0-9]{1,6})?))|(2038-01-19T05:14:0[0-6]((\\.[0-9]{1,6})?)$)|(^2038-01-19T05:14:07((\\.0{1,6})?)$)";
+    private final String defaultRegexForXSDDateTimeFromTimeStamp = "(^(19[7-9][0-9]|20([0-2][0-9]|3[0-7]))-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-(0[1-9]|1[0-8])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-19T0[0-2]:([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-19T03:(0[0-9]|1[0-3]):([0-5][0-9])((\\.[0-9]{1,6})?))|(2038-01-19T03:14:0[0-6]((\\.[0-9]{1,6})?)$)|(^2038-01-19T03:14:07((\\.0{1,6})?)$)";
 
     private final String defaultRegexForXSDTime = "^(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{1,6})?$";
 
@@ -46,6 +46,23 @@ final class MySQLBridge extends DBBridge {
         private final String value;
 
         IntegerTypes(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() { return value; }
+    }
+
+    private enum DateTimeTypes {
+        TIMESTAMP_MINIMUM_VALUE("1970-01-01T00:00:01"),
+        TIMESTAMP_MAXIMUM_VALUE("2038-01-19T03:14:07"),
+
+        DATETIME_MINIMUM_VALUE("1000-01-01T00:00:00.000000"),
+        DATETIME_MAXIMUM_VALUE("9999-12-31T23:59:59.999999");
+
+        private final String value;
+
+        DateTimeTypes(String value) {
             this.value = value;
         }
 
@@ -499,6 +516,32 @@ final class MySQLBridge extends DBBridge {
         }
 
         return Optional.ofNullable(minimumIntegerValue);
+    }
+
+    @Override
+    Optional<String> getMaximumDateTimeValue(String catalog, String table, String column) {
+        String maximumDateTimeValue = null;
+
+        String SQLDataType = getSQLDataType(catalog, table, column).toUpperCase();
+        switch (SQLDataType) {
+            case "TIMESTAMP": maximumDateTimeValue = DateTimeTypes.TIMESTAMP_MAXIMUM_VALUE.toString(); break;
+            case "DATETIME": maximumDateTimeValue = DateTimeTypes.DATETIME_MAXIMUM_VALUE.toString(); break;
+        }
+
+        return Optional.ofNullable(maximumDateTimeValue);
+    }
+
+    @Override
+    Optional<String> getMinimumDateTimeValue(String catalog, String table, String column) {
+        String minimumDateTimeValue = null;
+
+        String SQLDataType = getSQLDataType(catalog, table, column).toUpperCase();
+        switch (SQLDataType) {
+            case "TIMESTAMP": minimumDateTimeValue = DateTimeTypes.TIMESTAMP_MINIMUM_VALUE.toString(); break;
+            case "DATETIME": minimumDateTimeValue = DateTimeTypes.DATETIME_MINIMUM_VALUE.toString(); break;
+        }
+
+        return Optional.ofNullable(minimumDateTimeValue);
     }
 
     @Override

@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.Vector;
@@ -54,6 +55,7 @@ public class SQLResultSet {
 					v.add(DatatypeConverter.printHexBinary(rs.getBytes(i)));
 				else if (SqlXsdMap.getMappedXSD(rsmd.getColumnType(i)).equals(XSDs.XSD_DATE_TIME)) {
 					v.add(rs.getTimestamp(i).toLocalDateTime().toString());
+					//v.add(DatatypeConverter.printDateTime(new Calendar.Builder().setInstant(rs.getTimestamp(i).toInstant().toEpochMilli()).build()));
 				} else
 					v.add(rs.getString(i));
 			}
