@@ -10,6 +10,7 @@ import shaper.mapping.model.dm.TableIRI;
 import shaper.mapping.model.r2rml.*;
 import shaper.mapping.model.dm.LiteralProperty;
 import shaper.mapping.model.dm.ReferenceProperty;
+import shaper.mapping.model.shex.NodeConstraint;
 
 import java.net.URI;
 import java.sql.ResultSetMetaData;
@@ -95,30 +96,58 @@ public class PropertyShape extends Shape {
                 break;
             case XSD_DATE:
                 // sh:pattern
-                o = Symbols.DOUBLE_QUOTATION_MARK + Shaper.dbSchema.getRegexForXSDDate() + Symbols.DOUBLE_QUOTATION_MARK;
-                buffer.append(getPO("sh:pattern", o));
-                buffer.append(getSNT());
-                break;
-            case XSD_DATE_TIME:
-                // sh:pattern
-                o =  Shaper.dbSchema.getRegexForXSDDateTime(mappedTable, mappedColumn).get().replace("\\.", "\\\\.");
+                o =  Shaper.dbSchema.getRegexForXSDDate().replace("\\", "\\\\");
                 o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK;
                 buffer.append(getPO("sh:pattern", o));
                 buffer.append(getSNT());
 
                 // sh:minInclusive & sh:maxInclusive
-                String minimumDateTimeValue = Shaper.dbSchema.getMinimumDateTimeValue(mappedTable, mappedColumn).get();
-                String maximumDateTimeValue = Shaper.dbSchema.getMaximumDateTimeValue(mappedTable, mappedColumn).get();
+                Optional<String> minimumDateValue = Shaper.dbSchema.getMinimumDateValue();
+                if (minimumDateValue.isPresent()) {
+                    o = "\"" + minimumDateValue.get() + "\"" + "^^xsd:date";
+                    buffer.append(getPO("sh:minInclusive", o));
+                    buffer.append(getSNT());
+                }
+                Optional<String> maximumDateValue = Shaper.dbSchema.getMaximumDateValue();
+                if (maximumDateValue.isPresent()) {
+                    o = "\"" + maximumDateValue.get() + "\"" + "^^xsd:date";
+                    buffer.append(getPO("sh:maxInclusive", o));
+                    buffer.append(getSNT());
+                }
+                break;
+            case XSD_DATE_TIME:
+                // sh:pattern
+                Optional<String> dateTimeRegex = Shaper.dbSchema.getRegexForXSDDateTime(mappedTable, mappedColumn);
+                if (dateTimeRegex.isPresent()) {
+                    o = dateTimeRegex.get().replace("\\", "\\\\");
+                    o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK;
+                    buffer.append(getPO("sh:pattern", o));
+                    buffer.append(getSNT());
+                }
 
-                o = "\"" + minimumDateTimeValue + "\"" + "^^xsd:dateTime";
-                buffer.append(getPO("sh:minInclusive", o));
-                buffer.append(getSNT());
-
-                o = "\"" + maximumDateTimeValue + "\"" + "^^xsd:dateTime";
-                buffer.append(getPO("sh:maxInclusive", o));
-                buffer.append(getSNT());
+                // sh:minInclusive & sh:maxInclusive
+                Optional<String> minimumDateTimeValue = Shaper.dbSchema.getMinimumDateTimeValue(mappedTable, mappedColumn);
+                if (minimumDateTimeValue.isPresent()) {
+                    o = "\"" + minimumDateTimeValue.get() + "\"" + "^^xsd:dateTime";
+                    buffer.append(getPO("sh:minInclusive", o));
+                    buffer.append(getSNT());
+                }
+                Optional<String> maximumDateTimeValue = Shaper.dbSchema.getMaximumDateTimeValue(mappedTable, mappedColumn);
+                if (maximumDateTimeValue.isPresent()) {
+                    o = "\"" + maximumDateTimeValue.get() + "\"" + "^^xsd:dateTime";
+                    buffer.append(getPO("sh:maxInclusive", o));
+                    buffer.append(getSNT());
+                }
                 break;
             case XSD_DECIMAL:
+                // sh:pattern
+                Optional<String> decimalRegex = Shaper.dbSchema.getRegexForXSDDecimal(mappedTable, mappedColumn);
+                if (decimalRegex.isPresent()) {
+                    o = decimalRegex.get().replace("\\", "\\\\");
+                    o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK;
+                    buffer.append(getPO("sh:pattern", o));
+                    buffer.append(getSNT());
+                }
                 break;
             case XSD_DOUBLE:
                 // sh:minInclusive
@@ -131,37 +160,44 @@ public class PropertyShape extends Shape {
                 break;
             case XSD_HEX_BINARY:
                 // sh:maxLength
-                Integer maximumOctetLength = Shaper.dbSchema.getMaximumOctetLength(mappedTable, mappedColumn).get();
-                o = Integer.toString(maximumOctetLength * 2);
-                buffer.append(getPO("sh:maxLength", o));
-                buffer.append(getSNT());
+                Optional<Integer> maximumOctetLength = Shaper.dbSchema.getMaximumOctetLength(mappedTable, mappedColumn);
+                if (maximumOctetLength.isPresent()) {
+                    o = Integer.toString(maximumOctetLength.get() * 2);
+                    buffer.append(getPO("sh:maxLength", o));
+                    buffer.append(getSNT());
+                }
                 break;
             case XSD_INTEGER:
                 // sh:minInclusive & sh:maxInclusive
-                String minimumIntegerValue = Shaper.dbSchema.getMinimumIntegerValue(mappedTable, mappedColumn).get();
-                String maximumIntegerValue = Shaper.dbSchema.getMaximumIntegerValue(mappedTable, mappedColumn).get();
+                Optional<String> minimumIntegerValue = Shaper.dbSchema.getMinimumIntegerValue(mappedTable, mappedColumn);
+                Optional<String> maximumIntegerValue = Shaper.dbSchema.getMaximumIntegerValue(mappedTable, mappedColumn);
+                if (minimumIntegerValue.isPresent() && maximumIntegerValue.isPresent()) {
+                    o = minimumIntegerValue.get();
+                    buffer.append(getPO("sh:minInclusive", o));
+                    buffer.append(getSNT());
 
-                o = minimumIntegerValue;
-                buffer.append(getPO("sh:minInclusive", o));
-                buffer.append(getSNT());
-
-                o = maximumIntegerValue;
-                buffer.append(getPO("sh:maxInclusive", o));
-                buffer.append(getSNT());
-
+                    o = maximumIntegerValue.get();
+                    buffer.append(getPO("sh:maxInclusive", o));
+                    buffer.append(getSNT());
+                }
                 break;
             case XSD_STRING:
                 // sh:maxLength
-                Integer characterMaximumLength = Shaper.dbSchema.getCharacterMaximumLength(mappedTable, mappedColumn).get();
-                o = characterMaximumLength.toString();
-                buffer.append(getPO("sh:maxLength", o));
-                buffer.append(getSNT());
+                Optional<Integer> characterMaximumLength = Shaper.dbSchema.getCharacterMaximumLength(mappedTable, mappedColumn);
+                if (characterMaximumLength.isPresent()) {
+                    o = characterMaximumLength.get().toString();
+                    buffer.append(getPO("sh:maxLength", o));
+                    buffer.append(getSNT());
+                }
                 break;
             case XSD_TIME:
-                o = Shaper.dbSchema.getRegexForXSDTime(mappedTable, mappedColumn).get().replace("\\.", "\\\\.");
-                o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK;
-                buffer.append(getPO("sh:pattern", o));
-                buffer.append(getSNT());
+                Optional<String> timeRegex = Shaper.dbSchema.getRegexForXSDTime(mappedTable, mappedColumn);
+                if (timeRegex.isPresent()) {
+                    o = timeRegex.get().replace("\\", "\\\\");
+                    o = Symbols.DOUBLE_QUOTATION_MARK + o + Symbols.DOUBLE_QUOTATION_MARK;
+                    buffer.append(getPO("sh:pattern", o));
+                    buffer.append(getSNT());
+                }
                 break;
         }
 

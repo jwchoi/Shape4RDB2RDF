@@ -25,6 +25,10 @@ public class DBSchema {
 		return Shaper.dbBridge.getRegexForXSDDateTime(catalog, tableName, columnName);
 	}
 
+	public Optional<String> getRegexForXSDDecimal(String tableName, String columnName) {
+		return Shaper.dbBridge.getRegexForXSDDecimal(catalog, tableName, columnName);
+	}
+
 	public Optional<String> getRegexForXSDTime(String tableName, String columnName) {
 		return Shaper.dbBridge.getRegexForXSDTime(catalog, tableName, columnName);
 	}
@@ -286,6 +290,14 @@ public class DBSchema {
 				minimumDateTimeValue = table.getMinimumDateTimeValue(catalog, columnName);
 
 		return minimumDateTimeValue;
+	}
+
+	public Optional<String> getMaximumDateValue() {
+		return Shaper.dbBridge.getMaximumDateValue();
+	}
+
+	public Optional<String> getMinimumDateValue() {
+		return Shaper.dbBridge.getMinimumDateValue();
 	}
 
     public String getDefaultValue(String tableName, String columnName) {

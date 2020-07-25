@@ -5,6 +5,60 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
+cse:datetime_testShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/datetime_test#col3> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:pattern "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{1}[\\d]{1,6}){1}$" ;
+    sh:minInclusive "1000-01-01T00:00:00.000000"^^xsd:dateTime ;
+    sh:maxInclusive "9999-12-31T23:59:59.999999"^^xsd:dateTime ;
+    sh:maxCount 1  .
+    
+cse:datetime_testShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/datetime_test#col1> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:pattern "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{0}[\\d]{0,0}){0}$" ;
+    sh:minInclusive "1000-01-01T00:00:00.000000"^^xsd:dateTime ;
+    sh:maxInclusive "9999-12-31T23:59:59.999999"^^xsd:dateTime ;
+    sh:maxCount 1  .
+    
+cse:datetime_testShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/datetime_test#col2> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:pattern "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{1}[\\d]{1,3}){1}$" ;
+    sh:minInclusive "1000-01-01T00:00:00.000000"^^xsd:dateTime ;
+    sh:maxInclusive "9999-12-31T23:59:59.999999"^^xsd:dateTime ;
+    sh:maxCount 1  .
+    
+cse:datetime_testShape
+    a sh:NodeShape ;
+    sh:targetClass test:datetime_test ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class test:datetime_test ;
+    sh:property cse:datetime_testShape-col1 ;
+    sh:property cse:datetime_testShape-col2 ;
+    sh:property cse:datetime_testShape-col3  .
+    
+cse:decimal_testShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/decimal_test#d> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:decimal ;
+    sh:pattern "^(\\+|-)?\\d{0,10}(\\.\\d{0,0})?$" ;
+    sh:maxCount 1  .
+    
+cse:decimal_testShape
+    a sh:NodeShape ;
+    sh:targetClass test:decimal_test ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class test:decimal_test ;
+    sh:property cse:decimal_testShape-col1  .
+    
 cse:enum_testShape-col1
     a sh:PropertyShape ;
     sh:path <http://example.com/base/enum_test#numbers> ;
@@ -36,4 +90,64 @@ cse:set_testShape
     sh:nodeKind sh:BlankNode ;
     sh:class test:set_test ;
     sh:property cse:set_testShape-col1  .
+    
+cse:time_testShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/time_test#t0> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:time ;
+    sh:pattern "^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(\\.\\d{0,0}){0}|(24:00:00(\\.0{0,0}){0})$" ;
+    sh:maxCount 1  .
+    
+cse:time_testShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/time_test#t6> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:time ;
+    sh:pattern "^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(\\.\\d{1,6}){1}|(24:00:00(\\.0{1,6}){1})$" ;
+    sh:maxCount 1  .
+    
+cse:time_testShape
+    a sh:NodeShape ;
+    sh:targetClass test:time_test ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class test:time_test ;
+    sh:property cse:time_testShape-col1 ;
+    sh:property cse:time_testShape-col2  .
+    
+cse:timestamp_testShape-col1
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/timestamp_test#col2> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:pattern "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{1}[\\d]{1,3}){1}$" ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:timestamp_testShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/timestamp_test#col3> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:pattern "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{1}[\\d]{1,6}){1}$" ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:timestamp_testShape-col3
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/timestamp_test#col1> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:pattern "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{0}[\\d]{0,0}){0}$" ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
+cse:timestamp_testShape
+    a sh:NodeShape ;
+    sh:targetClass test:timestamp_test ;
+    sh:nodeKind sh:BlankNode ;
+    sh:class test:timestamp_test ;
+    sh:property cse:timestamp_testShape-col1 ;
+    sh:property cse:timestamp_testShape-col2 ;
+    sh:property cse:timestamp_testShape-col3  .
     

@@ -101,11 +101,17 @@ public abstract class DBBridge {
 
 	abstract Optional<String> getMinimumDateTimeValue(String catalog, String table, String column);
 
+	abstract Optional<String> getMaximumDateValue();
+
+	abstract Optional<String> getMinimumDateValue();
+
 	abstract String getRegexForXSDDate();
 
 	abstract Optional<String> getRegexForXSDDateTime(String catalog, String table, String column);
 
 	abstract Optional<String> getRegexForXSDTime(String catalog, String table, String column);
+
+	abstract Optional<String> getRegexForXSDDecimal(String catalog, String table, String column);
 	
 	// about DB Scheme
     String getConnectedCatalog() {

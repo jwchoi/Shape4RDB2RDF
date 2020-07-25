@@ -18,10 +18,10 @@ class Literal {
             case XSD_STRING:
                 literal = getStringLiteral(value);
                 break;
-//            case XSD_DATE_TIME:
-//                value = value.replace(Symbols.SPACE, "T");
-//                literal = buildTypedLiteral(value, xmlSchemaDataType);
-//                break;
+            case XSD_DATE_TIME:
+                value = value.replace(Symbols.SPACE, "T");
+                literal = buildTypedLiteral(value, xmlSchemaDataType);
+                break;
             case XSD_BOOLEAN:
                 value = value.toLowerCase();
                 if (value.equals("0")) value = "false";
