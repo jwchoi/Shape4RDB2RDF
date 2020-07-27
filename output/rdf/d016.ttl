@@ -12,7 +12,7 @@
     <patient#Weight> "80.25"^^xsd:double ;
     <patient#Height> "1.65"^^xsd:double ;
     <patient#BirthDate> "1981-10-10"^^xsd:date ;
-    <patient#EntranceDate> "2009-10-10T12:12:22"^^xsd:dateTime ;
+    <patient#EntranceDate> "2009-10-10T03:12:22Z"^^xsd:dateTime ;
     <patient#PaidInAdvance> "false"^^xsd:boolean ;
     <patient#Photo> "89504E470D0A1A0A0000000D49484452000000050000000508060000008D6F26E50000001C4944415408D763F9FFFEBFC37F062005C3201284D031F18258CD04000EF535CBD18E0E1F0000000049454E44AE426082"^^xsd:hexBinary .
 
@@ -25,7 +25,7 @@
     <patient#Weight> "70.22"^^xsd:double ;
     <patient#Height> "1.7"^^xsd:double ;
     <patient#BirthDate> "1982-11-12"^^xsd:date ;
-    <patient#EntranceDate> "2008-11-12T09:45:44"^^xsd:dateTime ;
+    <patient#EntranceDate> "2008-11-12T00:45:44Z"^^xsd:dateTime ;
     <patient#PaidInAdvance> "true"^^xsd:boolean ;
     <patient#Photo> "89504E470D0A1A0A0000000D49484452000000050000000508060000008D6F26E50000001C4944415408D763F9FFFF3FC37F062005C3201284D031F18258CD04000EF535CBD18E0E1F0000000049454E44AE426082"^^xsd:hexBinary .
 
@@ -38,7 +38,7 @@
     <patient#Weight> "90.31"^^xsd:double ;
     <patient#Height> "1.76"^^xsd:double ;
     <patient#BirthDate> "1978-04-06"^^xsd:date ;
-    <patient#EntranceDate> "2007-03-12T02:13:14"^^xsd:dateTime ;
+    <patient#EntranceDate> "2007-03-11T17:13:14Z"^^xsd:dateTime ;
     <patient#PaidInAdvance> "true"^^xsd:boolean ;
     <patient#Photo> "89504E470D0A1A0A0000000D49484452000000050000000508060000008D6F26E50000001C4944415408D763F9FFFEBFC37F062005C3201284D031F18258CD04000EF535CBD18E0E1F0000000049454E44AE426082"^^xsd:hexBinary .
 

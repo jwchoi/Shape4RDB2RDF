@@ -12,8 +12,8 @@ import java.util.Optional;
 import java.util.Vector;
 
 public class SQLResultSet {
-	private ResultSet rs;
-	private ResultSetMetaData rsmd;
+	protected ResultSet rs;
+	protected ResultSetMetaData rsmd;
 	
 	SQLResultSet(ResultSet rs, ResultSetMetaData rsmd) {
 		this.rs = rs;
@@ -51,22 +51,12 @@ public class SQLResultSet {
 			for (int i = 1 ; i <= cnt; i++) {
 				if (SqlXsdMap.getMappedXSD(rsmd.getColumnType(i)).equals(XSDs.XSD_HEX_BINARY))
 					v.add(DatatypeConverter.printHexBinary(rs.getBytes(i)));
-				else if (SqlXsdMap.getMappedXSD(rsmd.getColumnType(i)).equals(XSDs.XSD_DATE_TIME))
-					v.add(adjustScale(rs.getString(i), rsmd.getScale(i)));
 				else
 					v.add(rs.getString(i));
 			}
 		} catch(SQLException e) { e.printStackTrace(); }
 
 		return v;
-	}
-
-	// when scale is 0, remove ".0"
-	private String adjustScale(String value, int scale) {
-		if (scale == 0 && value.endsWith(".0"))
-			value = value.substring(0, value.lastIndexOf(".0"));
-
-		return value;
 	}
 	
 	public int getResultSetRowCount() {

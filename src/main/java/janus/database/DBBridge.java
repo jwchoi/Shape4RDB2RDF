@@ -1,6 +1,10 @@
 package janus.database;
 
+import shaper.mapping.SqlXsdMap;
+import shaper.mapping.XSDs;
+
 import java.sql.*;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -256,13 +260,14 @@ public abstract class DBBridge {
 
         try {
             Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY,
+					ResultSet.CONCUR_READ_ONLY,
                     ResultSet.HOLD_CURSORS_OVER_COMMIT);
 
             ResultSet rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
 
             SQLRS = new SQLResultSet(rs, rsmd);
+
         } catch(SQLException e) { e.printStackTrace(); }
 
         return SQLRS;
@@ -271,4 +276,8 @@ public abstract class DBBridge {
 	abstract SQLResultSet executeQueryFromInformationSchema(String query);
 	
 	abstract String buildURL(String host, String port, String schema);
+
+	abstract Optional<ZoneOffset> getDBZoneOffset();
+
+	abstract boolean isTimeZoneAwareDataType(String dbTypeName);
 }

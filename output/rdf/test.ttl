@@ -3,13 +3,13 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-_:datetime_test916474526
+_:datetime_test1220369133
     a <datetime_test> ;
     <datetime_test#col1> "2020-07-24T22:03:37"^^xsd:dateTime ;
     <datetime_test#col2> "2020-07-24T22:03:37.0"^^xsd:dateTime ;
     <datetime_test#col3> "2020-07-24T22:03:37.0"^^xsd:dateTime .
 
-_:datetime_test-364478912
+_:datetime_test-2006352047
     a <datetime_test> ;
     <datetime_test#col1> "2020-07-24T22:03:37"^^xsd:dateTime ;
     <datetime_test#col2> "2020-07-24T22:03:37.044"^^xsd:dateTime ;
@@ -39,143 +39,143 @@ _:decimal_test-777851575
     a <decimal_test> ;
     <decimal_test#d> "0000000006"^^xsd:decimal .
 
-_:timestamp_test-524273559
+_:timestamp_test-46593988
     a <timestamp_test> ;
-    <timestamp_test#col1> "2020-07-24T22:03:51"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-24T22:03:51.0"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-24T22:03:51.0"^^xsd:dateTime .
+    <timestamp_test#col1> "2020-07-24T13:03:51Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-24T13:03:51Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-24T13:03:51Z"^^xsd:dateTime .
 
-_:timestamp_test1320906231
+_:timestamp_test935573460
     a <timestamp_test> ;
-    <timestamp_test#col1> "2020-07-24T22:03:51"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-24T22:03:51.628"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-24T22:03:51.628297"^^xsd:dateTime .
+    <timestamp_test#col1> "2020-07-24T13:03:51Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-24T13:03:51.628Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-24T13:03:51.628297Z"^^xsd:dateTime .
 
-_:timestamp_test1754102798
+_:timestamp_test1514924956
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T03:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:30:39.911"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:30:39.911004"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-18T18:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:30:39.911Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:30:39.911004Z"^^xsd:dateTime .
 
-_:timestamp_test-707228527
+_:timestamp_test-1156433739
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T03:14:08"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:31:28.903"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:31:28.903882"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-18T18:14:08Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:31:28.903Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:31:28.903882Z"^^xsd:dateTime .
 
-_:timestamp_test-337274964
+_:timestamp_test-1542314388
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T03:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:32:06.675"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:32:06.675369"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-18T18:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:32:06.675Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:32:06.675369Z"^^xsd:dateTime .
 
-_:timestamp_test1955525806
+_:timestamp_test787986052
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T04:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:12.959"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:12.959764"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-18T19:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:12.959Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:12.959764Z"^^xsd:dateTime .
 
-_:timestamp_test-2088756308
+_:timestamp_test224235481
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T05:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:16.324"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:16.324833"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-18T20:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:16.324Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:16.324833Z"^^xsd:dateTime .
 
-_:timestamp_test122844460
+_:timestamp_test-709286635
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T06:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:20.615"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:20.61532"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-18T21:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:20.615Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:20.615320Z"^^xsd:dateTime .
 
-_:timestamp_test-1726696177
+_:timestamp_test346267436
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T07:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:25.716"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:25.716601"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-18T22:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:25.716Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:25.716601Z"^^xsd:dateTime .
 
-_:timestamp_test-1560452237
+_:timestamp_test-306635612
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T08:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:30.235"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:30.235444"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-18T23:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:30.235Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:30.235444Z"^^xsd:dateTime .
 
-_:timestamp_test-573302726
+_:timestamp_test-1238046316
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T09:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:36.81"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:36.810477"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T00:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:36.810Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:36.810477Z"^^xsd:dateTime .
 
-_:timestamp_test1476890258
+_:timestamp_test405373115
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T10:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:43.577"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:43.57777"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T01:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:43.577Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:43.577770Z"^^xsd:dateTime .
 
-_:timestamp_test-1152074908
+_:timestamp_test1685353505
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T11:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:47.366"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:47.366979"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T02:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:47.366Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:47.366979Z"^^xsd:dateTime .
 
-_:timestamp_test1607000910
+_:timestamp_test-212509235
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T12:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:33:55.605"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:33:55.605321"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T03:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:33:55.605Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:33:55.605321Z"^^xsd:dateTime .
 
-_:timestamp_test1238481068
+_:timestamp_test2046951591
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T12:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:34:08.866"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:34:08.866158"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T03:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:34:08.866Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:34:08.866158Z"^^xsd:dateTime .
 
-_:timestamp_test506979018
+_:timestamp_test1040449671
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T12:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:34:25.691"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:34:25.691754"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T03:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:34:25.691Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:34:25.691754Z"^^xsd:dateTime .
 
-_:timestamp_test-1756494711
+_:timestamp_test-693692632
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T12:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:34:30.268"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:34:30.268964"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T03:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:34:30.268Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:34:30.268964Z"^^xsd:dateTime .
 
-_:timestamp_test-904664561
+_:timestamp_test148765816
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T12:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:34:36.971"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:34:36.971133"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T03:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:34:36.971Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:34:36.971133Z"^^xsd:dateTime .
 
-_:timestamp_test-2138037295
+_:timestamp_test-1367641850
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T12:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:36:13.493"^^xsd:dateTime ;
-    <timestamp_test#col3> "2020-07-25T14:36:13.493054"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T03:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:36:13.493Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2020-07-25T05:36:13.493054Z"^^xsd:dateTime .
 
-_:timestamp_test-1564181893
+_:timestamp_test-1801342644
     a <timestamp_test> ;
-    <timestamp_test#col1> "2038-01-19T12:14:07"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:42:43.455"^^xsd:dateTime ;
-    <timestamp_test#col3> "2038-01-19T12:14:07.999999"^^xsd:dateTime .
+    <timestamp_test#col1> "2038-01-19T03:14:07Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:42:43.455Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2038-01-19T03:14:07.999999Z"^^xsd:dateTime .
 
-_:timestamp_test1761160377
+_:timestamp_test1185289148
     a <timestamp_test> ;
-    <timestamp_test#col1> "1971-01-01T00:00:01"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:45:24.835"^^xsd:dateTime ;
-    <timestamp_test#col3> "2038-01-19T12:14:07.999999"^^xsd:dateTime .
+    <timestamp_test#col1> "1970-12-31T15:00:01Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:45:24.835Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2038-01-19T03:14:07.999999Z"^^xsd:dateTime .
 
-_:timestamp_test1344347941
+_:timestamp_test-1070256631
     a <timestamp_test> ;
-    <timestamp_test#col1> "1970-01-02T00:00:02"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:45:45.891"^^xsd:dateTime ;
-    <timestamp_test#col3> "2038-01-19T12:14:07.999999"^^xsd:dateTime .
+    <timestamp_test#col1> "1970-01-01T15:00:02Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:45:45.891Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2038-01-19T03:14:07.999999Z"^^xsd:dateTime .
 
-_:timestamp_test1393549608
+_:timestamp_test1877525480
     a <timestamp_test> ;
-    <timestamp_test#col1> "1970-01-01T09:00:01"^^xsd:dateTime ;
-    <timestamp_test#col2> "2020-07-25T14:46:22.019"^^xsd:dateTime ;
-    <timestamp_test#col3> "2038-01-19T12:14:07.999999"^^xsd:dateTime .
+    <timestamp_test#col1> "1970-01-01T00:00:01Z"^^xsd:dateTime ;
+    <timestamp_test#col2> "2020-07-25T05:46:22.019Z"^^xsd:dateTime ;
+    <timestamp_test#col3> "2038-01-19T03:14:07.999999Z"^^xsd:dateTime .
 
 _:time_test-2103395669
     a <time_test> ;

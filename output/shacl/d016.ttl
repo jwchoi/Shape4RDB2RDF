@@ -7,7 +7,7 @@
 
 cse:patientShape-col1
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/patient#LastName> ;
+    sh:path <http://example.com/base/patient#FirstName> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:string ;
     sh:maxLength 50 ;
@@ -15,28 +15,30 @@ cse:patientShape-col1
     
 cse:patientShape-col10
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/patient#PaidInAdvance> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:boolean ;
-    sh:in ( "true"^^xsd:boolean "false"^^xsd:boolean ) ;
-    sh:maxCount 1  .
-    
-cse:patientShape-col2
-    a sh:PropertyShape ;
     sh:path <http://example.com/base/patient#BirthDate> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:date ;
-    sh:pattern "\\d{4}-\\d{2}-\\d{2}$" ;
+    sh:pattern "^\\d{4}-\\d{2}-\\d{2}$" ;
     sh:minInclusive "1000-01-01"^^xsd:date ;
     sh:maxInclusive "9999-12-31"^^xsd:date ;
     sh:maxCount 1  .
     
+cse:patientShape-col2
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#EntranceDate> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:dateTime ;
+    sh:pattern "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{0}[\\d]{0,0}){0}Z$" ;
+    sh:minInclusive "1970-01-01 00:00:00Z"^^xsd:dateTime ;
+    sh:maxInclusive "2038-01-19 03:14:07Z"^^xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1  .
+    
 cse:patientShape-col3
     a sh:PropertyShape ;
-    sh:path <http://example.com/base/patient#Photo> ;
+    sh:path <http://example.com/base/patient#Height> ;
     sh:nodeKind sh:Literal ;
-    sh:datatype xsd:hexBinary ;
-    sh:maxLength 400 ;
+    sh:datatype xsd:double ;
     sh:maxCount 1  .
     
 cse:patientShape-col4
@@ -49,43 +51,43 @@ cse:patientShape-col4
     
 cse:patientShape-col5
     a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#Photo> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:hexBinary ;
+    sh:maxLength 400 ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col6
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#LastName> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:maxLength 50 ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col7
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#PaidInAdvance> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:boolean ;
+    sh:in ( "true"^^xsd:boolean "false"^^xsd:boolean ) ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col8
+    a sh:PropertyShape ;
+    sh:path <http://example.com/base/patient#Weight> ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1  .
+    
+cse:patientShape-col9
+    a sh:PropertyShape ;
     sh:path <http://example.com/base/patient#ID> ;
     sh:nodeKind sh:Literal ;
     sh:datatype xsd:integer ;
     sh:minInclusive -2147483648 ;
     sh:maxInclusive 2147483647 ;
     sh:minCount 1 ;
-    sh:maxCount 1  .
-    
-cse:patientShape-col6
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/patient#EntranceDate> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:dateTime ;
-    sh:pattern "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.[\\d]{0}){0}$" ;
-    sh:minCount 1 ;
-    sh:maxCount 1  .
-    
-cse:patientShape-col7
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/patient#Height> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:double ;
-    sh:maxCount 1  .
-    
-cse:patientShape-col8
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/patient#FirstName> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:string ;
-    sh:maxLength 50 ;
-    sh:maxCount 1  .
-    
-cse:patientShape-col9
-    a sh:PropertyShape ;
-    sh:path <http://example.com/base/patient#Weight> ;
-    sh:nodeKind sh:Literal ;
-    sh:datatype xsd:double ;
     sh:maxCount 1  .
     
 cse:patientShape

@@ -1,12 +1,11 @@
 package janus.database;
 
-import shaper.Shaper;
+import shaper.mapping.SqlXsdMap;
+import shaper.mapping.XSDs;
 
 import java.sql.*;
-import java.util.Optional;
-import java.util.StringTokenizer;
-import java.util.List;
-import java.util.Set;
+import java.time.ZoneOffset;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 final class MariaDBBridge extends DBBridge {
@@ -18,7 +17,7 @@ final class MariaDBBridge extends DBBridge {
     private final String defaultRegexForXSDDateTimeFromDateTime = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{?}[\\d]{min,max}){?}$";
 
     //private final String defaultRegexForXSDDateTimeFromTimeStamp = "(^(19[7-9][0-9]|20([0-2][0-9]|3[0-7]))-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-(0[1-9]|1[0-8])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-19T0[0-2]:([0-5][0-9]):([0-5][0-9])((\\.[0-9]{1,6})?)$)|(^2038-01-19T03:(0[0-9]|1[0-3]):([0-5][0-9])((\\.[0-9]{1,6})?))|(2038-01-19T03:14:0[0-6]((\\.[0-9]{1,6})?)$)|(^2038-01-19T03:14:07((\\.0{1,6})?)$)";
-    private final String defaultRegexForXSDDateTimeFromTimeStamp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{?}[\\d]{min,max}){?}$";
+    private final String defaultRegexForXSDDateTimeFromTimeStamp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.{?}[\\d]{min,max}){?}Z$";
 
     private final String defaultRegexForXSDTime = "^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(\\.\\d{min,max}){?}|(24:00:00(\\.0{min,max}){?})$";
 
@@ -112,6 +111,35 @@ final class MariaDBBridge extends DBBridge {
 	String buildURL(String host, String port, String schema) {
 		return "jdbc:mysql://" + host + ":" + port + "/" + schema;
 	}
+
+    @Override
+    boolean isTimeZoneAwareDataType(String dbTypeName) {
+        return (dbTypeName.toUpperCase().equals("TIMESTAMP")) ? true : false;
+    }
+
+    @Override
+    Optional<ZoneOffset> getDBZoneOffset() {
+        Optional<ZoneOffset> zoneOffset = Optional.empty();
+
+        try {
+            Statement stmt = informationSchemaConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY,
+                    ResultSet.HOLD_CURSORS_OVER_COMMIT);
+
+            String query = "SELECT TIMEDIFF(NOW(), UTC_TIMESTAMP)";
+
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.first()) {
+                String value = rs.getString(1);
+                if (!value.startsWith("-"))
+                    value = "+" + value;
+                zoneOffset = Optional.of(ZoneOffset.of(value));
+            }
+
+        } catch(SQLException e) { e.printStackTrace(); }
+
+        return zoneOffset;
+    }
 
     @Override
     SQLResultSet executeQueryFromInformationSchema(String query) {
@@ -504,7 +532,7 @@ final class MariaDBBridge extends DBBridge {
 
         String SQLDataType = getSQLDataType(catalog, table, column).toUpperCase();
         switch (SQLDataType) {
-            case "TIMESTAMP": break;
+            case "TIMESTAMP": maximumDateTimeValue = DateTimeTypes.TIMESTAMP_MAXIMUM_VALUE.toString(); break;
             case "DATETIME": maximumDateTimeValue = DateTimeTypes.DATETIME_MAXIMUM_VALUE.toString(); break;
         }
 
@@ -517,7 +545,7 @@ final class MariaDBBridge extends DBBridge {
 
         String SQLDataType = getSQLDataType(catalog, table, column).toUpperCase();
         switch (SQLDataType) {
-            case "TIMESTAMP": break;
+            case "TIMESTAMP": minimumDateTimeValue = DateTimeTypes.TIMESTAMP_MINIMUM_VALUE.toString(); break;
             case "DATETIME": minimumDateTimeValue = DateTimeTypes.DATETIME_MINIMUM_VALUE.toString(); break;
         }
 
@@ -638,5 +666,36 @@ final class MariaDBBridge extends DBBridge {
 	        JDBCDataType = Types.BOOLEAN;
 
 	    return JDBCDataType;
+    }
+
+    @Override // about SQL query
+    public SQLResultSet executeQuery(String query) {
+        SQLResultSet SQLRS = null;
+
+        try {
+            Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY,
+                    ResultSet.HOLD_CURSORS_OVER_COMMIT);
+
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            List<Integer> timeZoneAwareTemporalDataTypeColumnIndexes = getTimeZoneAwareTemporalDataTypeColumnIndexes(rsmd);
+
+            SQLRS = new MariaDBResultSet(rs, rsmd, getDBZoneOffset(), timeZoneAwareTemporalDataTypeColumnIndexes);
+
+        } catch(SQLException e) { e.printStackTrace(); }
+
+        return SQLRS;
+    }
+
+    private List<Integer> getTimeZoneAwareTemporalDataTypeColumnIndexes(ResultSetMetaData rsmd) throws SQLException {
+        List<Integer> indexes = new ArrayList<>();
+        for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+            if (SqlXsdMap.getMappedXSD(rsmd.getColumnType(i)).equals(XSDs.XSD_DATE_TIME) && isTimeZoneAwareDataType(rsmd.getColumnTypeName(i)))
+                indexes.add(i);
+        }
+
+        return indexes;
     }
 }
