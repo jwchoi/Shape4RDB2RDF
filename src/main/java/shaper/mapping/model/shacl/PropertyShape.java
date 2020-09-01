@@ -191,6 +191,7 @@ public class PropertyShape extends Shape {
                 }
                 break;
             case XSD_TIME:
+                // sh:pattern
                 Optional<String> timeRegex = Shaper.dbSchema.getRegexForXSDTime(mappedTable, mappedColumn);
                 if (timeRegex.isPresent()) {
                     o = timeRegex.get().replace("\\", "\\\\");
